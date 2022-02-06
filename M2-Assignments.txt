@@ -1,126 +1,0 @@
-	Lab 2
-Student NameCSUSM accountHow much (percentage) contributed? 
-Grading Rubrics (for instructor only):
-Criteria1. Beginning2. Developing3. Proficient4. ExemplarySolution to (A): 
-Java Programming0-1516-2526-3536-40No or little codingProject is incomplete but shows some effortA working system is delivered but with logic errorsSystem working well and coding practices are excellentProject proposal (B): 
-1. Purpose0-67-1112-1617-20No or little information providedbusiness background and/or needs is not clearly describedInformation is provided for both business background and needs, but needs improvementSufficient information is provided for both business background and needsProject proposal (B): 
-2. Scope0-67-1112-1617-20No or little information providedgoals and/or benefits are not clearly describedboth goals and benefits are provided, but needs improvementBoth goals and benefits are provided clearlyProject proposal (B): 
-3. User Characteristics0-67-1112-1617-20No or little information provideduser groups are not clearly, missing important information about user characteristicsDifferent user groups are clearly given, but need more information about user characteristicsDifferent user groups are clearly given, relevant user characteristics are provided Total Grade (100)
-
-
-Problems:
-A. [40 points] Java Exercise 
-(Tic-Tac-Toe) Create a class TicTacToe that will enable you to play game Tic-Tac-Toe. 
-
-* The class contains a private 3-by-3 two-dimensional array for representing board elements. 
-* Use an enumeration to represent the status of the final game result. The enumeration’s constants should be named WIN, DRAW, and CONTINUE. 
-* Allow two human players. Whenever the first player moves, place an X in the specified square, and place an O wherever the second player moves. 
-* Each move must be to an empty square. After each move, determine whether the game has been won and whether it’s a draw. 
-
-Sample Output
-
-……
- _______________________ 
-|       |       |       |
-|   X   |   O   |   	|
-|_______|_______|_______|
-|       |       |       |
-|	  |   X   |		|
-|_______|_______|_______|
-|       |       |       |
-|	  |       |		|
-|_______|_______|_______|
-Player O's turn.
-Player O: Enter row ( 0, 1 or 2 ): 1
-Player O: Enter column ( 0, 1 or 2 ): 2
-
- _______________________ 
-|       |       |       |
-|   X   |   O   |   	|
-|_______|_______|_______|
-|       |       |       |
-|	  |   X   |	  O	|
-|_______|_______|_______|
-|       |       |       |
-|	  |       |		|
-|_______|_______|_______|
-
-Player X's turn.
-Player X: Enter row ( 0, 1 or 2 ): 2
-Player X: Enter column ( 0, 1 or 2 ): 2
-
- _______________________ 
-|       |       |       |
-|   X   |   O   |   	|
-|_______|_______|_______|
-|       |       |       |
-|	  |   X   |	  O	|
-|_______|_______|_______|
-|       |       |       |
-|	  |       |	  X	|
-|_______|_______|_______|
-
-Player X wins.
-
-B. [50 points] Team project proposal: each team work together to determine a project your team plans to work on. It can be one selected from the individual project proposals submitted last week, or a refined one combining from multiple individual proposals. This project proposal should include the following three sections (Note that the provided description in each section is hint information. You should replace it with information pertinent to your project).
-
-   Project title: XXX
-1 Purpose
-i. Market Validity
-   A 2015 study performed by AutoTrader reported that 72% of car owners perform maintenance on their personal vehicle, rather than taking it to a dealership or mechanic. According to the Hedges Company, there were 286.9 million cars registered in the United States in 2020. This means that approximately 206 million cars are maintained by their owners, rather than dealerships or mechanic shops. Taking your car to a dealership or mechanic is much more expensive than performing repairs and maintenance personally, due to the retail parts pricing and hourly labor charges, not including rent, utilities and other costs that come along with running a business. This can all be avoided by performing the labor yourself, because you’re not charging yourself for the work you do. Owners have various, valid reasons to perform repairs and maintenance on their personal vehicles at home, and will continue to.
-ii. Parts Supply Surplus
-   Due to this large market of people looking to perform repairs and maintenance themselves, numerous businesses are supplying end users with parts directly. AutoZone, O’Reilly, NAPA, Advance, and PepBoys all supply direct to consumer parts sales in traditional brick and mortar stores. Further, businesses such as RockAuto, PartsGeek, eBay, Amazon, and CarParts.com all supply direct to consumer parts sales over the internet.
-Needs
-      Now we know many Americans purchase replacement parts and perform repairs and maintenance on their cars themselves, and we also know that many businesses supply these parts, often at different price points. Currently, the end user has no way to know they are getting the absolute best price when purchasing, due to the overwhelming number of options available to them, without spending significant time cross-shopping, spending hours comparing prices. These businesses all sell the same parts supplied from the same manufacturers, providing no increase in quality for potentially significant increases in price.
-2 Scope
-* The objective of this project is to develop an application that gives the user confidence in knowing they are saving money by getting the absolute best retail price on their automotive repair and maintenance parts. This application shall take in a list of part numbers from the user to be searched for. This application shall let the user filter and remove businesses from the selection. This application shall account for shipping costs, as many businesses have “free shipping” built into their pricing structure. This application shall return to the user their original list of parts, with links to the best prices. This application shall let the user filter for same day in-store pickup or shipping.
-3 User characteristics
-Identifying the potential users of the product. Describe general characteristics of the intended groups of users (stakeholders) of the product, especially focusing on characteristics that may influence usability, such as educational level, experience, disabilities, and technical expertise.
-3.1 Key users
-They are critical to the continued success of the product. Give greater importance to requirements generated by this category of user.
-* User role responsibilities: Parts buyers from small independent shops, average consumers.
-* Subject matter experience: Summarizes the users’ knowledge of the business (domain). Rate as novice, journeyman, or master.
-* Technological experience: Describes the users’ experience with relevant technology. Rate as novice, journeyman, or master.
-* Other user characteristics: Describe any characteristics of the users that have an effect on the requirements and eventual design of the product. For example: 
-o Physical abilities/disabilities
-o Intellectual abilities/disabilities
-o Attitude toward technology
-o Education
-o Linguistic skills
-o Age group
-o Gender
- 
-3.2 Secondary users
-They will use the product, but their opinion of it has no effect on its long-term success. Where there is a conflict between secondary users’ requirements and those of key users, the key users take precedence.
-* User role responsibilities: what to do with the product.
-* Subject matter experience: Summarizes the users’ knowledge of the business (domain). Rate as novice, journeyman, or master.
-* Technological experience: Describes the users’ experience with relevant technology. Rate as novice, journeyman, or master.
-* Other user characteristics: Describe any characteristics of the users that have an effect on the requirements and eventual design of the product. For example: 
-o Physical abilities/disabilities
-o Intellectual abilities/disabilities
-o Attitude toward technology
-o Education
-o Linguistic skills
-o Age group
-o Gender
-3.3 Unimportant users
-This category of user is given the lowest priority. It includes infrequent, unauthorized, and unskilled users, as well as people who misuse the product.
-* User role responsibilities: Large dealerships getting wholesale prices.
-* Subject matter experience: Summarizes the users’ knowledge of the business (domain). Rate as novice, journeyman, or master.
-* Technological experience: Describes the users’ experience with relevant technology. Rate as novice, journeyman, or master.
-* Other user characteristics: Describe any characteristics of the users that have an effect on the requirements and eventual design of the product. For example: 
-o Physical abilities/disabilities
-o Intellectual abilities/disabilities
-o Attitude toward technology
-o Education
-o Linguistic skills
-o Age group
-o Gender
-
-
-
-   		SE 370 Software Engineering    
-
-
-2/3
-
