@@ -1,9 +1,9 @@
-
-import java.util.Scanner; //imports the scanner
+//imports the scanner
+import java.util.Scanner; 
+import java.lang.Math;
 
 public class TicTacToe       //declares class 
 {
-
 	//REQUIREMENTS
 	// REQ 1 Private 3x3 2D array for board state
 	// REQ 2 Enum for status of game
@@ -12,8 +12,20 @@ public class TicTacToe       //declares class
 
 	//Declare board
 	//REQ 1
-	private char[][] Board = new char[3][3];
+	static final int BOARD_SIZE = 3;
+	static final char SYMBOL_X = 'X';
+	static final char SYMBOL_O = 'O';
+	static Scanner input = new Scanner(System.in);
+	
+	int boardSize = BOARD_SIZE;
+	static private char[][] Board = new char[BOARD_SIZE][BOARD_SIZE];
 
+	//REQ 2
+	enum GAME_STATUS {
+		WIN,
+		DRAW,
+		CONTINUE
+	}
 
 	/*
 	 _______________________ 
@@ -28,114 +40,313 @@ public class TicTacToe       //declares class
 	|_______|_______|_______|
 	*/
 
-	//REQ 2
-	enum GAME_STATUS {
-		WIN,
-		DRAW,
-		CONTINUE
-	}
+	static int[] getMove(boolean isX){
 
-	// TODO
-	Pair getMove(boolean isX){
 
-		Scanner input = new Scanner(System.in);
-
-		//TODO THIS IS JUST A DEMO
-		//FLESH OUT WITH LOGIC LATER
-
-		/*
-		int number;
-		char letter;
-		String word;
-		System.out.print("Enter a whole number: ");
-		number = input.nextInt();
-		System.out.printf("You entered the number %d%n", number);
-		
-		System.out.print("Enter a word: ");
-		word = input.next();
-		System.out.printf("You entered the word %s%n", word);
-		
-		System.out.print("Enter a single character: ");
-		letter = input.next().charAt(0);
-		System.out.printf("You entered the character %s%n", letter);
-		
-		
-		String first, last;
-		char initial;
-		int age;
-		
-		System.out.print("Enter your first name: ");
-		first = input.nextLine();
-		System.out.print("Enter your middle initial: ");
-		initial = input.next().charAt(0);
-		input.nextLine();
-		System.out.print("Enter your last name: ");
-		last = input.nextLine();
-		System.out.print("Enter your age: ");
-		age = input.nextInt();
-		System.out.printf("My name is %s %s %s, and I am %d years old",first,initial,last,age);
-		*/
-
-		// END DEMO LOGIC FOR INPUT/OUTPUT
-
-		int xCoord = null;
-		int yCoord = null;
+		int xCoord;
+		int yCoord;
 
 		//Input X coord
 		//Input Y coord
-		switch (isX) {
-			//If X's turn, ask for P1 coordinates
-			case true:
-			System.out.print("Enter Player 1 X coordinates: ");
-			xCoord = input.nextInt();
-			System.out.print("Enter Player 1 Y coordinates: ");
-			yCoord = input.nextInt();			
-				break;
-		
-			// If O's turn, ask for P2 coordinates
-			case false:
-			System.out.print("Enter Player 2 X coordinates: ");
-			xCoord = input.nextInt();
-			System.out.print("Enter Player 2 Y coordinates: ");
-			yCoord = input.nextInt();
-				break
-			default:
-				break;
+		if(isX){
+			try{
+				//If X's turn, ask for P1 coordinates
+				System.out.print("Enter Player 1 X coordinates: ");
+				xCoord = input.nextInt();
+				System.out.print("Enter Player 1 Y coordinates: ");
+				yCoord = input.nextInt();
+			}catch(Exception e){
+				// Make user choice invalid to force the loop to reiterate the question
+				xCoord = 5;
+				yCoord = 5;
+			}
+		}else{
+			try{
+				// If O's turn, ask for P2 coordinates
+				System.out.print("Enter Player 2 X coordinates: ");
+				xCoord = input.nextInt();
+				System.out.print("Enter Player 2 Y coordinates: ");
+				yCoord = input.nextInt();
+			}catch(Exception e){
+				// Make user choice invalid to force the loop to reiterate the question
+				xCoord = 5;
+				yCoord = 5;
+			}
 		}
+		
 		//Create pair using X,Y
-		Pair<Integer, Integer> userMove = new Pair<Integer, Integer>(xCoord, yCoord);
+		int[] userMove = new int[]{xCoord, yCoord};
+		
+		//Flush buffer
+		input.nextLine();
+
 		//Return pair
 		return userMove;
 	}
 
-	GAME_STATUS isGameOver(){
+	static GAME_STATUS isGameOver(){
 
 		// Init to CONTINUE as default state
-		gameState = CONTINUE
+		GAME_STATUS gameState = GAME_STATUS.CONTINUE;
+
+		int score = 0;
+		int[] position = new int[2];
+		char positionChar;
 
 		// For each row, check XXX or OOO
-			// If true, gameState WIN
+		for(int j = 0; j <= 2; j++){
+			for(int k = 0; k <= 2; k++){
+				position[0] = j;
+				position[1] = k;
+
+				positionChar = getBoard(position);
+
+				if(positionChar == SYMBOL_X){
+					score++;
+				}else if(positionChar == SYMBOL_O){
+					score--;
+				}else{
+					//Do nothing
+				}
+
+				if(3 == score){
+					//X wins
+					System.out.println("Player 1 wins!");
+					gameState = GAME_STATUS.WIN;
+					//Print the final board state
+					printBoard();
+					// Early return
+					return gameState;
+				}else if(-3 == score){
+					//O wins
+					System.out.println("Player 2 wins!");
+					gameState = GAME_STATUS.WIN;
+					//Print the final board state
+					printBoard();
+					// Early return
+					return gameState;
+				}else{
+					//nothing
+				}
+			}
+			// Reset score to count next row
+			score = 0;
+		}
+
 		// For each column, check XXX or OOO
-			// If true, gameState WIN
+		for(int j = 0; j <= 2; j++){
+			for(int k = 0; k <= 2; k++){
+				position[1] = j;
+				position[0] = k;
+
+				positionChar = getBoard(position);
+
+				if(positionChar == SYMBOL_X){
+					score++;
+				}else if(positionChar == SYMBOL_O){
+					score--;
+				}else{
+					//Do nothing
+				}
+
+				if(3 == score){
+					//X wins
+					System.out.println("Player 1 wins!");
+					gameState = GAME_STATUS.WIN;
+					//Print the final board state
+					printBoard();
+					// Early return
+					return gameState;
+				}else if(-3 == score){
+					//O wins
+					System.out.println("Player 2 wins!");
+					gameState = GAME_STATUS.WIN;
+					//Print the final board state
+					printBoard();
+					// Early return
+					return gameState;
+				}else{
+					//nothing
+				}
+			}
+			// Reset score to count next row
+			score = 0;
+		}
+
+
 		// Check diagonals for XXX or OOO
-			// If true, gameState WIN
-		//Print the winning player
+		position[0] = 0;
+		position[1] = 0;
+
+		positionChar = getBoard(position);
+		if(SYMBOL_X == positionChar){
+			score++;
+		}else if(SYMBOL_O == positionChar){
+			score--;
+		}
+
+		position[0] = 1;
+		position[1] = 1;
+
+		positionChar = getBoard(position);
+		if(SYMBOL_X == positionChar){
+			score++;
+		}else if(SYMBOL_O == positionChar){
+			score--;
+		}
+
+		position[0] = 2;
+		position[1] = 2;
+
+		positionChar = getBoard(position);
+		if(SYMBOL_X == positionChar){
+			score++;
+		}else if(SYMBOL_O == positionChar){
+			score--;
+		}
+
+		if(3 == score){
+			//X wins
+			System.out.println("Player 1 wins!");
+			gameState = GAME_STATUS.WIN;
+			//Print the final board state
+			printBoard();
+			// Early return
+			return gameState;
+		}else if(-3 == score){
+			//O wins
+			System.out.println("Player 2 wins!");
+			gameState = GAME_STATUS.WIN;
+			//Print the final board state
+			printBoard();
+			// Early return
+			return gameState;
+		}
+
+		// Check diagonals for XXX or OOO
+		position[0] = 2;
+		position[1] = 0;
+
+		positionChar = getBoard(position);
+		if(SYMBOL_X == positionChar){
+			score++;
+		}else if(SYMBOL_O == positionChar){
+			score--;
+		}
+
+		position[0] = 1;
+		position[1] = 1;
+
+		positionChar = getBoard(position);
+		if(SYMBOL_X == positionChar){
+			score++;
+		}else if(SYMBOL_O == positionChar){
+			score--;
+		}
+
+		position[0] = 0;
+		position[1] = 2;
+
+		positionChar = getBoard(position);
+		if(SYMBOL_X == positionChar){
+			score++;
+		}else if(SYMBOL_O == positionChar){
+			score--;
+		}
+
+		if(3 == score){
+			//X wins
+			System.out.println("Player 1 wins!");
+			gameState = GAME_STATUS.WIN;
+			//Print the final board state
+			printBoard();
+			// Early return
+			return gameState;
+		}else if(-3 == score){
+			//O wins
+			System.out.println("Player 2 wins!");
+			gameState = GAME_STATUS.WIN;
+			//Print the final board state
+			printBoard();
+			// Early return
+			return gameState;
+		}
+
 		//Print the final board state
-		printBoard();
+		//printBoard();
 		
 		return gameState;
 	}
+	
+	static void pushMove(int[] userMove, boolean isX){
 
-	void printBoard(){
-		//Print board state
+		// Take in coords
+		// We don't need to check valid move, this func is only accessible when move is valid
+		// Push symbol to coordinates
+		char userSymbol;
+
+		if(isX){
+			userSymbol = SYMBOL_X;
+		}else{
+			userSymbol = SYMBOL_O;
+		}
+
+		setBoard(userMove, userSymbol);
 	}
 
-	boolean validMove(Pair userMove){
-		// Check board state that user move was to empty spot
+	static void printBoard(){
+		//Print board state
+		// Fill a temp board object to be used for displaying
+		char[][] tempBoard = new char[3][3];
+		int[] cords = new int[2];
+		
+		for(int j = 0; j <= 2; j++){
+			for(int k = 0; k <= 2; k++){
+				// Very inefficient, figure out how to simplify declaring array here
+				cords[0] = j;
+				cords[1] = k;
+				tempBoard[j][k] = getBoard(cords);
+			}
+		}
 
-		// Check value of array at userMove coords
-		// If null, return true
-		// Else, return false
+		System.out.printf(" _______________________\n");
+		System.out.printf("|       |       |       |\n");
+		System.out.printf("|   %c   |   %c   |   %c   |\n", getBoard(new int[]{0,0}), getBoard(new int[]{0,1}), getBoard(new int[]{0,2}));
+		System.out.printf("|_______|_______|_______|\n");
+		System.out.printf("|       |       |       |\n");
+		System.out.printf("|   %c   |   %c   |   %c   |\n", getBoard(new int[]{1,0}), getBoard(new int[]{1,1}), getBoard(new int[]{1,2}));
+		System.out.printf("|_______|_______|_______|\n");
+		System.out.printf("|       |       |       |\n");
+		System.out.printf("|   %c   |   %c   |   %c   |\n", getBoard(new int[]{2,0}), getBoard(new int[]{2,1}), getBoard(new int[]{2,2}));
+		System.out.printf("|_______|_______|_______|\n");
+	}
+
+	static char getBoard(int[] coordinates){
+		return Board[coordinates[0]][coordinates[1]];
+	};
+
+	static void setBoard(int[] coordinates, char userSymbol){
+		Board[coordinates[0]][coordinates[1]] = userSymbol;
+	};
+
+	static boolean validMove(int[] userMove){
+		// Check board state that user move was to empty spot
+		// Use userMove
+		// Invalid char 
+		char value = '!';
+		
+		if(Math.abs(userMove[0]) < 3 && Math.abs(userMove[1]) < 3){
+			if(userMove[0] >= 0 && userMove[1] >= 0){
+				value = getBoard(userMove);
+		}}
+		
+		System.out.println(value);
+
+		if(value == ' '){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public static void main(String[] args){
@@ -145,12 +356,31 @@ public class TicTacToe       //declares class
 		// REQ 3
 		boolean isX = true;
 
-		//Initialize userMove as null,null
-		Pair<Integer, Integer> userMove = new Pair<Integer, Integer>(null, null);
+		int moveCount = 0;
 
-		while(isGameOver() == CONTINUE){
+		// Initialize the board to be empty with spaces instead of null char
+		int[] cords = new int[2];
+		for(int j = 0; j <= 2; j++){
+			for(int k = 0; k <= 2; k++){
+				cords[0] = j;
+				cords[1] = k;
+				setBoard(cords, ' ');
+			}
+		}
+
+		//Initialize userMove as null,null
+		int[] userMove = new int[2];
+
+		while(isGameOver() == GAME_STATUS.CONTINUE){
+
+
 			// Display board state
 			printBoard();
+
+			if(moveCount > 8){
+				System.out.println("It's a draw");
+				break;
+			}
 
 			// Get FirstPlayerMove
 			// X goes
@@ -164,9 +394,11 @@ public class TicTacToe       //declares class
 				// Invert isX
 				// Next player goes on the next loop
 				isX = !isX;
+
+				moveCount++;
 	
 				// Modify board
-				pushMove(userMove);
+				pushMove(userMove, isX);
 			}
 		}
 	}
