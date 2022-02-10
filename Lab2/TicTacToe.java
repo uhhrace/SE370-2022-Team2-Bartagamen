@@ -15,9 +15,9 @@ public class TicTacToe       //declares class
 	static final int BOARD_SIZE = 3;
 	static final char SYMBOL_X = 'X';
 	static final char SYMBOL_O = 'O';
+
 	static Scanner input = new Scanner(System.in);
-	
-	int boardSize = BOARD_SIZE;
+
 	static private char[][] Board = new char[BOARD_SIZE][BOARD_SIZE];
 
 	//REQ 2
@@ -40,6 +40,12 @@ public class TicTacToe       //declares class
 	|_______|_______|_______|
 	*/
 
+	/**
+	 * @name	getMove
+	 * @desc	prompts the user to input their desired coordinates
+	 * @param 	boolean	used to decide which player is moving. True for P1, false for P2.
+	 * @returns	int[]	array with length 2, [0] is the X coordinate, [1] is the Y.
+	 */
 	static int[] getMove(boolean isX){
 
 		int xCoord;
@@ -81,8 +87,15 @@ public class TicTacToe       //declares class
 
 		//Return pair
 		return userMove;
-	}
+	} // end getMove
 
+	/**
+	 * @name	isGameOver
+	 * @desc	This function is used to determine whether the game is over. 
+	 * 			It reads the board, checks horizontal and vertical for XXX or OOO, and check diagonals for XXX or OOO.
+	 * @param	void
+	 * @returns	GAME_STATUS
+	 */
 	static GAME_STATUS isGameOver(){
 
 		// Init to CONTINUE as default state
@@ -276,8 +289,15 @@ public class TicTacToe       //declares class
 		}
 		
 		return gameState;
-	}
+	} // end isGameOver
 	
+	/**
+	 * @name	pushMove
+	 * @desc	This function writes a userMove to the board
+	 * @param	int[] contains an X and Y coordinate
+	 * @param	isX used to determine which player is moving
+	 * @returns	void
+	 */
 	static void pushMove(int[] userMove, boolean isX){
 
 		// Take in coords
@@ -292,8 +312,15 @@ public class TicTacToe       //declares class
 		}
 
 		setBoard(userMove, userSymbol);
-	}
+	} // end pushMove
 
+
+	/**
+	 * @name	printBoard
+	 * @desc	Prints the board to the command line.
+	 * @param	void
+	 * @return	void
+	 */
 	static void printBoard(){
 		//Print board state
 		// Fill a temp board object to be used for displaying
@@ -310,24 +337,47 @@ public class TicTacToe       //declares class
 
 		System.out.printf(" _______________________\n");
 		System.out.printf("|       |       |       |\n");
-		System.out.printf("|   %c   |   %c   |   %c   |\n", getBoard(new int[]{0,0}), getBoard(new int[]{1,0}), getBoard(new int[]{2,0}));
+		System.out.printf("|   %c   |   %c   |   %c   | 0\n", getBoard(new int[]{0,0}), getBoard(new int[]{1,0}), getBoard(new int[]{2,0}));
 		System.out.printf("|_______|_______|_______|\n");
 		System.out.printf("|       |       |       |\n");
-		System.out.printf("|   %c   |   %c   |   %c   |\n", getBoard(new int[]{0,1}), getBoard(new int[]{1,1}), getBoard(new int[]{2,1}));
+		System.out.printf("|   %c   |   %c   |   %c   | 1\n", getBoard(new int[]{0,1}), getBoard(new int[]{1,1}), getBoard(new int[]{2,1}));
 		System.out.printf("|_______|_______|_______|\n");
 		System.out.printf("|       |       |       |\n");
-		System.out.printf("|   %c   |   %c   |   %c   |\n", getBoard(new int[]{0,2}), getBoard(new int[]{1,2}), getBoard(new int[]{2,2}));
+		System.out.printf("|   %c   |   %c   |   %c   | 2\n", getBoard(new int[]{0,2}), getBoard(new int[]{1,2}), getBoard(new int[]{2,2}));
 		System.out.printf("|_______|_______|_______|\n");
-	}
+		System.out.println("   0       1       2");
+	} // end printBoard
 
+
+	/**
+	 * @name	getBoard
+	 * @desc	returns the character value stored in the board at the given coordinates
+	 * @param 	int[] board coordinates of the value to retrieve
+	 * @return	char
+	 */
 	static char getBoard(int[] coordinates){
 		return Board[coordinates[0]][coordinates[1]];
-	};
+	}; // end getBoard
 
+	/**
+	 * @name	setBoard
+	 * @desc	sets the character value stored in the board at the given coordinates
+	 * @param	int[] board coordinates of the value to set (0 - BOARD_SIZE)
+	 * @param	char value to store in the board. Use USER
+	 * @return	void
+	 */
 	static void setBoard(int[] coordinates, char userSymbol){
 		Board[coordinates[0]][coordinates[1]] = userSymbol;
-	};
+	}; // end setBoard
 
+	/**
+	 * @name	validMove
+	 * @desc	This function takes in a set of coordinates selected by the user 
+	 * 			and checks if the board is empty at those coordinates. If empty,
+	 * 			the move is valid, and returns true. Else, returns false.
+	 * @param 	userMove coordinates selected by the user
+	 * @return	boolean
+	 */
 	static boolean validMove(int[] userMove){
 		// Check board state that user move was to empty spot
 		// Use userMove
@@ -346,7 +396,7 @@ public class TicTacToe       //declares class
 		}else{
 			return false;
 		}
-	}
+	} // end validMove
 
 	public static void main(String[] args){
 		// Player 1 starts with X
@@ -376,6 +426,7 @@ public class TicTacToe       //declares class
 			// Display board state
 			printBoard();
 
+			// There's only 9 spots on the board, and the counter is zero-indexed.
 			if(moveCount > 8){
 				System.out.println("It's a draw");
 				break;
@@ -390,14 +441,14 @@ public class TicTacToe       //declares class
 			// REQ 4
 			if(validMove(userMove)){
 
-				// Invert isX
-				// Next player goes on the next loop
-				isX = !isX;
-
 				moveCount++;
 	
 				// Modify board
 				pushMove(userMove, isX);
+
+				// Invert isX
+				// Next player goes on the next loop
+				isX = !isX;
 			}
 		}
 	}
