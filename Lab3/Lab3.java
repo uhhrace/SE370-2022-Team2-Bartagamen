@@ -18,12 +18,6 @@ public class RandomBarChart extends JPanel{
 	JButton button;
 	Random rand = new Random();
 	
-	
-	public RandomBarChart(){
-	
-		
-	}
-	
 	public void paintComponent(Graphics g) {
 		 super.paintComponent(g);
 		 int baseline = 200;
@@ -58,26 +52,26 @@ public class RandomBarChart extends JPanel{
         }
 	
 	
-public static void main(String[] args) {
-	JFrame frame = new JFrame("Random Bar Chart");
-	JButton button = new JButton("Redraw");
-	
-	frame.getContentPane();
-	frame.setSize(600,400);
-	frame.setLayout(new BorderLayout());
-	frame.add(new RandomBarChart(), BorderLayout.CENTER);
-	frame.add(button, BorderLayout.SOUTH);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setVisible(true);
-	button.addActionListener( new ActionListener() {
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Random Bar Chart");
+		JButton button = new JButton("Redraw");
 
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			frame.repaint();
+		frame.getContentPane();
+		frame.setSize(600,400);
+		frame.setLayout(new BorderLayout());
+		frame.add(new RandomBarChart(), BorderLayout.CENTER);
+		frame.add(button, BorderLayout.SOUTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		button.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				frame.repaint();
+				
+			}
 			
-		}
-		
-	});
-}
+		});
+	}
 }
 
