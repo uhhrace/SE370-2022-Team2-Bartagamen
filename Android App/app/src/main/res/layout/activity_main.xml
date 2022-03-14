@@ -10,12 +10,13 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-></FrameLayout>
+        android:background="#F1F4FD"></FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="#d5deff"
         app:menu="@menu/menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>

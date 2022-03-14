@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Bartagamen Specific Color Values Start Here-->
+    <color name="backgroundBlue">#f1f4fd</color>
+    <color name="buttonLightBlue">#d5deff</color>
+    <color name="buttonDarkBlue">#2e5bff</color>
+    <color name="textBackgroundGray">#e4e8f1</color>
+    <color name="textBlack">#000000</color>
 </resources>
