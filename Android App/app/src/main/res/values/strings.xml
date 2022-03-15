@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Bartagamen</string>
+    <!-- Days of the week used for Individual Pet Screen Day Selector-->
+    <string name="shortString_Sunday">      SUN</string>
+    <string name="shortString_Monday">      MON</string>
+    <string name="shortString_Tuesday">     TUE</string>
+    <string name="shortString_Wednesday">   WED</string>
+    <string name="shortString_Thursday">    THU</string>
+    <string name="shortString_Friday">      FRI</string>
+    <string name="shortString_Saturday">    SAT</string>
 </resources>

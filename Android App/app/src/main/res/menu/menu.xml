@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <item   android:id="@+id/item1"
+    <item   android:id="@+id/bottom_home_button"
             android:title="Home"
-            android:icon="@drawable/ic_baseline_home_24"
+            android:icon="@drawable/icon_home"
         ></item>
-    <item   android:id="@+id/item2"
-        android:title="Calender"
-        android:icon="@drawable/ic_baseline_schedule_24"
-        ></item>
-    <item   android:id="@+id/item3"
+    <item   android:id="@+id/bottom_pets_button"
         android:title="Pets"
-        android:icon="@drawable/ic_baseline_pets_24"
+        android:icon="@drawable/icon_pet_list"
         ></item>
-    <item   android:id="@+id/item4"
+    <item   android:id="@+id/bottom_food_bank_button"
         android:title="Food"
-        android:icon="@drawable/ic_baseline_food_bank_24"
+        android:icon="@drawable/icon_food_bank"
         ></item>
 
 </menu>

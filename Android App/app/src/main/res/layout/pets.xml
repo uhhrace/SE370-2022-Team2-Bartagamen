@@ -1,14 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f1f4fd"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pets"
-        android:textSize="50sp"></TextView>
+    <!-- Day Selector Layout -->
+    <RelativeLayout
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="15dp"
+        android:layout_height="53.3dp">
+
+        <ToggleButton
+            android:id="@+id/sunButton"
+            android:layout_alignParentLeft="true"
+            android:layout_width="53.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttonLightBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/buttonDarkBlue"
+            android:textOff="@string/shortString_Sunday"
+            android:textOn="@string/shortString_Sunday"
+            android:textSize="20sp"
+            tools:ignore="TextContrastCheck"  />
+
+        <ToggleButton
+            android:id="@+id/monButton"
+            android:layout_toRightOf="@id/sunButton"
+            android:layout_width="53.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttonLightBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/buttonDarkBlue"
+            android:textOff="@string/shortString_Monday"
+            android:textOn="@string/shortString_Monday"
+            android:textSize="20sp"
+            tools:ignore="TextContrastCheck"  />
+
+        <ToggleButton
+            android:id="@+id/tueButton"
+            android:layout_toRightOf="@id/monButton"
+            android:layout_width="53.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttonLightBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/buttonDarkBlue"
+            android:textOff="@string/shortString_Tuesday"
+            android:textOn="@string/shortString_Tuesday"
+            android:textSize="20sp"
+            tools:ignore="TextContrastCheck" />
+
+        <ToggleButton
+            android:id="@+id/wedButton"
+            android:layout_toRightOf="@id/tueButton"
+            android:layout_width="53.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttonLightBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/buttonDarkBlue"
+            android:textOff="@string/shortString_Wednesday"
+            android:textOn="@string/shortString_Wednesday"
+            android:textSize="20sp"
+            tools:ignore="TextContrastCheck" />
+
+        <ToggleButton
+            android:id="@+id/thuButton"
+            android:layout_toRightOf="@id/wedButton"
+            android:layout_width="53.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttonLightBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/buttonDarkBlue"
+            android:textOff="@string/shortString_Thursday"
+            android:textOn="@string/shortString_Thursday"
+            android:textSize="20sp"
+            tools:ignore="TextContrastCheck"  />
+
+        <ToggleButton
+            android:id="@+id/friButton"
+            android:layout_toRightOf="@id/thuButton"
+            android:layout_toLeftOf="@id/satButton"
+            android:layout_width="53.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttonLightBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/buttonDarkBlue"
+            android:textOff="@string/shortString_Friday"
+            android:textOn="@string/shortString_Friday"
+            android:textSize="20sp"
+            tools:ignore="TextContrastCheck" />
+
+        <ToggleButton
+            android:id="@+id/satButton"
+            android:layout_alignParentRight="true"
+            android:layout_width="53.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttonLightBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/buttonDarkBlue"
+            android:textOff="@string/shortString_Saturday"
+            android:textOn="@string/shortString_Saturday"
+            android:textSize="20sp"
+            tools:ignore="TextContrastCheck" />
+    </RelativeLayout>
+    <!-- End Day Selector Layout -->
 
 </RelativeLayout>

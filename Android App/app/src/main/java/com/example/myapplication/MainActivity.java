@@ -49,16 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
             //set selected screen to declared public screen
             switch (item.getItemId()) {
-                case R.id.item1:
+                case R.id.bottom_home_button:
                     selectedFragment = home;
                     break;
-                case R.id.item2:
-                    selectedFragment = calendar;
-                    break;
-                case R.id.item3:
+                case R.id.bottom_pets_button:
                     selectedFragment = pets;
                     break;
-                case R.id.item4:
+                case R.id.bottom_food_bank_button:
                     selectedFragment = food;
                     break;
 
