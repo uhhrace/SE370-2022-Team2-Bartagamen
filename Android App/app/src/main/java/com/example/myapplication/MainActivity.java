@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
             Fragment selectedFragment = null;
 
-
             //set selected screen to declared public screen
             switch (item.getItemId()) {
                 case R.id.bottom_home_button:
