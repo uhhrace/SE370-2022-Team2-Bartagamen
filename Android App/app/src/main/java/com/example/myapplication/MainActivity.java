@@ -37,11 +37,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-        getSupportActionBar().hide();
-
-        //Display Home Screen at the beginning
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, home).commit();
-
+        changeScreenToHome();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -117,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
      * @returns void
      * @public
      */
-    public void changeScreen(Fragment destinationFragment){
+    private void changeScreen(Fragment destinationFragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationFragment).commit();
     }
 }
