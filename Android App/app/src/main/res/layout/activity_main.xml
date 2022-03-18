@@ -10,13 +10,15 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F1F4FD"></FrameLayout>
+        android:background="@color/backgroundBlue"></FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#d5deff"
+        android:background="@color/buttonLightBlue"
+        app:itemIconTint="@color/buttonDarkBlue"
+        app:itemTextColor="@color/buttonDarkBlue"
         app:menu="@menu/menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>
