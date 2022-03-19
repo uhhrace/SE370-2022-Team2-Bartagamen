@@ -61,6 +61,10 @@ public class Pets extends Fragment {
                 }
             });
         }
+
+        //TODO check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
+
+        //TODO check current day of the week, highlight current day
         
         return view;
     }

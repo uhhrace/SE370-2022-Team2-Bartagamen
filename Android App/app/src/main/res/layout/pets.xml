@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="15dp"
+        android:paddingVertical="30dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -19,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="53.3dp"
             android:layout_marginTop="150dp"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="45dp">
 
             <ToggleButton
                 android:id="@+id/sunButton"
@@ -32,6 +33,7 @@
                 android:textOff="@string/shortString_Sunday"
                 android:textOn="@string/shortString_Sunday"
                 android:textSize="20sp"
+                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -45,6 +47,7 @@
                 android:textOff="@string/shortString_Monday"
                 android:textOn="@string/shortString_Monday"
                 android:textSize="20sp"
+                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -58,6 +61,7 @@
                 android:textOff="@string/shortString_Tuesday"
                 android:textOn="@string/shortString_Tuesday"
                 android:textSize="20sp"
+                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -71,6 +75,7 @@
                 android:textOff="@string/shortString_Wednesday"
                 android:textOn="@string/shortString_Wednesday"
                 android:textSize="20sp"
+                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -84,6 +89,7 @@
                 android:textOff="@string/shortString_Thursday"
                 android:textOn="@string/shortString_Thursday"
                 android:textSize="20sp"
+                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -98,6 +104,7 @@
                 android:textOff="@string/shortString_Friday"
                 android:textOn="@string/shortString_Friday"
                 android:textSize="20sp"
+                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -111,6 +118,7 @@
                 android:textOff="@string/shortString_Saturday"
                 android:textOn="@string/shortString_Saturday"
                 android:textSize="20sp"
+                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
@@ -120,15 +128,19 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/buttonLightBlue"
             android:textColor="@color/buttonDarkBlue"
+            android:fontFamily="@font/rubik_medium"
             android:text="View Monthly"
-            android:layout_marginBottom="60dp"/>
+            android:layout_marginBottom="45dp"/>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/textBackgroundGray"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="10dp"
             android:textColor="@color/black"
+            android:fontFamily="@font/rubik_medium"
             android:text="Protein : \n5x Medium crickets\n5x Dubia roaches" />
     </LinearLayout>
 
