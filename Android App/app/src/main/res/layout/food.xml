@@ -32,12 +32,15 @@
 
                 <ToggleButton
                     android:id="@+id/toggleButton"
-                    android:background="@drawable/rounded_corner"
+                    android:background="@drawable/food_bank_rounded_corner"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="25dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:text="ToggleButton" />
+                    android:layout_marginVertical="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:textOff=""
+                    android:textOn=""/>
             </RelativeLayout>
 
         </LinearLayout>
