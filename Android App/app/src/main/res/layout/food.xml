@@ -5,11 +5,41 @@
     android:background="@color/backgroundBlue"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Food"
-        android:textColor="@color/black"
-        android:textSize="50sp"></TextView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/buttonDarkBlue"
+                    android:fontFamily="@font/rubik_medium"
+                    android:background="@drawable/rounded_corner"
+                    android:text="Crickets"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="25dp">
+
+                </TextView>
+
+                <ToggleButton
+                    android:id="@+id/toggleButton"
+                    android:background="@drawable/rounded_corner"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="ToggleButton" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

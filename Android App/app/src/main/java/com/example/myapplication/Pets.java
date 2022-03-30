@@ -26,6 +26,16 @@ public class Pets extends Fragment {
 
         View view = inflater.inflate(R.layout.pets, container, false);
 
+        setButtonListeners(view);
+
+        //TODO check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
+
+        //TODO check current day of the week, highlight current day
+        
+        return view;
+    }
+
+    void setButtonListeners(View view){
         // Assign buttons
         sunButton = (ToggleButton) view.findViewById(R.id.sunButton);
         monButton = (ToggleButton) view.findViewById(R.id.monButton);
@@ -47,6 +57,9 @@ public class Pets extends Fragment {
 
         // For each button
         for(ToggleButton button : dayButtons){
+            // We could keep track of the last button clicked, and only reset that button instead
+            // of resetting all the buttons if we end up needing better performance here. I'm not
+            // sure how that would work if the user presses multiple buttons at the same time.
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -61,15 +74,7 @@ public class Pets extends Fragment {
                 }
             });
         }
-
-        //TODO check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
-
-        //TODO check current day of the week, highlight current day
-        
-        return view;
     }
-
-
 
 
 }
