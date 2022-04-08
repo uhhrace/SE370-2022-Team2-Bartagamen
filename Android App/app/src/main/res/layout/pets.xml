@@ -125,7 +125,8 @@
         </LinearLayout>
 
         <!-- View Monthly Button -->
-        <!-- TODO fix this font family -->
+        <!-- TODO low priority
+        fix this font family -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ViewMonthlyButton"
             android:layout_width="match_parent"
@@ -133,12 +134,14 @@
             android:layout_marginBottom="45dp"
             android:background="@drawable/food_bank_rounded_corner"
             android:backgroundTint="@color/buttonLightBlue"
+
             android:fontFamily="@font/rubik_medium"
             android:text="View Monthly"
+            android:textSize="25dp"
+            android:textAllCaps="false"
             android:textColor="@color/buttonDarkBlue"
-            android:textColorHint="@color/buttonLightBlue"
-            app:iconTint="@color/buttonLightBlue"
-            app:iconTintMode="add" />
+
+            />
 
         <!-- Daily Meal Plan Display -->
         <TextView

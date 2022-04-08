@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         changeScreenToHome();
     }
 
-    // TODO OnNavigationItemSelectedListener is deprecated, find current version of this listener
+    // TODO low priority
+    //  OnNavigationItemSelectedListener is deprecated, find current version of this listener
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -102,8 +103,10 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToPets(){
         changeScreen(pets);
 
-        //TODO animation is choppy when this slides in, can we make this better?
-        // TODO this needs black text, the whole bar might need to be turned into a drawable object?
+        //TODO low priority
+        // animation is choppy when this slides in, can we make this better?
+        // TODO low priority
+        //  this needs black text, the whole bar might need to be turned into a drawable object?
         topBar.setTitle("Lizard's Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
 

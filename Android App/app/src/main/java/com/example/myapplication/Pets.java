@@ -29,9 +29,11 @@ public class Pets extends Fragment {
 
         setDayButtonListeners(view);
 
-        //TODO check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
+        //TODO low priority
+        // check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
 
-        //TODO check current day of the week, highlight current day
+        //TODO high priority feature
+        // check current day of the week, highlight current day
         
         return view;
     }
