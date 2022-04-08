@@ -5,11 +5,53 @@
     android:background="@color/backgroundBlue"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:textColor="@color/black"
-        android:textSize="50sp"></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- TODO low priority
+         Replace logo with new icon, this is just a placeholder -->
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/icon_pet_list"
+            android:layout_marginTop="75dp"></ImageView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@drawable/rounded_corner_inactive"
+            android:text="Pet List"
+            android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="15dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@drawable/rounded_corner_inactive"
+            android:text="Food Bank"
+            android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatButton>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="75dp"
+            android:layout_marginHorizontal="15dp"
+            android:padding="15dp"
+            android:background="@color/textBackgroundGray"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/black"
+            android:text="Daily Food Sum:"></TextView>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

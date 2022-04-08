@@ -16,14 +16,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:textColor="@color/buttonDarkBlue"
                     android:fontFamily="@font/rubik_medium"
-                    android:background="@drawable/rounded_corner"
+                    android:background="@drawable/rounded_corner_inactive"
                     android:text="Crickets"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="25dp">

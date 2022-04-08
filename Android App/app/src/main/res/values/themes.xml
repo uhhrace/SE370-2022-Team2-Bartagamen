@@ -1,14 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Bartagamen" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
+        <!-- Primary brand color.
         <item name="colorPrimary">@color/buttonDarkBlue</item>
         <item name="actionMenuTextColor">@color/black</item>
         <item name="android:fontFamily">@font/rubik_medium</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
+        <!- Secondary brand color.
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
+        <!- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/buttonDarkBlue</item>
     </style>
 </resources>

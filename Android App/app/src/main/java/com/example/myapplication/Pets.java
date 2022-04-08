@@ -1,10 +1,11 @@
 package com.example.myapplication;
 
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,7 @@ public class Pets extends Fragment {
 
         View view = inflater.inflate(R.layout.pets, container, false);
 
-        setButtonListeners(view);
+        setDayButtonListeners(view);
 
         //TODO check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
 
@@ -35,7 +36,7 @@ public class Pets extends Fragment {
         return view;
     }
 
-    void setButtonListeners(View view){
+    void setDayButtonListeners(View view){
         // Assign buttons
         sunButton = (ToggleButton) view.findViewById(R.id.sunButton);
         monButton = (ToggleButton) view.findViewById(R.id.monButton);
@@ -65,16 +66,14 @@ public class Pets extends Fragment {
                 public void onClick(View view) {
                     // Reset every other button to unpressed colors
                     for(ToggleButton butt : dayButtons){
-                        butt.setBackgroundColor( getResources().getColor(R.color.buttonLightBlue));
+                        butt.setBackground(getResources().getDrawable(R.drawable.rounded_corner_inactive));
                         butt.setTextColor( getResources().getColor(R.color.buttonDarkBlue));
                     }
                     // Set clicked button to pressed colors
-                    button.setBackgroundColor( getResources().getColor(R.color.buttonDarkBlue));
+                    button.setBackground(getResources().getDrawable(R.drawable.rounded_corner_active));
                     button.setTextColor(getResources().getColor(R.color.white));
                 }
             });
         }
     }
-
-
 }
