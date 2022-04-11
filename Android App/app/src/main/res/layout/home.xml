@@ -20,6 +20,7 @@
             android:layout_marginTop="75dp"></ImageView>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/petListButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
@@ -34,6 +35,7 @@
             android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/foodBankButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginVertical="15dp"

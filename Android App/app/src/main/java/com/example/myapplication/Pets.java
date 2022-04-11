@@ -10,9 +10,10 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
-public class Pets extends Fragment {
+public class Pets extends BartScreen {
 
     ToggleButton sunButton;
     ToggleButton monButton;
@@ -21,6 +22,7 @@ public class Pets extends Fragment {
     ToggleButton thuButton;
     ToggleButton friButton;
     ToggleButton satButton;
+    AppCompatButton monthButton;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class Pets extends Fragment {
 
         setDayButtonListeners(view);
 
+        setMonthButtonListener(view);
+
         //TODO low priority
         // check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
 
@@ -36,6 +40,19 @@ public class Pets extends Fragment {
         // check current day of the week, highlight current day
         
         return view;
+    }
+
+    void setMonthButtonListener(View view){
+
+        // Assign buttons
+        monthButton = (AppCompatButton) view.findViewById(R.id.ViewMonthlyButton);
+
+        monthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeScreenToCalendar();
+            }
+        });
     }
 
     void setDayButtonListeners(View view){

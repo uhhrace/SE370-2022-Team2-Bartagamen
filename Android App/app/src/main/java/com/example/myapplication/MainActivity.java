@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         food = new Food();
         topBar = getSupportActionBar();
 
+        pets.attach(this);
+
         //initialize bottomNavigationView by connecting it to the xml-Element
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
@@ -62,12 +64,16 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.bottom_food_bank_button:
                     changeScreenToFoodBank();
                     break;
-
             }
 
             return true;
         }
     };
+
+    private void wipeTopBar(){
+        topBar.setTitle(null);
+        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroundBlue)));
+    }
 
     /**
      * @name    changeScreenToHome
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void changeScreenToHome(){
         changeScreen(home);
-        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroundBlue)));
+        wipeTopBar();
     }
 
     /**
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void changeScreenToFoodBank(){
         changeScreen(food);
-        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroundBlue)));
+        wipeTopBar();
     }
 
     /**
@@ -103,13 +109,15 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToPets(){
         changeScreen(pets);
 
-        //TODO low priority
-        // animation is choppy when this slides in, can we make this better?
         // TODO low priority
         //  this needs black text, the whole bar might need to be turned into a drawable object?
         topBar.setTitle("Lizard's Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+    }
 
+    public void changeScreenToCalendar(){
+        changeScreen(calendar);
+        //wipeTopBar();
     }
 
     /**
@@ -119,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
      * @returns void
      * @public
      */
-    private void changeScreen(Fragment destinationFragment){
+    private void changeScreen(BartScreen destinationFragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationFragment).commit();
+        destinationFragment.attach(this);
     }
 }
