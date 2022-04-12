@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeScreenToCalendar(){
         changeScreen(calendar);
-        //wipeTopBar();
+        wipeTopBar();
     }
 
     /**
@@ -127,8 +127,12 @@ public class MainActivity extends AppCompatActivity {
      * @returns void
      * @public
      */
-    private void changeScreen(BartScreen destinationFragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationFragment).commit();
-        destinationFragment.attach(this);
+    private void changeScreen(BartScreen destinationScreen){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationScreen).commit();
+
+        //TODO low priority
+        //It seems we need to call this every time we change screens, it'd be better if it was only
+        // called once when we initialize the bartScreen objects inside onCreate()
+        destinationScreen.attach(this);
     }
 }

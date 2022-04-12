@@ -14,6 +14,14 @@ public class BartScreen extends Fragment {
         main.changeScreenToFoodBank();
     }
 
+    protected void changeScreenToHome(){
+        main.changeScreenToHome();
+    }
+
+    protected void changeScreenToPets(){
+        main.changeScreenToPets();
+    }
+
     public void attach(MainActivity foreignMain){
         main = foreignMain;
     }
