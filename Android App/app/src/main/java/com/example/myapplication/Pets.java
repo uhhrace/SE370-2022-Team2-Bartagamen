@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -55,10 +56,6 @@ public class Pets extends BartScreen {
             help = 4;}
         else if(d.getDay()==5){
             help = 5;}else {help = 6;}
-
-
-
-
 
 
         setDayButtonListeners(view);
