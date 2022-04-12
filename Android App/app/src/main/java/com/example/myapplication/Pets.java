@@ -28,9 +28,11 @@ public class Pets extends BartScreen {
     ToggleButton[] dayButtons = new ToggleButton[DAYS_PER_WEEK];
     AppCompatButton monthButton;
     int currentDay;
+
     TextView dateView;
     Date d = new Date();
     CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
+    int help;
 
 
 
@@ -41,6 +43,21 @@ public class Pets extends BartScreen {
 
         dateView = view.findViewById(R.id.dateField);
         dateView.setText("Date: "+s);
+        if(d.getDay()==0){
+            help = 0;
+        }else if(d.getDay()==1){
+            help = 1;}
+        else if(d.getDay()==2){
+            help = 2;}
+        else if(d.getDay()==3){
+            help = 3;}
+        else if(d.getDay()==4){
+            help = 4;}
+        else if(d.getDay()==5){
+            help = 5;}else {help = 6;}
+
+
+
 
 
 
@@ -59,6 +76,7 @@ public class Pets extends BartScreen {
     void autoSelectDayOfWeek(){
         // check current day of the week, highlight current day
         //Calendar calendar = Calendar.getInstance();
+
         //The Calendar.DAY_OF_WEEK enum starts with Mon at position 1, ends with Sun at position 7
         currentDay = d.getDay();
         //Decrement the offset to match with our array
@@ -111,12 +129,35 @@ public class Pets extends BartScreen {
                     for(ToggleButton butt : dayButtons){
                         butt.setBackground(getResources().getDrawable(R.drawable.rounded_corner_inactive));
                         butt.setTextColor( getResources().getColor(R.color.buttonDarkBlue));
+
                     }
                     // Set clicked button to pressed colors
                     button.setBackground(getResources().getDrawable(R.drawable.rounded_corner_active));
                     button.setTextColor(getResources().getColor(R.color.white));
+                    String buttonText = (String) button.getText();
+                    int helpCal;
+                    if (buttonText == "SUN"){
+                        helpCal = 0;
+                    }else if (buttonText == "MON"){
+                        helpCal = 1;
+                    }else if (buttonText == "TUE"){
+                        helpCal = 2;
+                    }else if (buttonText == "WED"){
+                        helpCal = 3;
+                    }else if (buttonText == "THU"){
+                        helpCal = 4;
+                    }else if (buttonText == "FRI"){
+                        helpCal = 5;}else{helpCal = 6;}
+
+                    if(help - helpCal == 1){
+
+                        dateView.setText("HI");
+                    }
+
+
+
                 }
             });
         }
-    }
+        }
 }
