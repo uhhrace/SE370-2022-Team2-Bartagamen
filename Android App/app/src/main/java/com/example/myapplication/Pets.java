@@ -1,19 +1,19 @@
 package com.example.myapplication;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ToggleButton;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
+import java.util.Calendar;
 
 public class Pets extends BartScreen {
+
+    // Avoid hard-coded values, declare here
+    final int DAYS_PER_WEEK = 7;
 
     ToggleButton sunButton;
     ToggleButton monButton;
@@ -22,7 +22,9 @@ public class Pets extends BartScreen {
     ToggleButton thuButton;
     ToggleButton friButton;
     ToggleButton satButton;
+    ToggleButton[] dayButtons = new ToggleButton[DAYS_PER_WEEK];
     AppCompatButton monthButton;
+    int currentDay;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,13 +35,21 @@ public class Pets extends BartScreen {
 
         setMonthButtonListener(view);
 
+        autoSelectDayOfWeek();
+
         //TODO low priority
         // check button sizes, if < 100dp, change SUN -> S, MON -> M, etc
 
-        //TODO high priority feature
-        // check current day of the week, highlight current day
-        
         return view;
+    }
+
+    void autoSelectDayOfWeek(){
+        // check current day of the week, highlight current day
+        Calendar calendar = Calendar.getInstance();
+        //The Calendar.DAY_OF_WEEK enum starts with Mon at position 1, ends with Sun at position 7
+        currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+        //Decrement the offset to match with our array
+        dayButtons[currentDay-1].performClick();
     }
 
     void setMonthButtonListener(View view){
@@ -66,7 +76,6 @@ public class Pets extends BartScreen {
         satButton = (ToggleButton) view.findViewById(R.id.satButton);
 
         // Fill button array
-        ToggleButton[] dayButtons = new ToggleButton[7];
         dayButtons[0] = sunButton;
         dayButtons[1] = monButton;
         dayButtons[2] = tueButton;
