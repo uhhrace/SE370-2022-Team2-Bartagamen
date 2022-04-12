@@ -5,9 +5,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     public Pets pets;
     public Food food;
 
+    private ActionBar topBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         calendar = new Calender();
         pets = new Pets();
         food = new Food();
+        topBar = getSupportActionBar();
+
+        pets.attach(this);
 
         //initialize bottomNavigationView by connecting it to the xml-Element
         bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -40,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         changeScreenToHome();
     }
 
+    // TODO low priority
+    //  OnNavigationItemSelectedListener is deprecated, find current version of this listener
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -55,12 +64,16 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.bottom_food_bank_button:
                     changeScreenToFoodBank();
                     break;
-
             }
 
             return true;
         }
     };
+
+    private void wipeTopBar(){
+        topBar.setTitle(null);
+        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroundBlue)));
+    }
 
     /**
      * @name    changeScreenToHome
@@ -71,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void changeScreenToHome(){
         changeScreen(home);
-        getSupportActionBar().hide();
+        wipeTopBar();
     }
 
     /**
@@ -83,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void changeScreenToFoodBank(){
         changeScreen(food);
-        getSupportActionBar().hide();
+        wipeTopBar();
     }
 
     /**
@@ -96,24 +109,30 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToPets(){
         changeScreen(pets);
 
-        //TODO animation is choppy when this slides in, can we make this better?
-        ActionBar topBar = getSupportActionBar();
-
-        // TODO this needs black text, the whole bar might need to be turned into a drawable object?
+        // TODO low priority
+        //  this needs black text, the whole bar might need to be turned into a drawable object?
         topBar.setTitle("Lizard's Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
-        topBar.show();
+    }
 
+    public void changeScreenToCalendar(){
+        changeScreen(calendar);
+        wipeTopBar();
     }
 
     /**
      * @name    changeScreen
      * @desc    Changes the main screen fragment to a Fragment object passed in as a parameter
-     * @param   destinationFragment Desired Fragment object to change the screen to
+     * @params  destinationFragment Desired Fragment object to change the screen to
      * @returns void
      * @public
      */
-    private void changeScreen(Fragment destinationFragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationFragment).commit();
+    private void changeScreen(BartScreen destinationScreen){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationScreen).commit();
+
+        //TODO low priority
+        //It seems we need to call this every time we change screens, it'd be better if it was only
+        // called once when we initialize the bartScreen objects inside onCreate()
+        destinationScreen.attach(this);
     }
 }

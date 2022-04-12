@@ -2,14 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
-    <!-- TODO clean up this file: myapplication -> Bartagamen-->
+    <!-- TODO low priority
+     clean up this file: myapplication -> Bartagamen-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication">
+        android:theme="@style/Theme.Bartagamen">
         <activity
             android:name=".MainActivity"
             android:exported="true">

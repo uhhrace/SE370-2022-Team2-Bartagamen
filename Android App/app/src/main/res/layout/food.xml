@@ -2,14 +2,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f1f4fd"
+    android:background="@color/backgroundBlue"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Food"
-        android:textColor="@color/black"
-        android:textSize="50sp"></TextView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_corner_inactive"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="25dp"
+
+                    android:textSize="20dp"
+                    android:text="Crickets"
+                    android:textColor="@color/buttonDarkBlue"
+                    android:fontFamily="@font/rubik_medium"
+                    >
+
+                </TextView>
+
+                <ToggleButton
+                    android:id="@+id/toggleButton"
+                    android:background="@drawable/food_bank_rounded_corner"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:textOff=""
+                    android:textOn=""/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
