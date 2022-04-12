@@ -1,14 +1,17 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Pets extends BartScreen {
 
@@ -25,11 +28,21 @@ public class Pets extends BartScreen {
     ToggleButton[] dayButtons = new ToggleButton[DAYS_PER_WEEK];
     AppCompatButton monthButton;
     int currentDay;
+    TextView dateView;
+    Date d = new Date();
+    CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
+
+
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.pets, container, false);
+
+        dateView = view.findViewById(R.id.dateField);
+        dateView.setText("Date: "+s);
+
+
 
         setDayButtonListeners(view);
 
@@ -45,11 +58,11 @@ public class Pets extends BartScreen {
 
     void autoSelectDayOfWeek(){
         // check current day of the week, highlight current day
-        Calendar calendar = Calendar.getInstance();
+        //Calendar calendar = Calendar.getInstance();
         //The Calendar.DAY_OF_WEEK enum starts with Mon at position 1, ends with Sun at position 7
-        currentDay = calendar.get(Calendar.DAY_OF_WEEK);
+        currentDay = d.getDay();
         //Decrement the offset to match with our array
-        dayButtons[currentDay-1].performClick();
+        dayButtons[currentDay].performClick();
     }
 
     void setMonthButtonListener(View view){
@@ -92,6 +105,8 @@ public class Pets extends BartScreen {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+
                     // Reset every other button to unpressed colors
                     for(ToggleButton butt : dayButtons){
                         butt.setBackground(getResources().getDrawable(R.drawable.rounded_corner_inactive));
