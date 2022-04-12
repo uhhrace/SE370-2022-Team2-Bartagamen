@@ -5,10 +5,8 @@
     android:background="#f1f4fd"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calender"
-        android:textSize="50sp"></TextView>
-
+    <CalendarView
+        android:id="@+id/calendarView2"
+        android:layout_width="380dp"
+        android:layout_height="403dp" />
 </RelativeLayout>
