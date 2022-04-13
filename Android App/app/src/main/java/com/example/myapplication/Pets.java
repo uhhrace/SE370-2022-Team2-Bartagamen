@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import java.time.Instant;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -10,7 +12,10 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
+
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -118,9 +123,9 @@ public class Pets extends BartScreen {
             // of resetting all the buttons if we end up needing better performance here. I'm not
             // sure how that would work if the user presses multiple buttons at the same time.
             button.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View view) {
-
 
                     // Reset every other button to unpressed colors
                     for(ToggleButton butt : dayButtons){
@@ -131,25 +136,35 @@ public class Pets extends BartScreen {
                     // Set clicked button to pressed colors
                     button.setBackground(getResources().getDrawable(R.drawable.rounded_corner_active));
                     button.setTextColor(getResources().getColor(R.color.white));
+
+
                     String buttonText = (String) button.getText();
                     int helpCal;
-                    if (buttonText == "SUN"){
+                    if (buttonText.equals("SUN")){
                         helpCal = 0;
-                    }else if (buttonText == "MON"){
+                    }else if (buttonText.equals("MON")){
                         helpCal = 1;
-                    }else if (buttonText == "TUE"){
+                    }else if (buttonText.equals("TUE")){
                         helpCal = 2;
-                    }else if (buttonText == "WED"){
+                    }else if (buttonText.equals("WED")){
                         helpCal = 3;
-                    }else if (buttonText == "THU"){
+                    }else if (buttonText.equals("THU")){
                         helpCal = 4;
-                    }else if (buttonText == "FRI"){
+                    }else if (buttonText.equals("FRI")){
                         helpCal = 5;}else{helpCal = 6;}
 
-                    if(help - helpCal == 1){
 
-                        dateView.setText("HI");
-                    }
+                    int dateDiff = currentDay - helpCal;
+
+                    Instant now = Instant.now();
+                    // Difference between today and selected day in seconds
+                    int secondsDiff = dateDiff * 86400;
+                    Instant then = now.plusSeconds(-secondsDiff);
+
+                    Date selectedDay = Date.from(then);
+                    CharSequence selectedDate  = DateFormat.format("MMMM d, yyyy ", selectedDay.getTime());
+                    dateView.setText(""+selectedDate);
+
 
 
 
