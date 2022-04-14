@@ -10,18 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/ChooseText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/rubik_medium"
-            android:gravity="center_horizontal"
-            android:paddingTop="25dp"
-            android:text="Choose your date!"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
@@ -30,29 +18,20 @@
             android:paddingTop="25dp" />
 
         <TextView
-            android:id="@+id/DateViewText"
+            android:id="@+id/selectedDayMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@color/textBackgroundGray"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="left"
             android:paddingTop="25dp"
+            android:text="Menu "
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:fontFamily="@font/rubik_medium"/>
+            android:textSize="20sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/ViewMonthlyButton"
-            android:layout_width="match_parent"
-            android:layout_height="53.3dp"
-            android:layout_marginBottom="45dp"
-            android:background="@drawable/food_bank_rounded_corner"
-            android:backgroundTint="@color/buttonLightBlue"
-
-            android:fontFamily="@font/rubik_medium"
-            android:text="Confirm"
-            android:textSize="25dp"
-            android:textAllCaps="false"
-            android:textColor="@color/buttonDarkBlue"
-            />
     </LinearLayout>
 
 </RelativeLayout>
