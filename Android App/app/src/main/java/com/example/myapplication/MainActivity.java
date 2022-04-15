@@ -109,15 +109,18 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToPets(){
         changeScreen(pets);
 
-        // TODO low priority
-        //  this needs black text, the whole bar might need to be turned into a drawable object?
+        //TODO very low priority
+        // Currently, text defaults to white, so the topBar is made buttonDarkBlue for easy reading
+        // Ideally the top bar would be backgroundBlue, and the text would be Black, but there is
+        // no easy option for setting the text color. The topBar object might have to be converted
+        // to a View / Fragment?
         topBar.setTitle("Lizard's Meal Plan");
-        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
     }
 
     public void changeScreenToCalendar(){
         changeScreen(calendar);
-        wipeTopBar();
+        topBar.setTitle("Lizard's Meal Plan - Monthly View");
     }
 
     /**
