@@ -10,7 +10,6 @@ import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 public class Calender extends BartScreen {
 
@@ -30,12 +29,9 @@ public class Calender extends BartScreen {
                 date = (i1 + 1) + "/" + i2 + "/" + i;
                 Log.d(TAG, "OnSelectedDayChange: MMMM d, yyyy: "+ date);
 
-
-
                 //changeScreenToPets();
             }
         });
-
 
         return view;
 

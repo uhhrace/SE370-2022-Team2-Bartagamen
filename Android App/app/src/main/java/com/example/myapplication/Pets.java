@@ -14,15 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
-
-import java.time.Instant;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Pets extends BartScreen {
 
     // Avoid hard-coded values, declare here
     final int DAYS_PER_WEEK = 7;
+    final int SECONDS_PER_DAY = 86400;
 
     ToggleButton sunButton;
     ToggleButton monButton;
@@ -31,16 +30,19 @@ public class Pets extends BartScreen {
     ToggleButton thuButton;
     ToggleButton friButton;
     ToggleButton satButton;
-    ToggleButton[] dayButtons = new ToggleButton[DAYS_PER_WEEK];
+    ToggleButton[] dayButtons;
     AppCompatButton monthButton;
     int currentDay;
 
     TextView dateView;
-    Date d = new Date();
-    CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
-    int help;
+    Date currentDate;
+    CharSequence selectedDateString;
 
-
+    public Pets(){
+        dayButtons = new ToggleButton[DAYS_PER_WEEK];
+        currentDate = new Date();
+        selectedDateString = DateFormat.format("MMMM d, yyyy ", currentDate.getTime());
+    }
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,20 +50,7 @@ public class Pets extends BartScreen {
         View view = inflater.inflate(R.layout.pets, container, false);
 
         dateView = view.findViewById(R.id.dateField);
-        dateView.setText("Date: "+s);
-        if(d.getDay()==0){
-            help = 0;
-        }else if(d.getDay()==1){
-            help = 1;}
-        else if(d.getDay()==2){
-            help = 2;}
-        else if(d.getDay()==3){
-            help = 3;}
-        else if(d.getDay()==4){
-            help = 4;}
-        else if(d.getDay()==5){
-            help = 5;}else {help = 6;}
-
+        dateView.setText("Date: "+ selectedDateString);
 
         setDayButtonListeners(view);
 
@@ -80,7 +69,7 @@ public class Pets extends BartScreen {
         //Calendar calendar = Calendar.getInstance();
 
         //The Calendar.DAY_OF_WEEK enum starts with Mon at position 1, ends with Sun at position 7
-        currentDay = d.getDay();
+        currentDay = currentDate.getDay();
         //Decrement the offset to match with our array
         dayButtons[currentDay].performClick();
     }
@@ -100,13 +89,13 @@ public class Pets extends BartScreen {
 
     void setDayButtonListeners(View view){
         // Assign buttons
-        sunButton = (ToggleButton) view.findViewById(R.id.sunButton);
-        monButton = (ToggleButton) view.findViewById(R.id.monButton);
-        tueButton = (ToggleButton) view.findViewById(R.id.tueButton);
-        wedButton = (ToggleButton) view.findViewById(R.id.wedButton);
-        thuButton = (ToggleButton) view.findViewById(R.id.thuButton);
-        friButton = (ToggleButton) view.findViewById(R.id.friButton);
-        satButton = (ToggleButton) view.findViewById(R.id.satButton);
+        sunButton = view.findViewById(R.id.sunButton);
+        monButton = view.findViewById(R.id.monButton);
+        tueButton = view.findViewById(R.id.tueButton);
+        wedButton = view.findViewById(R.id.wedButton);
+        thuButton = view.findViewById(R.id.thuButton);
+        friButton = view.findViewById(R.id.friButton);
+        satButton = view.findViewById(R.id.satButton);
 
         // Fill button array
         dayButtons[0] = sunButton;
@@ -131,45 +120,43 @@ public class Pets extends BartScreen {
                     for(ToggleButton butt : dayButtons){
                         butt.setBackground(getResources().getDrawable(R.drawable.rounded_corner_inactive));
                         butt.setTextColor( getResources().getColor(R.color.buttonDarkBlue));
-
                     }
                     // Set clicked button to pressed colors
                     button.setBackground(getResources().getDrawable(R.drawable.rounded_corner_active));
                     button.setTextColor(getResources().getColor(R.color.white));
 
-
-                    String buttonText = (String) button.getText();
-                    int helpCal;
-                    if (buttonText.equals("SUN")){
-                        helpCal = 0;
-                    }else if (buttonText.equals("MON")){
-                        helpCal = 1;
-                    }else if (buttonText.equals("TUE")){
-                        helpCal = 2;
-                    }else if (buttonText.equals("WED")){
-                        helpCal = 3;
-                    }else if (buttonText.equals("THU")){
-                        helpCal = 4;
-                    }else if (buttonText.equals("FRI")){
-                        helpCal = 5;}else{helpCal = 6;}
-
-
-                    int dateDiff = currentDay - helpCal;
-
-                    Instant now = Instant.now();
-                    // Difference between today and selected day in seconds
-                    int secondsDiff = dateDiff * 86400;
-                    Instant then = now.plusSeconds(-secondsDiff);
-
-                    Date selectedDay = Date.from(then);
-                    CharSequence selectedDate  = DateFormat.format("MMMM d, yyyy ", selectedDay.getTime());
-                    dateView.setText(""+selectedDate);
-
-
-
-
+                    findDateAndRequestMenu(button);
                 }
             });
         }
-        }
+    } // end setDayButtonListeners
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void findDateAndRequestMenu(ToggleButton button){
+        Date selectedDate = findDateOfSelectedDayButton(button);
+
+        selectedDateString  = DateFormat.format("MMMM d, yyyy ", selectedDate.getTime());
+        dateView.setText("" + selectedDateString);
+
+        //TODO High Priority Feature
+        //Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    Date findDateOfSelectedDayButton(ToggleButton button){
+        // Find index of selected button
+        int selectedDay = Arrays.asList(dayButtons).indexOf(button);
+
+        // Find the difference in days between today and selected day
+        int dayDiff = selectedDay - currentDay;
+
+        // Convert difference from days -> seconds
+        Instant now = Instant.now();
+        int secondsDiff = dayDiff * SECONDS_PER_DAY;
+        // Create an instant at the selected day
+        Instant then = now.plusSeconds(secondsDiff);
+
+        // Return the date of the selected day
+        return Date.from(then);
+    }
 }
