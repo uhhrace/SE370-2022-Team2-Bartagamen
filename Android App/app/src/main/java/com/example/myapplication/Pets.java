@@ -77,14 +77,9 @@ public class Pets extends BartScreen {
     void setMonthButtonListener(View view){
 
         // Assign buttons
-        monthButton = (AppCompatButton) view.findViewById(R.id.ViewMonthlyButton);
+        monthButton = view.findViewById(R.id.ViewMonthlyButton);
 
-        monthButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeScreenToCalendar();
-            }
-        });
+        monthButton.setOnClickListener(tempView -> changeScreenToCalendar());
     }
 
     void setDayButtonListeners(View view){
@@ -139,7 +134,7 @@ public class Pets extends BartScreen {
         dateView.setText("" + selectedDateString);
 
         //TODO High Priority Feature
-        //Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
+        // Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

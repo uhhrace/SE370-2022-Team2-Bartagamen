@@ -27,7 +27,7 @@
             android:fontFamily="@font/rubik_medium"
 
             android:padding="25dp"
-            android:text="Menu for $SelectedDay"
+            android:text="Select a day to view"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
