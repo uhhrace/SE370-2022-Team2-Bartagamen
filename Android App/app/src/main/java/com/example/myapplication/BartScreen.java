@@ -22,6 +22,8 @@ public class BartScreen extends Fragment {
         main.changeScreenToPets();
     }
 
+    protected void changeScreenToPets(String petName){ main.changeScreenToPets(petName); }
+
     public void attach(MainActivity foreignMain){
         main = foreignMain;
     }

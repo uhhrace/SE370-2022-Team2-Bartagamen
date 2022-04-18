@@ -19,7 +19,7 @@
             android:background="@drawable/icon_pet_list"
             android:layout_marginTop="75dp"></ImageView>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/petListButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -28,11 +28,10 @@
             android:layout_marginHorizontal="15dp"
             android:background="@drawable/rounded_corner_inactive"
 
-            android:fontFamily="@font/rubik_medium"
             android:text="Pet List"
             android:textAllCaps="false"
             android:textSize="25dp"
-            android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatButton>
+            android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatSpinner>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/foodBankButton"
@@ -50,6 +49,7 @@
             android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatButton>
 
         <TextView
+            android:id="@+id/DailyMenuSumTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"

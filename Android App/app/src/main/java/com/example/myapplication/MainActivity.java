@@ -118,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
     }
 
+    public void changeScreenToPets(String petName){
+        changeScreen(pets);
+
+        topBar.setTitle(petName + "'s Meal Plan");
+        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
+    }
+
     public void changeScreenToCalendar(){
         changeScreen(calendar);
         topBar.setTitle("Lizard's Meal Plan - Monthly View");
