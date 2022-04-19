@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public Calender calendar;
     public Pets pets;
     public Food food;
+    public MyDatabaseHelper dbHelper;
 
     private ActionBar topBar;
 
