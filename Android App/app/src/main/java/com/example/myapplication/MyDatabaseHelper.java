@@ -15,18 +15,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_FOOD = "food";
-    private static final String COLUMN_FOOD_ID = "food_id";
-    private static final String COLUMN_FOOD_NAME = "food_name";
-    private static final String COLUMN_FOOD_AVAILABLE = "food_avaiable";
+    private static final String COLUMN_FOOD_ID = "_id";
+    private static final String COLUMN_FOOD_NAME = "name";
+    private static final String COLUMN_FOOD_AVAILABLE = "avaiable";
 
     private static final String TABLE_PET = "pet";
-    private static final String COLUMN_PET_ID = "pet_id";
-    private static final String COLUMN_PET_NAME = "pet_name";
-    private static final String COLUMN_PET_SIZE = "pet_size";
-    private static final String COLUMN_PET_AGE = "pet_age";
+    private static final String COLUMN_PET_ID = "_id";
+    private static final String COLUMN_PET_NAME = "name";
+    private static final String COLUMN_PET_SIZE = "size";
+    private static final String COLUMN_PET_AGE = "age";
 
     private static final String TABLE_MENU = "menu";
-    private static final String COLUMN_MENU_ID = "menu_id";
+    private static final String COLUMN_MENU_ID = "_id";
     private static final String COLUMN_MENU_PET_ID = "pet_id";
     private static final String COLUMN_MENU_FOOD_ID = "food_id";
 
