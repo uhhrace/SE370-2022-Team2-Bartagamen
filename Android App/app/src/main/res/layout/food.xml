@@ -12,41 +12,67 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginHorizontal="15dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/rounded_corner_inactive">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/rounded_corner_inactive"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="25dp"
-
-                    android:textSize="20dp"
-                    android:text="Crickets"
+                    android:id="@+id/LettuceText"
                     android:textColor="@color/buttonDarkBlue"
                     android:fontFamily="@font/rubik_medium"
-                    >
-
-                </TextView>
+                    android:layout_width="wrap_content"
+                    android:paddingHorizontal="25dp"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:text="Mealworm" />
 
                 <ToggleButton
-                    android:id="@+id/toggleButton"
-                    android:background="@drawable/food_bank_rounded_corner"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:gravity="center_vertical"
+                    android:id="@+id/toggleLettuce"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/toogle_selector"
+                    android:text="Lettuce"
                     android:textOff=""
-                    android:textOn=""/>
-            </RelativeLayout>
+                    android:textOn="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/rounded_corner_inactive">
+
+                <TextView
+                    android:id="@+id/MealwormText"
+                    android:textColor="@color/buttonDarkBlue"
+                    android:fontFamily="@font/rubik_medium"
+                    android:paddingHorizontal="25dp"
+                    android:textSize="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+
+                    android:text="Lettuce" />
+
+                <ToggleButton
+                    android:id="@+id/toggleMealworm"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/toogle_selector"
+                    android:text="ToggleButton"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>
