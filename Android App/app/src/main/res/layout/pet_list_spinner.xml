@@ -6,7 +6,7 @@
     android:fontFamily="@font/rubik_medium"
     android:textSize="25dp"
     android:textColor="@color/buttonDarkBlue"
-    android:background="@color/buttonLightBlue"
+    android:background="@drawable/rounded_corner_inactive"
     android:gravity="center"
 
     android:singleLine="true"

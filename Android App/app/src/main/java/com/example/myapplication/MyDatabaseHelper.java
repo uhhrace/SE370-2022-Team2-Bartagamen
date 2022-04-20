@@ -18,7 +18,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_FOOD_ID = "_id";
     private static final String COLUMN_FOOD_TYPE = "food_type";
     private static final String COLUMN_FOOD_NAME = "name";
-    private static final String COLUMN_FOOD_AVAILABLE = "avaiable";
+    // TODO High Priority
+    //  Do we need a "Type" field for these Food items? Veg, Greens, Protein?
+    private static final String COLUMN_FOOD_AVAILABLE = "available";
 
     private static final String TABLE_PET = "pet";
     private static final String COLUMN_PET_ID = "_id";
