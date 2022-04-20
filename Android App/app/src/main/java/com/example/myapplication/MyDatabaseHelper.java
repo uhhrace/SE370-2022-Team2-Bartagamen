@@ -16,6 +16,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_FOOD = "food";
     private static final String COLUMN_FOOD_ID = "_id";
+    private static final String COLUMN_FOOD_TYPE = "food_type";
     private static final String COLUMN_FOOD_NAME = "name";
     private static final String COLUMN_FOOD_AVAILABLE = "avaiable";
 
@@ -27,6 +28,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_MENU = "menu";
     private static final String COLUMN_MENU_ID = "_id";
+    private static final String COLUMN_MENU_DATE = "menu_date";
     private static final String COLUMN_MENU_PET_ID = "pet_id";
     private static final String COLUMN_MENU_FOOD_ID = "food_id";
 
@@ -42,6 +44,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query1 = "CREATE TABLE " + TABLE_FOOD + "(" +
                 COLUMN_FOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_FOOD_TYPE + " TEXT NOT NULL, " +
                 COLUMN_FOOD_NAME + " TEXT NOT NULL, " +
                 COLUMN_FOOD_AVAILABLE + " BOOLEAN NOT NULL);";
 
@@ -53,6 +56,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         String query3 = "CREATE TABLE " + TABLE_MENU + "(" +
                 COLUMN_MENU_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_MENU_DATE + " DATE NOT NULL, " +
                 COLUMN_MENU_PET_ID + " INTEGER NOT NULL, " +
                 COLUMN_MENU_FOOD_ID + " INTEGER NOT NULL);";
 

@@ -17,14 +17,13 @@ import androidx.fragment.app.Fragment;
 public class Food extends BartScreen {
 
 
+    ToggleButton toggleItem1;
     Context context;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food, container, false);
-
-
 
         return view;
     }
