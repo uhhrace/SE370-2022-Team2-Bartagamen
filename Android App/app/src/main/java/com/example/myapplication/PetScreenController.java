@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import java.time.Instant;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +16,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Pets extends BartScreen {
+public class PetScreenController extends BartScreenController {
 
     // Avoid hard-coded values, declare here
     final int DAYS_PER_WEEK = 7;
@@ -38,7 +37,7 @@ public class Pets extends BartScreen {
     Date currentDate;
     CharSequence selectedDateString;
 
-    public Pets(){
+    public PetScreenController(){
         dayButtons = new ToggleButton[DAYS_PER_WEEK];
         currentDate = new Date();
         selectedDateString = DateFormat.format("MMMM d, yyyy ", currentDate.getTime());
@@ -47,7 +46,7 @@ public class Pets extends BartScreen {
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.pets, container, false);
+        View view = inflater.inflate(R.layout.pet_screen, container, false);
 
         dateView = view.findViewById(R.id.dateField);
         dateView.setText("Date: "+ selectedDateString);

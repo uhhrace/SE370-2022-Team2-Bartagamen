@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import java.util.Calendar;
 
-public class Calender extends BartScreen {
+public class CalendarScreenController extends BartScreenController {
 
     CalendarView calendarView;
     TextView selectedDayMenuTextView;
@@ -20,7 +19,7 @@ public class Calender extends BartScreen {
     public String dateString;
     Calendar selectedDate;
 
-    public Calender(){
+    public CalendarScreenController(){
         selectedDate = Calendar.getInstance();
     }
 
@@ -28,7 +27,7 @@ public class Calender extends BartScreen {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.calender, container, false);
+        View view = inflater.inflate(R.layout.calendar_screen, container, false);
 
         setCalendarViewListener(view);
 

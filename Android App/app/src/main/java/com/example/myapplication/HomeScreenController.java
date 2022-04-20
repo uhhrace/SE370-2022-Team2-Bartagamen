@@ -6,17 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.SpinnerAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 
-import java.lang.reflect.Array;
-
-public class Home extends BartScreen {
+public class HomeScreenController extends BartScreenController {
 
     AppCompatSpinner petListButton;
     AppCompatButton foodBankButton;
@@ -39,7 +35,7 @@ public class Home extends BartScreen {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home, container, false);
+        View view = inflater.inflate(R.layout.home_screen, container, false);
 
         setButtonListeners(view);
 

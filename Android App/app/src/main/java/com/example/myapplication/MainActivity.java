@@ -3,13 +3,10 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -19,10 +16,10 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     //declare home, calendar, pets, food in scope of this file
-    public Home home;
-    public Calender calendar;
-    public Pets pets;
-    public Food food;
+    public HomeScreenController homeScreenController;
+    public CalendarScreenController calendarScreenController;
+    public PetScreenController petScreenController;
+    public FoodScreenController foodScreenController;
 
     private ActionBar topBar;
 
@@ -32,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //initialize home, calendar, pets, food in scope of this file
-        home = new Home();
-        calendar = new Calender();
-        pets = new Pets();
-        food = new Food();
+        homeScreenController = new HomeScreenController();
+        calendarScreenController = new CalendarScreenController();
+        petScreenController = new PetScreenController();
+        foodScreenController = new FoodScreenController();
         topBar = getSupportActionBar();
 
-        pets.attach(this);
+        petScreenController.attach(this);
 
         //initialize bottomNavigationView by connecting it to the xml-Element
         bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
      * @public
      */
     public void changeScreenToHome(){
-        changeScreen(home);
+        changeScreen(homeScreenController);
         wipeTopBar();
     }
 
@@ -95,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
      * @public
      */
     public void changeScreenToFoodBank(){
-        changeScreen(food);
+        changeScreen(foodScreenController);
         wipeTopBar();
     }
 
@@ -107,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
      * @public
      */
     public void changeScreenToPets(){
-        changeScreen(pets);
+        changeScreen(petScreenController);
 
         //TODO very low priority
         // Currently, text defaults to white, so the topBar is made buttonDarkBlue for easy reading
@@ -119,14 +116,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeScreenToPets(String petName){
-        changeScreen(pets);
+        changeScreen(petScreenController);
 
         topBar.setTitle(petName + "'s Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
     }
 
     public void changeScreenToCalendar(){
-        changeScreen(calendar);
+        changeScreen(calendarScreenController);
         topBar.setTitle("Lizard's Meal Plan - Monthly View");
     }
 
@@ -137,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
      * @returns void
      * @public
      */
-    private void changeScreen(BartScreen destinationScreen){
+    private void changeScreen(BartScreenController destinationScreen){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationScreen).commit();
 
         //TODO low priority
