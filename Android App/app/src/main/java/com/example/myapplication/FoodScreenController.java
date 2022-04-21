@@ -36,7 +36,12 @@ public class FoodScreenController extends BartScreenController {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
 
         dbFood = new MyDatabaseHelper(getContext());
-        dbFood.addItem("Test", "Test", false);
+        dbFood.addItem("Leaf Greens", "Collard Greens", false);
+        dbFood.addItem("Leaf Greens", "Mustard Greens", false);
+        dbFood.addItem("Vegetables", "Squash", false);
+        dbFood.addItem("Bugs", "Crickets", false);
+
+
 
 //        toggleCollardGreens = view.findViewById(R.id.toggleColGreens);
 //        toggleMustardGreens = view.findViewById(R.id.toggleMustardGreens);
