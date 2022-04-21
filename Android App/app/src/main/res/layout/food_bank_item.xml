@@ -8,6 +8,7 @@
     android:background="@drawable/rounded_corner_inactive">
 
         <TextView
+            android:id="@+id/text"
             android:textColor="@color/buttonDarkBlue"
             android:fontFamily="@font/rubik_medium"
             android:paddingHorizontal="25dp"
