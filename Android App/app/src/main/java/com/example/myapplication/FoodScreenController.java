@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class FoodScreenController extends BartScreenController {
 
-    MyDatabaseHelper dbFood;
+    FoodDAO dbFood;
 
     ToggleButton toggleCollardGreens, toggleMustardGreens, toggleRomaine, toggleDandelion, toggleTurnipGreens, toggleBokChoy,
             toggleChicory, toggleEscarole, toggleWIldPlants, toggleCilantro, toggleWatercress, toggleGrapeLeaves, toggleSquash,
@@ -35,7 +35,7 @@ public class FoodScreenController extends BartScreenController {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
 
-        dbFood = new MyDatabaseHelper(getContext());
+        dbFood = new FoodDAO(getContext());
         dbFood.addItem("Leaf Greens", "Collard Greens", false);
         dbFood.addItem("Leaf Greens", "Mustard Greens", false);
         dbFood.addItem("Vegetables", "Squash", false);

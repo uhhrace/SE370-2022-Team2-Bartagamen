@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
-public class MyDatabaseHelper extends SQLiteOpenHelper {
+public class FoodDAO extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "Bartagamen.db";
@@ -45,7 +45,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String drop = "DROP IF TABLE EXISTS ";
 
 
-    public MyDatabaseHelper(Context context) {
+    public FoodDAO(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
