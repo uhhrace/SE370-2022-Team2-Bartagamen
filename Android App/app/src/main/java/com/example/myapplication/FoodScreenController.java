@@ -43,6 +43,8 @@ public class FoodScreenController extends BartScreenController {
 
 
 
+
+
 //        toggleCollardGreens = view.findViewById(R.id.toggleColGreens);
 //        toggleMustardGreens = view.findViewById(R.id.toggleMustardGreens);
 //        toggleRomaine = view.findViewById(R.id.toggleRomaine);

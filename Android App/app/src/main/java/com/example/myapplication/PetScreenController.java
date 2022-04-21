@@ -18,6 +18,8 @@ import java.util.Date;
 
 public class PetScreenController extends BartScreenController {
 
+    //PetDAO pets;
+
     // Avoid hard-coded values, declare here
     final int DAYS_PER_WEEK = 7;
     final int SECONDS_PER_DAY = 86400;
@@ -56,6 +58,8 @@ public class PetScreenController extends BartScreenController {
         setMonthButtonListener(view);
 
         autoSelectDayOfWeek();
+
+      //  pets.addPet("Wild Bart", "Matthew", true);
 
         //TODO low priority
         // check button sizes, if < 100dp, change SUN -> S, MON -> M, etc

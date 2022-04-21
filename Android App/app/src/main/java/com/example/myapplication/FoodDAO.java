@@ -40,7 +40,7 @@ public class FoodDAO extends SQLiteOpenHelper {
             COLUMN_FOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_FOOD_TYPE + " TEXT NOT NULL, " +
             COLUMN_FOOD_NAME + " TEXT NOT NULL, " +
-            COLUMN_FOOD_AVAILABLE + " TEXT NOT NULL);";
+            COLUMN_FOOD_AVAILABLE + " BOOLEAN NOT NULL);";
 
     private static final String drop = "DROP IF TABLE EXISTS ";
 
