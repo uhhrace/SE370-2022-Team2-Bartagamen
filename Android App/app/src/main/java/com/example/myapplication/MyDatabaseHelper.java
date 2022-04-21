@@ -26,6 +26,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PET_ID = "_id";
     private static final String COLUMN_PET_NAME = "name";
     private static final String COLUMN_PET_SIZE = "size";
+    // TODO High Priority
+    //  This should be date of birth rather than Age
     private static final String COLUMN_PET_AGE = "age";
 
     private static final String TABLE_MENU = "menu";
