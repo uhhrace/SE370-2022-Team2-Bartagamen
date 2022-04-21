@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,18 +15,27 @@ public class MainActivity extends AppCompatActivity {
 
     //declare bottomNavigationView
     BottomNavigationView bottomNavigationView;
+    DAO dbFood;
+    boolean chk;
 
     //declare home, calendar, pets, food in scope of this file
     public HomeScreenController homeScreenController;
     public CalendarScreenController calendarScreenController;
     public PetScreenController petScreenController;
     public FoodScreenController foodScreenController;
+    private String[] greensNames = {"Collard Greens", "Mustard Greens", "Romaine", "Dandelion", "Turnip Greens"};
+    private String[] vegNames = {"Squash", "Zucchini", "Sweet Potato", "Broccoli", "Peas"};
+    private String[] bugNames = {"Crickets", "Mealworms", "Grasshoppers", "Earthworms", "Calciworms"};
+
 
     private ActionBar topBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbFood = new DAO(MainActivity.this);
 
         //initialize home, calendar, pets, food in scope of this file
         homeScreenController = new HomeScreenController();
@@ -39,6 +49,21 @@ public class MainActivity extends AppCompatActivity {
         //initialize bottomNavigationView by connecting it to the xml-Element
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+
+
+
+
+            for (int j = 0; j < greensNames.length; j++) {
+                dbFood.addItem("Leafy Green", greensNames[j], false);
+            }
+            for (int j = 0; j < vegNames.length; j++) {
+                dbFood.addItem("Vegetable", vegNames[j], false);
+            }
+            for (int j = 0; j < bugNames.length; j++) {
+                dbFood.addItem("Bug", bugNames[j], false);
+            }
+
+            dbFood.addPet("Wild Bart", "Matthew", "Test");
 
         changeScreenToHome();
     }
@@ -66,43 +91,43 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void wipeTopBar(){
+    private void wipeTopBar() {
         topBar.setTitle(null);
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroundBlue)));
     }
 
     /**
-     * @name    changeScreenToHome
-     * @desc    Changes the main screen fragment to the home screen, and hides the top action bar.
-     * @params  void
+     * @name changeScreenToHome
+     * @desc Changes the main screen fragment to the home screen, and hides the top action bar.
+     * @params void
      * @returns void
      * @public
      */
-    public void changeScreenToHome(){
+    public void changeScreenToHome() {
         changeScreen(homeScreenController);
         wipeTopBar();
     }
 
     /**
-     * @name    changeScreenToFoodBank
-     * @desc    Changes the main screen fragment to the Food Bank screen, and hides the top action bar
-     * @params  void
+     * @name changeScreenToFoodBank
+     * @desc Changes the main screen fragment to the Food Bank screen, and hides the top action bar
+     * @params void
      * @returns void
      * @public
      */
-    public void changeScreenToFoodBank(){
+    public void changeScreenToFoodBank() {
         changeScreen(foodScreenController);
         wipeTopBar();
     }
 
     /**
-     * @name    changeScreenToPets
-     * @desc    Changes the main screen fragment to the Individual Pets screen, and enables the top action bar
-     * @params  void
+     * @name changeScreenToPets
+     * @desc Changes the main screen fragment to the Individual Pets screen, and enables the top action bar
+     * @params void
      * @returns void
      * @public
      */
-    public void changeScreenToPets(){
+    public void changeScreenToPets() {
         changeScreen(petScreenController);
 
         //TODO very low priority
@@ -114,26 +139,26 @@ public class MainActivity extends AppCompatActivity {
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
     }
 
-    public void changeScreenToPets(String petName){
+    public void changeScreenToPets(String petName) {
         changeScreen(petScreenController);
 
         topBar.setTitle(petName + "'s Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
     }
 
-    public void changeScreenToCalendar(){
+    public void changeScreenToCalendar() {
         changeScreen(calendarScreenController);
         topBar.setTitle("Lizard's Meal Plan - Monthly View");
     }
 
     /**
-     * @name    changeScreen
-     * @desc    Changes the main screen fragment to a Fragment object passed in as a parameter
-     * @params  destinationFragment Desired Fragment object to change the screen to
+     * @name changeScreen
+     * @desc Changes the main screen fragment to a Fragment object passed in as a parameter
+     * @params destinationFragment Desired Fragment object to change the screen to
      * @returns void
      * @public
      */
-    private void changeScreen(BartScreenController destinationScreen){
+    private void changeScreen(BartScreenController destinationScreen) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationScreen).commit();
 
         //TODO low priority
@@ -141,4 +166,11 @@ public class MainActivity extends AppCompatActivity {
         // called once when we initialize the bartScreen objects inside onCreate()
         destinationScreen.attach(this);
     }
-}
+
+
+
+
+        }
+
+
+

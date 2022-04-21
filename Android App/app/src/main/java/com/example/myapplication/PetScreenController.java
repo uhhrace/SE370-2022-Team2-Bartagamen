@@ -50,6 +50,7 @@ public class PetScreenController extends BartScreenController {
 
         View view = inflater.inflate(R.layout.pet_screen, container, false);
 
+
         dateView = view.findViewById(R.id.dateField);
         dateView.setText("Date: "+ selectedDateString);
 

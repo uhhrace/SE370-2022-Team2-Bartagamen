@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -13,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class FoodScreenController extends BartScreenController {
 
-    FoodDAO dbFood;
+    DAO dbFood1;
     boolean executed = false;
 
     ToggleButton toggleCollardGreens, toggleMustardGreens, toggleRomaine, toggleDandelion, toggleTurnipGreens, toggleBokChoy,
@@ -36,8 +35,8 @@ public class FoodScreenController extends BartScreenController {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
-        dbFood = new FoodDAO(getContext());
-        checkExecution();
+        //dbFood = new FoodDAO(getContext());
+       // checkExecution();
 
 
 
@@ -109,7 +108,7 @@ public class FoodScreenController extends BartScreenController {
         return view;
     }
 
-    void checkExecution() {
+   /* void checkExecution() {
 
         if(executed ==false){
         for (int j = 0; j < greensNames.length; j++) {
@@ -122,7 +121,7 @@ public class FoodScreenController extends BartScreenController {
             dbFood.addItem("Bug", bugNames[j], false);
         }}
         executed = true;
-    }
+    }*/
 
 
     void populateFoodList(View view){
@@ -161,14 +160,14 @@ public class FoodScreenController extends BartScreenController {
             bugButton.setId(getResources().getIdentifier(bug, "integer", "values"));
 
             bugDiv.addView(toAdd);
-            bugButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           /* bugButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if (bugButton.isChecked()){
-                        dbFood.changeAvailabiliy(bugButton.getId());
+                        dbFood1.changeAvailabiliy(bugButton.getId());
                     }
                 }
-            });
+            });*/
         }
 
 

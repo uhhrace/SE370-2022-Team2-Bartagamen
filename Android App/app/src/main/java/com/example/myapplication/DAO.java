@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
-public class FoodDAO extends SQLiteOpenHelper {
+public class DAO extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "Bartagamen.db";
@@ -18,18 +18,15 @@ public class FoodDAO extends SQLiteOpenHelper {
     private static final String COLUMN_FOOD_ID = "_id";
     private static final String COLUMN_FOOD_TYPE = "food_type";
     private static final String COLUMN_FOOD_NAME = "name";
-    // TODO High Priority
-    //  Do we need a "Type" field for these Food items? Veg, Greens, Protein?
     private static final String COLUMN_FOOD_AVAILABLE = "available";
 
-   /* private static final String TABLE_PET = "pet";
+   private static final String TABLE_PET = "pet";
     private static final String COLUMN_PET_ID = "_id";
     private static final String COLUMN_PET_NAME = "name";
-    private static final String COLUMN_PET_SIZE = "size"; */
-    // TODO High Priority
-    //  This should be date of birth rather than Age
- /*   private static final String COLUMN_PET_AGE = "age";
+    private static final String COLUMN_PET_SIZE = "size";
 
+  private static final String COLUMN_PET_DOB = "date_of_birth";
+/*
     private static final String TABLE_MENU = "menu";
     private static final String COLUMN_MENU_ID = "_id";
     private static final String COLUMN_MENU_DATE = "menu_date";
@@ -42,10 +39,16 @@ public class FoodDAO extends SQLiteOpenHelper {
             COLUMN_FOOD_NAME + " TEXT NOT NULL, " +
             COLUMN_FOOD_AVAILABLE + " BOOLEAN NOT NULL);";
 
+    final String query2 = "CREATE TABLE " + TABLE_PET + "(" +
+            COLUMN_PET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_PET_NAME + " TEXT NOT NULL, " +
+            COLUMN_PET_SIZE + " TEXT NOT NULL, " +
+            COLUMN_PET_DOB + " TEXT NOT NULL);";
+
     private static final String drop = "DROP IF TABLE EXISTS ";
 
 
-    public FoodDAO(Context context) {
+    public DAO(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -53,12 +56,7 @@ public class FoodDAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-
-      /*  String query2 = "CREATE TABLE " + TABLE_PET + "(" +
-                COLUMN_PET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_PET_NAME + " TEXT NOT NULL, " +
-                COLUMN_PET_SIZE + " TEXT NOT NULL, " +
-                COLUMN_PET_AGE + " TEXT NOT NULL);";
+        /*
 
         String query3 = "CREATE TABLE " + TABLE_MENU + "(" +
                 COLUMN_MENU_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -68,7 +66,7 @@ public class FoodDAO extends SQLiteOpenHelper {
 
         try{
             db.execSQL(query1);
-           // db.execSQL(query2);
+            db.execSQL(query2);
          //   db.execSQL(query3);
 
         }catch(SQLException ex){
@@ -82,7 +80,7 @@ public class FoodDAO extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL(drop + TABLE_FOOD);
-      //  db.execSQL(drop + TABLE_PET);
+        db.execSQL(drop + TABLE_PET);
       //  db.execSQL(drop + TABLE_MENU);
         onCreate(db);
 
@@ -107,4 +105,19 @@ public class FoodDAO extends SQLiteOpenHelper {
        db.execSQL("UPDATE " + TABLE_FOOD + " SET " + COLUMN_FOOD_AVAILABLE + "= true" + " WHERE " + COLUMN_FOOD_ID + "= id;");
 
     }
+
+    public void addPet(String name, String size, String age){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_PET_NAME, name);
+        cv.put(COLUMN_PET_SIZE, size);
+        cv.put(COLUMN_PET_DOB, age);
+
+        long result = db.insert(TABLE_PET, null, cv);
+
+
+    }
+
+
 }
