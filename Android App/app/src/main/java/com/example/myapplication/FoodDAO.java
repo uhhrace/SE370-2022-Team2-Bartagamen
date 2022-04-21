@@ -22,19 +22,19 @@ public class FoodDAO extends SQLiteOpenHelper {
     //  Do we need a "Type" field for these Food items? Veg, Greens, Protein?
     private static final String COLUMN_FOOD_AVAILABLE = "available";
 
-    private static final String TABLE_PET = "pet";
+   /* private static final String TABLE_PET = "pet";
     private static final String COLUMN_PET_ID = "_id";
     private static final String COLUMN_PET_NAME = "name";
-    private static final String COLUMN_PET_SIZE = "size";
+    private static final String COLUMN_PET_SIZE = "size"; */
     // TODO High Priority
     //  This should be date of birth rather than Age
-    private static final String COLUMN_PET_AGE = "age";
+ /*   private static final String COLUMN_PET_AGE = "age";
 
     private static final String TABLE_MENU = "menu";
     private static final String COLUMN_MENU_ID = "_id";
     private static final String COLUMN_MENU_DATE = "menu_date";
     private static final String COLUMN_MENU_PET_ID = "pet_id";
-    private static final String COLUMN_MENU_FOOD_ID = "food_id";
+    private static final String COLUMN_MENU_FOOD_ID = "food_id"; */
 
     final String query1 = "CREATE TABLE " + TABLE_FOOD + "(" +
             COLUMN_FOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

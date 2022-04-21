@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 public class FoodScreenController extends BartScreenController {
 
     FoodDAO dbFood;
+    boolean executed = false;
 
     ToggleButton toggleCollardGreens, toggleMustardGreens, toggleRomaine, toggleDandelion, toggleTurnipGreens, toggleBokChoy,
             toggleChicory, toggleEscarole, toggleWIldPlants, toggleCilantro, toggleWatercress, toggleGrapeLeaves, toggleSquash,
@@ -36,15 +37,10 @@ public class FoodScreenController extends BartScreenController {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
         dbFood = new FoodDAO(getContext());
-        for(int j = 0; j<greensNames.length;j++){
-            dbFood.addItem("Leafy Green", greensNames[j], false);
-        }
-        for(int j = 0; j<vegNames.length;j++){
-            dbFood.addItem("Vegetable", vegNames[j], false);
-        }
-        for(int j = 0; j<bugNames.length;j++){
-            dbFood.addItem("Bug", bugNames[j], false);
-        }
+        checkExecution();
+
+
+
 
 
 //        toggleCollardGreens = view.findViewById(R.id.toggleColGreens);
@@ -111,6 +107,22 @@ public class FoodScreenController extends BartScreenController {
         return view;
     }
 
+    void checkExecution() {
+
+        if(executed ==false){
+        for (int j = 0; j < greensNames.length; j++) {
+            dbFood.addItem("Leafy Green", greensNames[j], false);
+        }
+        for (int j = 0; j < vegNames.length; j++) {
+            dbFood.addItem("Vegetable", vegNames[j], false);
+        }
+        for (int j = 0; j < bugNames.length; j++) {
+            dbFood.addItem("Bug", bugNames[j], false);
+        }}
+        executed = true;
+    }
+
+
     void populateFoodList(View view){
         LinearLayout greensDiv = (LinearLayout) view.findViewById(R.id.TypeLeafyGreens);
         LinearLayout vegDiv = (LinearLayout) view.findViewById(R.id.TypeVegetables);
@@ -159,5 +171,8 @@ public class FoodScreenController extends BartScreenController {
 
 
 
+
     }
+
+
 }
