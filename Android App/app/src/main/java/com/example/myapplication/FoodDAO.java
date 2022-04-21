@@ -100,4 +100,11 @@ public class FoodDAO extends SQLiteOpenHelper {
 
 
     }
+
+    public void changeAvailabiliy(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+       db.execSQL("UPDATE " + TABLE_FOOD + " SET " + COLUMN_FOOD_AVAILABLE + "= true" + " WHERE " + COLUMN_FOOD_ID + "= id;");
+
+    }
 }

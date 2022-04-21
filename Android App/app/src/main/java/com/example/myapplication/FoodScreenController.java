@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -44,13 +45,6 @@ public class FoodScreenController extends BartScreenController {
         for(int j = 0; j<bugNames.length;j++){
             dbFood.addItem("Bug", bugNames[j], false);
         }
-
-
-       /* dbFood.addItem("Leafy Greens", "Collard Greens", false);
-        dbFood.addItem("Leafy Greens", "Mustard Greens", false);
-        dbFood.addItem("Vegetables", "Squash", false);
-        dbFood.addItem("Bugs", "Crickets", false);*/
-
 
 
 //        toggleCollardGreens = view.findViewById(R.id.toggleColGreens);
@@ -151,7 +145,19 @@ public class FoodScreenController extends BartScreenController {
             //Replace the ID from generic foodBankButton to ID specific to the bug name
             ToggleButton bugButton = (ToggleButton) toAdd.findViewById(R.id.foodBankButton);
             bugButton.setId(getResources().getIdentifier(bug, "integer", "values"));
+
             bugDiv.addView(toAdd);
+            bugButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (bugButton.isChecked()){
+                        dbFood.changeAvailabiliy(bugButton.getId());
+                    }
+                }
+            });
         }
+
+
+
     }
 }
