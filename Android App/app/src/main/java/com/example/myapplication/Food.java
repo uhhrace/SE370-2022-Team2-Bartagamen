@@ -1,21 +1,19 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 public class Food extends BartScreen {
+
+    MyDatabaseHelper dbFood;
 
 
     ToggleButton toggleCollardGreens, toggleMustardGreens, toggleRomaine, toggleDandelion, toggleTurnipGreens, toggleBokChoy,
@@ -29,7 +27,6 @@ public class Food extends BartScreen {
             textBellPepper, textEndive, textCrickets, textMealworms, textGrasshoppers, textEarthworms, textCalciWorms;
 
 
-    Context context;
 
     @Nullable
     @Override
@@ -93,13 +90,8 @@ public class Food extends BartScreen {
         textCalciWorms = view.findViewById(R.id.CalciWormsText);
 
 
-
-
-
-
-
-
-
+        dbFood = new MyDatabaseHelper(getContext());
+        dbFood.addItem("Test", "Test", false);
 
 
         return view;

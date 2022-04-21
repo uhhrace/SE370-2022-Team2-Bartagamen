@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     public Food food;
 
     private ActionBar topBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
