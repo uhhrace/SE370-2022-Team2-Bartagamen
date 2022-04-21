@@ -34,12 +34,22 @@ public class FoodScreenController extends BartScreenController {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
-
         dbFood = new FoodDAO(getContext());
-        dbFood.addItem("Leaf Greens", "Collard Greens", false);
-        dbFood.addItem("Leaf Greens", "Mustard Greens", false);
+        for(int j = 0; j<greensNames.length;j++){
+            dbFood.addItem("Leafy Green", greensNames[j], false);
+        }
+        for(int j = 0; j<vegNames.length;j++){
+            dbFood.addItem("Vegetable", vegNames[j], false);
+        }
+        for(int j = 0; j<bugNames.length;j++){
+            dbFood.addItem("Bug", bugNames[j], false);
+        }
+
+
+       /* dbFood.addItem("Leafy Greens", "Collard Greens", false);
+        dbFood.addItem("Leafy Greens", "Mustard Greens", false);
         dbFood.addItem("Vegetables", "Squash", false);
-        dbFood.addItem("Bugs", "Crickets", false);
+        dbFood.addItem("Bugs", "Crickets", false);*/
 
 
 
