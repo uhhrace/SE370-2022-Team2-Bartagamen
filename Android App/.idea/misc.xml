@@ -5,10 +5,13 @@
       <map>
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/ic_baseline_food_bank_24.xml" value="0.23177083333333334" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2740740740740741" />
+        <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/toggle_off.xml" value="0.23177083333333334" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/toogle_selector.xml" value="0.2962962962962963" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/activity_main.xml" value="0.18591691995947315" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/calender.xml" value="0.22871376811594202" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/food.xml" value="0.18591691995947315" />
+        <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/food_bank_item.xml" value="0.11594202898550725" />
+        <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/food_bank_screen.xml" value="0.11594202898550725" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/fragment1.xml" value="0.215625" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/fragment2.xml" value="0.215625" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/fragment3.xml" value="0.215625" />
@@ -20,7 +23,6 @@
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/food_bank_rounded_corner.xml" value="0.332" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/food_bank_rounded_corner_active.xml" value="0.332" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/food_bank_rounded_corner_inactive.xml" value="0.332" />
-        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/food_bank_toggle.xml" value="0.332" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/ic_baseline_food_bank_24.xml" value="0.332" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.332" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/ic_baseline_pets_24.xml" value="0.332" />
@@ -36,10 +38,8 @@
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/calender.xml" value="0.25" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/food.xml" value="0.24517906336088155" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/food_bank_item.xml" value="0.25" />
-        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/food_bank_screen.xml" value="0.1" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/home.xml" value="0.33" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/pet_list_spinner.xml" value="0.13269927536231885" />
-        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/pet_screen.xml" value="0.2798913043478261" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/pets.xml" value="0.33" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/menu/menu.xml" value="0.1" />
       </map>
