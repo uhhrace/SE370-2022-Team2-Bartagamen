@@ -102,6 +102,8 @@ public class FoodScreenController extends BartScreenController {
 
         populateFoodList(view);
 
+        view.findViewById(R.id.crickets);
+
         return view;
     }
 
@@ -135,10 +137,11 @@ public class FoodScreenController extends BartScreenController {
             //toAdd.setId(idNumOfBug);
             TextView itemText = (TextView) toAdd.findViewById(R.id.text);
             itemText.setText(bug);
-            bugDiv.addView(toAdd);
 
+            //Replace the ID from generic foodBankButton to ID specific to the bug name
+            ToggleButton bugButton = (ToggleButton) toAdd.findViewById(R.id.foodBankButton);
+            bugButton.setId(getResources().getIdentifier(bug, "integer", "values"));
+            bugDiv.addView(toAdd);
         }
     }
 }
-
-
