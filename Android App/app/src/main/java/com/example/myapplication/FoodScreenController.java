@@ -11,7 +11,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class Food extends BartScreen {
+public class FoodScreenController extends BartScreenController {
 
     MyDatabaseHelper dbFood;
 
@@ -31,7 +31,7 @@ public class Food extends BartScreen {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.food, container, false);
+        View view = inflater.inflate(R.layout.food_bank_screen, container, false);
         toggleCollardGreens = view.findViewById(R.id.toggleColGreens);
         toggleMustardGreens = view.findViewById(R.id.toggleMustardGreens);
         toggleRomaine = view.findViewById(R.id.toggleRomaine);

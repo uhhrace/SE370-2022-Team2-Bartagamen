@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 import androidx.fragment.app.Fragment;
 
-public class BartScreen extends Fragment {
+public class BartScreenController extends Fragment {
 
     public MainActivity main;
 

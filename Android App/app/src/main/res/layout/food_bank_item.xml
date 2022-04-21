@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingRight="15dp"
+    android:paddingVertical="5dp"
+    android:background="@drawable/rounded_corner_inactive">
+
+        <TextView
+            android:textColor="@color/buttonDarkBlue"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingHorizontal="25dp"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:text="Dummy Text" />
+
+        <ToggleButton
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/food_bank_toggle"
+            android:textOff=""
+            android:textOn="" />
+</androidx.appcompat.widget.LinearLayoutCompat>
