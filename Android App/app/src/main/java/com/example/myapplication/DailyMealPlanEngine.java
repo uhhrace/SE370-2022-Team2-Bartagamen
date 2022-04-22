@@ -5,17 +5,22 @@ import java.util.Date;
 
 public class DailyMealPlanEngine {
 
-    public enum FoodType{LEAFYGREEN, VEGETABLE, PROTEIN}
+    public enum FoodType{LEAFYGREEN(0), VEGETABLE(1), PROTEIN(2)}
     final int MS_PER_SECOND = 1000;
     final int SECONDS_PER_MINUTE = 60;
     final int MINUTES_PER_HOUR = 60;
     final int HOURS_PER_DAY = 24;
+    final int INDEX_NOT_FOUND = -1;
+    final int PINHEAD_CRICKETS_ID = 15;
+    final int CRICKETS_ID = 10;
 
     class Lizard{
         private int id;
         private String name;
         private Date dateOfBirth;
         private int sizeCentimeters;
+
+        private ArrayList<FoodItem> recentFoods;
 
         Lizard(int id, String newName, int sizeCentimeters, Date dateOfBirth){
             this.id = id;
@@ -28,6 +33,22 @@ public class DailyMealPlanEngine {
         public String getName(){return this.name;}
         public Date getDateOfBirth(){return this.dateOfBirth;}
         public int getSizeCentimeters(){return this.sizeCentimeters;}
+
+        public void addRecentFood(FoodItem recentFood){
+            recentFoods.add(recentFood);
+        }
+
+        // Decrement cooldowns for all recent foods
+        public void decrementCooldowns(){
+            for(food : recentFoods){
+                if(food.cooldown == 0){
+                    recentFoods.remove(food);
+                }else{
+                    food.cooldown--;
+                }
+            }
+        }
+
     }
 
     class FoodItem{
@@ -88,6 +109,7 @@ public class DailyMealPlanEngine {
         foodList.add(new FoodItem(12, FoodType.PROTEIN, "Grasshoppers"));
         foodList.add(new FoodItem(13, FoodType.PROTEIN, "Earthworms"));
         foodList.add(new FoodItem(14, FoodType.PROTEIN, "Calciworms"));
+        foodList.add(new FoodItem(15, FoodType.PROTEIN, "Pinhead Crickets"));
     }
 
     public static DailyMealPlanEngine getDMPEngine(){
@@ -108,48 +130,61 @@ public class DailyMealPlanEngine {
         int ageDays = (int) (ageMs / (MS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY));
         int ageMonths = ageDays % 31;
 
+        boolean[] foodTypeHandled = new int{false, false, false};
+
+
+        //Create menu object for this pet today
+        MealPlan todaysMealPlan = new MealPlan();
+        todaysMealPlan.petId = pet.id;
+        todaysMealPlan.date = new Date();
+        pet.decrementCooldowns();
+
         if(ageMonths < 1){
             //80% Proteins
             //10% LeafyGreens
             //10% Vegetables
             //MANDATORY PINHEAD CRICKETS EVERY DAY
+            todaysMealPlan.foodIdList.add(PINHEAD_CRICKETS_ID);
+            foodTypeHandled[PROTEIN] = true;
         }else if(ageMonths < 3){
             //65% Proteins
             //25% Leafy Greens
             //10% Vegetables
             //MANDATORY CRICKETS EVERY DAY
+            todaysMealPlan.foodIdList.add(CRICKETS_ID);
+            foodTypeHandled[PROTEIN] = true;
         }else if(ageMonths < 18){
             //50% Proteins
-            //25% Leafy Greens
-            //10% Vegetables
+            //35% Leafy Greens
+            //15% Vegetables
             //MANDATORY CRICKETS EVERY DAY
+            todaysMealPlan.foodIdList.add(CRICKETS_ID);
+            foodTypeHandled[PROTEIN] = true;
         }else{
             //25% Proteins
             //55% Leafy Greens
             //20% Vegetables
         }
 
-        //Create menu object for this pet today
-        //for(food:foods)
-        //      if available
-        //          if !cooldown && food type not handled
-        //              foodIdList.add(food)
-        //              food type handled
-        //          cooldown--
+        // for each food in foods
+        for( food : foodList ){
+            if(food.available){
+                // If food type not yet currently in meal plan
+                if (!foodTypeHandled[food.type]){
+                    // If food not in recent foods
+                    if(INDEX_NOT_FOUND == pet.recentFoods.indexOf(food)){
+                        todaysMealPlan.foodIdList.add(food);
+                        pet.addRecentFood(food);
+                        foodTypeHandled[food.type] = true;
+                    }
+                }
+            }
+        }
     }
 
     public void generateMealPlanForPetFuture(int requestedPetId){
 
         //oh this might be complicated.
-
-        //TODO Question : Are multiple pets fed all together or separately?
-        // Dumb question. They have to be separate. You can't feed the same meal plan to lizards in
-        // different age brackets
-
-        //If they're fed all together, cooldown field can stay attached to the respective food
-
-        //If they're fed separately, each pet will need a different cooldown timer for every food
-        //If this is  the case, store the cooldown attached to the pet, not to the food
 
         //Read the future: Mod the max cooldown of a food with the distance in days from today and
         // the target date to decide if that food can be used on that date.
