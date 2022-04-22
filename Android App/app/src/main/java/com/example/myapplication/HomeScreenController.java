@@ -104,4 +104,7 @@ public class HomeScreenController extends BartScreenController {
             }
         });
     }
+
+    //TODO Bryce
+    // changeScreenToAddPet, call changeScreen
 }

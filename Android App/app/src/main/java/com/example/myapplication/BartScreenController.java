@@ -22,6 +22,9 @@ public class BartScreenController extends Fragment {
         main.changeScreenToPets();
     }
 
+    //TODO Bryce
+    // Add changeScreenToAddPet() calls main.changeScreenToAddPet
+
     protected void changeScreenToPets(String petName){ main.changeScreenToPets(petName); }
 
     public void attach(MainActivity foreignMain){

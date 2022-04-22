@@ -72,9 +72,6 @@ public class DAO extends SQLiteOpenHelper {
         }catch(SQLException ex){
             Log.e("Error", "Creation of the table failed" + ex);
         }
-
-
-
     }
 
     @Override
@@ -95,15 +92,12 @@ public class DAO extends SQLiteOpenHelper {
         cv.put(COLUMN_FOOD_AVAILABLE, available);
 
         long result = db.insert(TABLE_FOOD, null, cv);
-
-
     }
 
     public void changeAvailabiliy(int id){
         SQLiteDatabase db = this.getWritableDatabase();
 
        db.execSQL("UPDATE " + TABLE_FOOD + " SET " + COLUMN_FOOD_AVAILABLE + "= true" + " WHERE " + COLUMN_FOOD_ID + "= id;");
-
     }
 
     public void addPet(String name, String size, String age){
@@ -115,8 +109,12 @@ public class DAO extends SQLiteOpenHelper {
         cv.put(COLUMN_PET_DOB, age);
 
         long result = db.insert(TABLE_PET, null, cv);
+    }
 
-
+    // TODO High Priority Function
+    //  Update pet when edit pet form completed
+    public void updatePet(String name, String Size, String age){
+        //stuff
     }
 
 

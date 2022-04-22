@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     public CalendarScreenController calendarScreenController;
     public PetScreenController petScreenController;
     public FoodScreenController foodScreenController;
+    //TODO Bryce
+    // addPetController
     private String[] greensNames = {"Collard Greens", "Mustard Greens", "Romaine", "Dandelion", "Turnip Greens"};
     private String[] vegNames = {"Squash", "Zucchini", "Sweet Potato", "Broccoli", "Peas"};
     private String[] bugNames = {"Crickets", "Mealworms", "Grasshoppers", "Earthworms", "Calciworms"};
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         calendarScreenController = new CalendarScreenController();
         petScreenController = new PetScreenController();
         foodScreenController = new FoodScreenController();
+        //TODO Bryce
+        // addPetController
         topBar = getSupportActionBar();
 
         petScreenController.attach(this);
@@ -150,6 +154,9 @@ public class MainActivity extends AppCompatActivity {
         changeScreen(calendarScreenController);
         topBar.setTitle("Lizard's Meal Plan - Monthly View");
     }
+
+    //TODO Bryce
+    // Add changeScreenToAddPet
 
     /**
      * @name changeScreen
