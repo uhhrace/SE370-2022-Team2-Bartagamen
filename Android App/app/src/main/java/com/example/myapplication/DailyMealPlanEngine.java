@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class DailyMealPlanEngine {
 
-    public enum FoodType{LEAFYGREEN(0), VEGETABLE(1), PROTEIN(2)}
+    public enum FoodType{LEAFYGREEN, VEGETABLE, PROTEIN}
     final int MS_PER_SECOND = 1000;
     final int SECONDS_PER_MINUTE = 60;
     final int MINUTES_PER_HOUR = 60;
@@ -40,11 +40,11 @@ public class DailyMealPlanEngine {
 
         // Decrement cooldowns for all recent foods
         public void decrementCooldowns(){
-            for(food : recentFoods){
-                if(food.cooldown == 0){
+            for(FoodItem food : recentFoods){
+                if(food.getCoolDown() == 0){
                     recentFoods.remove(food);
                 }else{
-                    food.cooldown--;
+                    food.decrementCooldown();
                 }
             }
         }
@@ -69,7 +69,8 @@ public class DailyMealPlanEngine {
         public int getId(){return this.id;}
         public String getName(){return this.name;}
         public int getCoolDown(){return this.coolDown;}
-        public FoodType getFoodType(){return this.foodType;}
+        public void decrementCooldown(){coolDown--;}
+        public int getFoodType(){return this.foodType.ordinal();}
         public boolean isAvailable(){return this.available;}
     }
 
@@ -84,6 +85,10 @@ public class DailyMealPlanEngine {
     ArrayList<FoodItem> foodList;
     ArrayList<MealPlan> mealPlanList;
 
+    public ArrayList getFoodList(){
+        return foodList;
+    }
+
     private static DailyMealPlanEngine DMPEngine = null;
 
     private DailyMealPlanEngine() {
@@ -92,6 +97,9 @@ public class DailyMealPlanEngine {
         lizardList.add(new Lizard(1, "Godzilla", 60, new Date(2022, 4, 20)));
         lizardList.add(new Lizard(2, "Dragonite", 40, new Date(2021, 12, 25)));
 
+
+        //TODO High Priority
+        // Build food list from JSON object
         foodList.add(new FoodItem(0, FoodType.LEAFYGREEN, "Collard Greens"));
         foodList.add(new FoodItem(1, FoodType.LEAFYGREEN, "Mustard Greens"));
         foodList.add(new FoodItem(2, FoodType.LEAFYGREEN, "Romaine"));
@@ -126,16 +134,15 @@ public class DailyMealPlanEngine {
         Lizard pet = lizardList.get(requestedPetId);
 
         // Get Age in Months
-        long ageMs = new Date().getTime() - pet.dateOfBirth.getTime();
+        long ageMs = new Date().getTime() - pet.getDateOfBirth().getTime();
         int ageDays = (int) (ageMs / (MS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY));
         int ageMonths = ageDays % 31;
 
-        boolean[] foodTypeHandled = new int{false, false, false};
-
+        boolean[] foodTypeHandled = {false, false, false};
 
         //Create menu object for this pet today
         MealPlan todaysMealPlan = new MealPlan();
-        todaysMealPlan.petId = pet.id;
+        todaysMealPlan.petId = pet.getId();
         todaysMealPlan.date = new Date();
         pet.decrementCooldowns();
 
@@ -145,21 +152,21 @@ public class DailyMealPlanEngine {
             //10% Vegetables
             //MANDATORY PINHEAD CRICKETS EVERY DAY
             todaysMealPlan.foodIdList.add(PINHEAD_CRICKETS_ID);
-            foodTypeHandled[PROTEIN] = true;
+            foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
         }else if(ageMonths < 3){
             //65% Proteins
             //25% Leafy Greens
             //10% Vegetables
             //MANDATORY CRICKETS EVERY DAY
             todaysMealPlan.foodIdList.add(CRICKETS_ID);
-            foodTypeHandled[PROTEIN] = true;
+            foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
         }else if(ageMonths < 18){
             //50% Proteins
             //35% Leafy Greens
             //15% Vegetables
             //MANDATORY CRICKETS EVERY DAY
             todaysMealPlan.foodIdList.add(CRICKETS_ID);
-            foodTypeHandled[PROTEIN] = true;
+            foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
         }else{
             //25% Proteins
             //55% Leafy Greens
@@ -167,19 +174,21 @@ public class DailyMealPlanEngine {
         }
 
         // for each food in foods
-        for( food : foodList ){
+        for( FoodItem food : foodList ){
             if(food.available){
                 // If food type not yet currently in meal plan
-                if (!foodTypeHandled[food.type]){
+                if (!foodTypeHandled[food.getFoodType()]){
                     // If food not in recent foods
-                    if(INDEX_NOT_FOUND == pet.recentFoods.indexOf(food)){
-                        todaysMealPlan.foodIdList.add(food);
+                    if(INDEX_NOT_FOUND == pet.recentFoods.indexOf(food.getId())){
+                        todaysMealPlan.foodIdList.add(food.getId());
                         pet.addRecentFood(food);
-                        foodTypeHandled[food.type] = true;
+                        foodTypeHandled[food.getFoodType()] = true;
                     }
                 }
             }
         }
+
+        mealPlanList.add(todaysMealPlan);
     }
 
     public void generateMealPlanForPetFuture(int requestedPetId){

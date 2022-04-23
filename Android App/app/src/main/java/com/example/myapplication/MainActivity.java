@@ -3,20 +3,24 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
+
 
 public class MainActivity extends AppCompatActivity {
 
     //declare bottomNavigationView
     BottomNavigationView bottomNavigationView;
-    DAO dbFood;
-    boolean chk;
+    DAO DAO;
 
     //declare home, calendar, pets, food in scope of this file
     public HomeScreenController homeScreenController;
@@ -29,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private String[] vegNames = {"Squash", "Zucchini", "Sweet Potato", "Broccoli", "Peas"};
     private String[] bugNames = {"Crickets", "Mealworms", "Grasshoppers", "Earthworms", "Calciworms"};
 
-
     private ActionBar topBar;
 
     @Override
@@ -37,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbFood = new DAO(MainActivity.this);
+        // Init singleton DAO object here
+        DAO = new DAO(MainActivity.this);
+        // We init the DB here
+        SQLiteDatabase t = DAO.getWritableDatabase();
 
         //initialize home, calendar, pets, food in scope of this file
         homeScreenController = new HomeScreenController();
@@ -53,21 +59,6 @@ public class MainActivity extends AppCompatActivity {
         //initialize bottomNavigationView by connecting it to the xml-Element
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
-
-
-
-
-            for (int j = 0; j < greensNames.length; j++) {
-                dbFood.addItem("Leafy Green", greensNames[j], false);
-            }
-            for (int j = 0; j < vegNames.length; j++) {
-                dbFood.addItem("Vegetable", vegNames[j], false);
-            }
-            for (int j = 0; j < bugNames.length; j++) {
-                dbFood.addItem("Bug", bugNames[j], false);
-            }
-
-            dbFood.addPet("Wild Bart", "Matthew", "Test");
 
         changeScreenToHome();
     }
@@ -174,10 +165,4 @@ public class MainActivity extends AppCompatActivity {
         destinationScreen.attach(this);
     }
 
-
-
-
-        }
-
-
-
+}

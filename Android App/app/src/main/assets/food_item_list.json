@@ -1,0 +1,93 @@
+{
+  "items": [{
+    "name": "Collard Greens",
+    "type": "LEAFYGREEN",
+    "id": 1,
+    "available": false
+  },
+    {
+      "name": "Mustard Greens",
+      "type": "LEAFYGREEN",
+      "id": 2,
+      "available": false
+    },
+    {
+      "name": "Romaine",
+      "type": "LEAFYGREEN",
+      "id": 3,
+      "available": false
+    },
+    {
+      "name": "Dandelion",
+      "type": "LEAFYGREEN",
+      "id": 4,
+      "available": false
+    },
+    {
+      "name": "Turnip Greens",
+      "type": "LEAFYGREEN",
+      "id": 5,
+      "available": false
+    },
+    {
+      "name": "Squash",
+      "type": "VEGETABLE",
+      "id": 6,
+      "available": false
+    },
+    {
+      "name": "Zucchini",
+      "type": "VEGETABLE",
+      "id": 7,
+      "available": false
+    },
+    {
+      "name": "Sweet Potato",
+      "type": "VEGETABLE",
+      "id": 8,
+      "available": false
+    },
+    {
+      "name": "Broccoli",
+      "type": "VEGETABLE",
+      "id": 9,
+      "available": false
+    },
+    {
+      "name": "Peas",
+      "type": "VEGETABLE",
+      "id": 10,
+      "available": false
+    },
+    {
+      "name": "Crickets",
+      "type": "PROTEIN",
+      "id": 11,
+      "available": false
+    },
+    {
+      "name": "Mealworms",
+      "type": "PROTEIN",
+      "id": 12,
+      "available": false
+    },
+    {
+      "name": "Grasshoppers",
+      "type": "PROTEIN",
+      "id": 13,
+      "available": false
+    },
+    {
+      "name": "Earthworms",
+      "type": "PROTEIN",
+      "id": 14,
+      "available": false
+    },
+    {
+      "name": "Calciworms",
+      "type": "PROTEIN",
+      "id": 15,
+      "available": false
+    }
+  ]
+}
