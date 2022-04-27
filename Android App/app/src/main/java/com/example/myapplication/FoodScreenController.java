@@ -15,36 +15,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
+import java.util.function.Function;
+import java.util.zip.Inflater;
+
 public class FoodScreenController extends BartScreenController {
 
-    DAO dbFood1;
-    boolean executed = false;
+    DAO dao;
 
-//    ToggleButton toggleCollardGreens, toggleMustardGreens, toggleRomaine, toggleDandelion, toggleTurnipGreens, toggleBokChoy,
-//            toggleChicory, toggleEscarole, toggleWIldPlants, toggleCilantro, toggleWatercress, toggleGrapeLeaves, toggleSquash,
-//            toggleZucchini, toggleBroccoli, togglePeas, toggleCarrot, toggleBeans, toggleOkra, toggleBeanSprouts, toggleTofu,
-//            toggleBellPepper, toggleEndive, toggleCrickets, toggleMealworms, toggleGrasshoppers, toggleEarthworms, toggleCalciWorms;
-//
-//    TextView textCollardGreens, textMustardGreens, textRomaine, textDandelion, textTurnipGreens, textBokChoy,
-//            textChicory, textEscarole, textWIldPlants, textCilantro, textWatercress, textGrapeLeaves, textSquash,
-//            textZucchini, textBroccoli, textPeas, textCarrot, textBeans, textOkra, textBeanSprouts, textTofu,
-//            textBellPepper, textEndive, textCrickets, textMealworms, textGrasshoppers, textEarthworms, textCalciWorms;
-
-    //Replace these with arrays built from DB queries
-    private String[] greensNames =  { "Collard Greens", "Mustard Greens", "Romaine", "Dandelion", "Turnip Greens" };
-    private String[] vegNames = {"Squash", "Zucchini", "Sweet Potato", "Broccoli", "Peas"};
-    private String[] bugNames = {"Crickets", "Mealworms", "Grasshoppers", "Earthworms", "Calciworms"};
-
+    LayoutInflater viewInflater;
+    View foodListContainer;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
         try{
-            dbFood1 = DAO.getDAO();
+            dao = DAO.getDAO();
         }catch (Exception e){
 
         }
+
+        setFoodListContainer(inflater, container);
 
         try{
             populateFoodList(inflater, view);
@@ -52,23 +45,41 @@ public class FoodScreenController extends BartScreenController {
             e.printStackTrace();
         }
 
-        view.findViewById(R.id.crickets);
-
         return view;
     }
 
-    void populateFoodList(LayoutInflater inflater, View view) throws JSONException {
-        LinearLayout greensDiv = view.findViewById(R.id.TypeLeafyGreens);
-        LinearLayout vegDiv = view.findViewById(R.id.TypeVegetables);
-        LinearLayout bugDiv = view.findViewById(R.id.TypeBugs);
+    void setFoodListContainer(LayoutInflater inflater, ViewGroup container){
+        viewInflater = inflater;
+        foodListContainer = container;
+    }
 
-        LinearLayout destinationDiv = null;
+    public void checkAvailableFoods() throws JSONException{
+
+        JSONArray foodList = dao.getFoodList();
+
+        for(int i = 1; i < foodList.length(); i++){
+            JSONObject food = foodList.getJSONObject(i);
+
+            View mainView = ((ViewGroup)getView().getParent());
+
+            ToggleButton butt = mainView.findViewWithTag(i).findViewById(R.id.foodBankButton);
+
+            //ToggleButton butt = foods.get(0).findViewById(R.id.foodBankButton);
+
+            butt.setChecked(food.getBoolean("available"));
+        }
+
+    }
+
+    void populateFoodList(LayoutInflater inflater, View view) throws JSONException {
+
+        LinearLayout destinationDiv;
 
         // TODO High Priority
         //  Once DB is implemented, build arrays from DB queries
         //  greensNames = SELECT NAME FROM FOOD WHERE TYPE = LEAFYGREEN
 
-        DAO dao = DAO.getDAO();
+        //DAO dao = DAO.getDAO();
         JSONArray foodList = dao.getFoodList();
 
         for(int i = 0; i < foodList.length(); i++){
@@ -95,16 +106,36 @@ public class FoodScreenController extends BartScreenController {
             button = toAdd.findViewById(R.id.foodBankButton);
             itemText = toAdd.findViewById(R.id.text);
             itemText.setText(food.get("name").toString());
+            toAdd.setTag(food.get("id"));
 
-            button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            button.setChecked(food.getBoolean("available"));
+
+            //We're setting checked/unchecked in the code, so we don't want a listener
+            //  to activate every time that happens. this needs to be an onClicked listener,
+            //  so we only trigger for user input button presses
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     try {
-                        dbFood1.changeFoodAvailability((int) food.get("id"), isChecked);
+                        button.setChecked(button.isChecked());
+                        dao.changeFoodAvailability((int) food.get("id"), button.isChecked());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
+
+
+
+//            button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    try {
+//                        dao.changeFoodAvailability((int) food.get("id"), isChecked);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
 
             destinationDiv.addView(toAdd);
         }
