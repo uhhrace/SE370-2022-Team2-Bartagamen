@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -14,11 +13,6 @@ import androidx.annotation.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
-import java.util.function.Function;
-import java.util.zip.Inflater;
 
 public class FoodScreenController extends BartScreenController {
 
@@ -37,10 +31,10 @@ public class FoodScreenController extends BartScreenController {
 
         }
 
-        setFoodListContainer(inflater, container);
+        //setFoodListContainer(inflater, container);
 
         try{
-            populateFoodList(inflater, view);
+            populateFoodListButtons(inflater, view);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -71,15 +65,10 @@ public class FoodScreenController extends BartScreenController {
 
     }
 
-    void populateFoodList(LayoutInflater inflater, View view) throws JSONException {
+    private void populateFoodListButtons(LayoutInflater inflater, View view) throws JSONException {
 
         LinearLayout destinationDiv;
 
-        // TODO High Priority
-        //  Once DB is implemented, build arrays from DB queries
-        //  greensNames = SELECT NAME FROM FOOD WHERE TYPE = LEAFYGREEN
-
-        //DAO dao = DAO.getDAO();
         JSONArray foodList = dao.getFoodList();
 
         for(int i = 0; i < foodList.length(); i++){
@@ -124,8 +113,6 @@ public class FoodScreenController extends BartScreenController {
                     }
                 }
             });
-
-
 
 //            button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
