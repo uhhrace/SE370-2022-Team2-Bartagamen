@@ -34,6 +34,21 @@
             android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatSpinner>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addPetButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/rounded_corner_inactive"
+
+
+            android:fontFamily="@font/rubik_medium"
+            android:text="New Pet Profile"
+            android:textAllCaps="false"
+            android:textColor="@color/buttonDarkBlue"
+            android:textSize="25dp"></androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/foodBankButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"

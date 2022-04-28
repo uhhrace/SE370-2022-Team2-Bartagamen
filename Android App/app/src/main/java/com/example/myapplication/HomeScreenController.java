@@ -16,6 +16,7 @@ public class HomeScreenController extends BartScreenController {
 
     AppCompatSpinner petListButton;
     AppCompatButton foodBankButton;
+    AppCompatButton addPetButton ;
 
 
     //When PetDAO is functional, replace this array with actual info from the DB
@@ -40,8 +41,6 @@ public class HomeScreenController extends BartScreenController {
 
         setButtonListeners(view);
 
-
-
         return view;
     }
 
@@ -64,6 +63,7 @@ public class HomeScreenController extends BartScreenController {
     void setButtonListeners(View view){
         petListButton = view.findViewById(R.id.petListButton);
         foodBankButton = view.findViewById(R.id.foodBankButton);
+        addPetButton = view.findViewById(R.id.addPetButton) ;
 
         petListButton.setPrompt("Pet List");
 
@@ -103,8 +103,12 @@ public class HomeScreenController extends BartScreenController {
                 changeScreenToFoodBank();
             }
         });
-    }
 
-    //TODO Bryce
-    // changeScreenToAddPet, call changeScreen
+        addPetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeScreenToAddPet();
+            }
+        });
+    }
 }
