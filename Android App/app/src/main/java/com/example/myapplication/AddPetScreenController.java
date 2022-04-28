@@ -4,6 +4,7 @@ package com.example.myapplication;
 
 import java.time.Instant;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -25,7 +26,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 public class AddPetScreenController extends BartScreenController {
 
-    String name;
+    String name, date;
 
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
@@ -34,6 +35,7 @@ public class AddPetScreenController extends BartScreenController {
     AppCompatButton saveButton;
     EditText nameInput;
     TextView errorText;
+    EditText dateInput ;
     //Declare Lizard object
 
     @Nullable
@@ -52,6 +54,7 @@ public class AddPetScreenController extends BartScreenController {
 
             saveButton = view.findViewById(R.id.saveButton);
             nameInput = view.findViewById(R.id.addLizardNameText);
+            dateInput = view.findViewById(R.id.addLizardDateText) ;
             errorText = view.findViewById(R.id.errorText);
 
 
@@ -62,17 +65,19 @@ public class AddPetScreenController extends BartScreenController {
                 public void onClick(View view) {
                     //          //TODO Bryce
                     //          //read text forms for required info
-                    name = nameInput.getText().toString();
+                    name = nameInput.getText().toString() ;
+                    date = dateInput.getText().toString() ;
                     //
                     // if info incomplete
                     //TODO
                     // Set up 3 spinners with month day and year
-                    if (name.isEmpty()) {
+                    if (name.isEmpty() || date.isEmpty()) {
                         //      error, ask for more info
                         errorText.setText("Error. Some fields are incorrect or incomplete.");
                     } else {
                         changeScreenToHome();
                         nameInput.getText().clear();
+                        dateInput.getText().clear();
                         //      build Lizard object based on textform info
                         //      send lizard to DB
                         //

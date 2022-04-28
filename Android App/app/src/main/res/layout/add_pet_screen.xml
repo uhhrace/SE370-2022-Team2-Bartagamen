@@ -74,15 +74,16 @@
                 android:text="Date of Birth"
                 android:textSize="25sp" />
 
-            <Button
-                android:id="@+id/addPetDatePicker"
+            <EditText
+                android:id="@+id/addLizardDateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="MM/DD/YYYY"
-                android:textColor = "@color/black"
-                android:textSize = "25sp"
-                style="?android:spinnerStyle" />
+                android:ems="10"
+                android:hint="MM/DD/YYYY"
+                android:inputType="textPersonName"
+                android:fontFamily="@font/rubik_medium"
+                android:textSize="25sp"/>
 
         </LinearLayout>
 
