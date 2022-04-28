@@ -34,6 +34,7 @@ public class HomeScreenController extends BartScreenController {
     String[] lizardNames;
     Object lastItem;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
