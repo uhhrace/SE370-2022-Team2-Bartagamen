@@ -17,34 +17,41 @@ import org.json.JSONObject;
 public class FoodScreenController extends BartScreenController {
 
     DAO dao;
+    DailyMealPlanEngine dmp;
 
     LayoutInflater viewInflater;
     View foodListContainer;
+
+    public FoodScreenController(){
+        dao = DAO.getDAO();
+        //dmp = DailyMealPlanEngine.getDMPEngine();
+
+    }
+
+    public void setFoodListContainer(LayoutInflater viewInflater, View foodListContainer) {
+        this.foodListContainer = foodListContainer;
+        this.viewInflater = viewInflater;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
-        try{
-            dao = DAO.getDAO();
-        }catch (Exception e){
 
-        }
-
-        //setFoodListContainer(inflater, container);
-
-        try{
-            populateFoodListButtons(inflater, view);
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
+        setFoodListContainer(inflater, container);
 
         return view;
     }
 
-    void setFoodListContainer(LayoutInflater inflater, ViewGroup container){
-        viewInflater = inflater;
-        foodListContainer = container;
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        try{
+            populateFoodListButtons(viewInflater, foodListContainer);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
     }
 
     public void checkAvailableFoods() throws JSONException{
