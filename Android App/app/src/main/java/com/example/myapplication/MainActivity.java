@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     //declare bottomNavigationView
     BottomNavigationView bottomNavigationView;
     DAO DAO;
+    DailyMealPlanEngine dmp;
 
     //declare home, calendar, pets, food in scope of this file
     public HomeScreenController homeScreenController;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         DAO = new DAO(MainActivity.this);
         // We init the DB here
         SQLiteDatabase t = DAO.getWritableDatabase();
+
+        // Init singleton DMP object here
+        dmp = DailyMealPlanEngine.getDMPEngine();
 
         //initialize home, calendar, pets, food in scope of this file
         homeScreenController = new HomeScreenController();
@@ -94,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToHome() {
         changeScreen(homeScreenController);
         wipeTopBar();
+
+        DAO.updateAvailableFoods();
     }
 
     /**
@@ -131,18 +137,26 @@ public class MainActivity extends AppCompatActivity {
         // to a View / Fragment?
         topBar.setTitle("Lizard's Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
+
+        DAO.updateAvailableFoods();
     }
 
     public void changeScreenToPets(String petName) {
         changeScreen(petScreenController);
 
+        petScreenController.setDisplayedPetId( DAO.getLizard(petName).getId() );
+
         topBar.setTitle(petName + "'s Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
+
+        DAO.updateAvailableFoods();
     }
 
     public void changeScreenToCalendar() {
         changeScreen(calendarScreenController);
         topBar.setTitle("Lizard's Meal Plan - Monthly View");
+
+        DAO.updateAvailableFoods();
     }
 
     //TODO Bryce
