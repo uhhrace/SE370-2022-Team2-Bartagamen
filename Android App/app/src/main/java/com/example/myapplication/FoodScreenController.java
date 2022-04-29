@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -17,58 +16,66 @@ import org.json.JSONObject;
 
 public class FoodScreenController extends BartScreenController {
 
-    DAO dbFood1;
-    boolean executed = false;
+    DAO dao;
+    DailyMealPlanEngine dmp;
 
-//    ToggleButton toggleCollardGreens, toggleMustardGreens, toggleRomaine, toggleDandelion, toggleTurnipGreens, toggleBokChoy,
-//            toggleChicory, toggleEscarole, toggleWIldPlants, toggleCilantro, toggleWatercress, toggleGrapeLeaves, toggleSquash,
-//            toggleZucchini, toggleBroccoli, togglePeas, toggleCarrot, toggleBeans, toggleOkra, toggleBeanSprouts, toggleTofu,
-//            toggleBellPepper, toggleEndive, toggleCrickets, toggleMealworms, toggleGrasshoppers, toggleEarthworms, toggleCalciWorms;
-//
-//    TextView textCollardGreens, textMustardGreens, textRomaine, textDandelion, textTurnipGreens, textBokChoy,
-//            textChicory, textEscarole, textWIldPlants, textCilantro, textWatercress, textGrapeLeaves, textSquash,
-//            textZucchini, textBroccoli, textPeas, textCarrot, textBeans, textOkra, textBeanSprouts, textTofu,
-//            textBellPepper, textEndive, textCrickets, textMealworms, textGrasshoppers, textEarthworms, textCalciWorms;
+    LayoutInflater viewInflater;
+    View foodListContainer;
 
-    //Replace these with arrays built from DB queries
-    private String[] greensNames =  { "Collard Greens", "Mustard Greens", "Romaine", "Dandelion", "Turnip Greens" };
-    private String[] vegNames = {"Squash", "Zucchini", "Sweet Potato", "Broccoli", "Peas"};
-    private String[] bugNames = {"Crickets", "Mealworms", "Grasshoppers", "Earthworms", "Calciworms"};
+    public FoodScreenController(){
+        dao = DAO.getDAO();
+        //dmp = DailyMealPlanEngine.getDMPEngine();
 
+    }
+
+    public void setFoodListContainer(LayoutInflater viewInflater, View foodListContainer) {
+        this.foodListContainer = foodListContainer;
+        this.viewInflater = viewInflater;
+    }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.food_bank_screen, container, false);
-        try{
-            dbFood1 = DAO.getDAO();
-        }catch (Exception e){
 
-        }
-
-        try{
-            populateFoodList(inflater, view);
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-        view.findViewById(R.id.crickets);
+        setFoodListContainer(inflater, container);
 
         return view;
     }
 
-    void populateFoodList(LayoutInflater inflater, View view) throws JSONException {
-        LinearLayout greensDiv = view.findViewById(R.id.TypeLeafyGreens);
-        LinearLayout vegDiv = view.findViewById(R.id.TypeVegetables);
-        LinearLayout bugDiv = view.findViewById(R.id.TypeBugs);
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        LinearLayout destinationDiv = null;
+        try{
+            populateFoodListButtons(viewInflater, foodListContainer);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
 
-        // TODO High Priority
-        //  Once DB is implemented, build arrays from DB queries
-        //  greensNames = SELECT NAME FROM FOOD WHERE TYPE = LEAFYGREEN
+    public void checkAvailableFoods() throws JSONException{
 
-        DAO dao = DAO.getDAO();
+        JSONArray foodList = dao.getFoodList();
+
+        for(int i = 1; i < foodList.length(); i++){
+            JSONObject food = foodList.getJSONObject(i);
+
+            View mainView = ((ViewGroup)getView().getParent());
+
+            ToggleButton butt = mainView.findViewWithTag(i).findViewById(R.id.foodBankButton);
+
+            //ToggleButton butt = foods.get(0).findViewById(R.id.foodBankButton);
+
+            butt.setChecked(food.getBoolean("available"));
+        }
+
+    }
+
+    private void populateFoodListButtons(LayoutInflater inflater, View view) throws JSONException {
+
+        LinearLayout destinationDiv;
+
         JSONArray foodList = dao.getFoodList();
 
         for(int i = 0; i < foodList.length(); i++){
@@ -95,16 +102,34 @@ public class FoodScreenController extends BartScreenController {
             button = toAdd.findViewById(R.id.foodBankButton);
             itemText = toAdd.findViewById(R.id.text);
             itemText.setText(food.get("name").toString());
+            toAdd.setTag(food.get("id"));
 
-            button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            button.setChecked(food.getBoolean("available"));
+
+            //We're setting checked/unchecked in the code, so we don't want a listener
+            //  to activate every time that happens. this needs to be an onClicked listener,
+            //  so we only trigger for user input button presses
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     try {
-                        dbFood1.changeFoodAvailability((int) food.get("id"), isChecked);
+                        button.setChecked(button.isChecked());
+                        dao.changeFoodAvailability((int) food.get("id"), button.isChecked());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
+
+//            button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    try {
+//                        dao.changeFoodAvailability((int) food.get("id"), isChecked);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
 
             destinationDiv.addView(toAdd);
         }
