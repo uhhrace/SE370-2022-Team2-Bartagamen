@@ -40,8 +40,6 @@ public class HomeScreenController extends BartScreenController {
 
         setButtonListeners(view);
 
-
-
         return view;
     }
 
