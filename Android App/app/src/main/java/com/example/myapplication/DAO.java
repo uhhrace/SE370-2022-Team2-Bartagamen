@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -14,13 +16,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DAO extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "Bartagamen.db";
-    private static final int DATABASE_VERSION = 1;
+    private static int DATABASE_VERSION = 1;
     private static final String TABLE_FOOD = "food";
     private static final String COLUMN_FOOD_ID = "_id";
     private static final String COLUMN_FOOD_TYPE = "food_type";
@@ -52,6 +55,7 @@ public class DAO extends SQLiteOpenHelper {
                 COLUMN_MENU_PET_ID + " INTEGER NOT NULL, " +
                 COLUMN_MENU_FOOD_ID + " INTEGER NOT NULL);";
     private static final String drop = "DROP IF TABLE EXISTS ";
+    final String QUERY_GET_FOOD_TABLE = "SELECT * FROM " + TABLE_FOOD + "";
     private static DAO DAO = null;
 
     SQLiteDatabase BartDB = null;
@@ -91,36 +95,74 @@ public class DAO extends SQLiteOpenHelper {
             //Create JSON Object from JSON String
             foods = new JSONObject(JSONString);
             //Extract JSON Array from JSON Object
+            //Build default food list, everything unavailable
             foodList = foods.getJSONArray("items");
 
             //Iterate through JSON Array, add each item to the DB
-            for(int i = 0; i < foodList.length(); i++){
+            for(int i = 0; i <= foodList.length(); i++){
                 DAO.addItem(
                         (int) foodList.getJSONObject(i).get("id"),
                         foodList.getJSONObject(i).get("type").toString(),
                         foodList.getJSONObject(i).get("name").toString(),
                         (boolean) foodList.getJSONObject(i).get("available"));
             }
+
+            DATABASE_VERSION++;
+        } catch(SQLiteConstraintException e){
+            DATABASE_VERSION++;
         } catch (JSONException | IOException e){
             e.printStackTrace();
         }
     }
 
+    private JSONArray getUserFoodList(){
+
+        Cursor resultCursor = BartDB.rawQuery("SELECT * FROM " + TABLE_FOOD + " WHERE TRUE", null);
+        resultCursor.moveToFirst();
+
+        int id;
+        int available;
+
+        //While resultCursor.getPosition < resultCursor.getCount
+        while (resultCursor.getPosition() < resultCursor.getCount() - 1){
+            id = resultCursor.getInt(0);
+            available = resultCursor.getInt(3);
+
+            try{
+                foodList.getJSONObject(id).remove("available");
+                if(1 == available){
+                    foodList.getJSONObject(id).put("available", "true");
+                }else{
+                    foodList.getJSONObject(id).put("available", "false");
+                }
+                resultCursor.moveToNext();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return foodList;
+    }
+
     void generateTables(){
-        generateFoodTable();
-        //
+        if(1 == DATABASE_VERSION){
+            generateFoodTable();
+        }
+        getUserFoodList();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         BartDB = db;
 
-        try{
-            BartDB.execSQL(QUERY_GENERATE_FOOD_TABLE);
-            BartDB.execSQL(QUERY_GENERATE_PET_TABLE);
-            //BartDB.execSQL(QUERY_GENERATE_MEAL_TABLE);
-        }catch(SQLException ex){
-            Log.e("Error", "Creation of the table failed" + ex);
+        if(1 == DATABASE_VERSION){
+            try{
+                BartDB.execSQL(QUERY_GENERATE_FOOD_TABLE);
+                BartDB.execSQL(QUERY_GENERATE_PET_TABLE);
+                //BartDB.execSQL(QUERY_GENERATE_MEAL_TABLE);
+            }catch(SQLException ex){
+                Log.e("Error", "Creation of the table failed" + ex);
+            }
         }
     }
 
@@ -128,10 +170,10 @@ public class DAO extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         BartDB = db;
 
-        BartDB.execSQL(drop + TABLE_FOOD);
-        BartDB.execSQL(drop + TABLE_PET);
-        db.execSQL(drop + TABLE_MENU);
-        onCreate(db);
+//        BartDB.execSQL(drop + TABLE_FOOD);
+//        BartDB.execSQL(drop + TABLE_PET);
+//        BartDB.execSQL(drop + TABLE_MENU);
+//        onCreate(db);
     }
 
     public void addItem(int id, String type, String name, boolean available){
@@ -143,7 +185,7 @@ public class DAO extends SQLiteOpenHelper {
         cv.put(COLUMN_FOOD_NAME, name);
         cv.put(COLUMN_FOOD_AVAILABLE, available);
 
-        long result = BartDB.insert(TABLE_FOOD, null, cv);
+        BartDB.insert(TABLE_FOOD, null, cv);
     }
 
     public void changeFoodAvailability(int id, boolean available){
@@ -151,6 +193,14 @@ public class DAO extends SQLiteOpenHelper {
         String query = "UPDATE " + TABLE_FOOD + " SET " + COLUMN_FOOD_AVAILABLE + "= " + available + " WHERE " + COLUMN_FOOD_ID + "= " + id;
 
         BartDB.execSQL(query);
+
+        try{
+            foodList.getJSONObject(id).remove("available");
+            foodList.getJSONObject(id).put("available", available);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void addPet(String name, String size, String age){

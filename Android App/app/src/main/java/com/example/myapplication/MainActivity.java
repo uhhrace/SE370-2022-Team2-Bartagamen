@@ -8,12 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import org.json.JSONArray;
+
 import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
     public FoodScreenController foodScreenController;
     //TODO Bryce
     // addPetController
-    private String[] greensNames = {"Collard Greens", "Mustard Greens", "Romaine", "Dandelion", "Turnip Greens"};
-    private String[] vegNames = {"Squash", "Zucchini", "Sweet Potato", "Broccoli", "Peas"};
-    private String[] bugNames = {"Crickets", "Mealworms", "Grasshoppers", "Earthworms", "Calciworms"};
 
     private ActionBar topBar;
 
@@ -113,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToFoodBank() {
         changeScreen(foodScreenController);
         wipeTopBar();
+
+        try{
+            foodScreenController.checkAvailableFoods();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -158,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void changeScreen(BartScreenController destinationScreen) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, destinationScreen).commit();
-
         //TODO low priority
         //It seems we need to call this every time we change screens, it'd be better if it was only
         // called once when we initialize the bartScreen objects inside onCreate()

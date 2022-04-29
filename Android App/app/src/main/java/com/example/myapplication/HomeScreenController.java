@@ -17,7 +17,6 @@ public class HomeScreenController extends BartScreenController {
     AppCompatSpinner petListButton;
     AppCompatButton foodBankButton;
 
-
     //When PetDAO is functional, replace this array with actual info from the DB
     class Lizard{
         private String name;
@@ -39,8 +38,6 @@ public class HomeScreenController extends BartScreenController {
         View view = inflater.inflate(R.layout.home_screen, container, false);
 
         setButtonListeners(view);
-
-
 
         return view;
     }
