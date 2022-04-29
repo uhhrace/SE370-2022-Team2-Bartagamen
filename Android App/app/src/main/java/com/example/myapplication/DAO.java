@@ -127,7 +127,7 @@ public class DAO extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList getAvailableFoods(){
+    public ArrayList<FoodItem> getAvailableFoods(){
         return availableFoods;
     }
 

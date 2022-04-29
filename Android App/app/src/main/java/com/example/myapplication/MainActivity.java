@@ -113,11 +113,7 @@ public class MainActivity extends AppCompatActivity {
         changeScreen(foodScreenController);
         wipeTopBar();
 
-        try{
-            foodScreenController.checkAvailableFoods();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        foodScreenController.checkAvailableFoods();
     }
 
     /**

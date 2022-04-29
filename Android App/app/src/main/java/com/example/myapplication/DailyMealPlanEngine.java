@@ -110,6 +110,8 @@ public class DailyMealPlanEngine {
 
             food = availableFoods.get(i);
 
+            // TODO date instead of decrement
+
             // If food type not yet currently in meal plan
             if (!foodTypeHandled[availableFoods.get(i).getFoodType()]){
                 // If food not in recent foods

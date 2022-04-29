@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class FoodScreenController extends BartScreenController {
 
     DAO dao;
@@ -24,8 +26,7 @@ public class FoodScreenController extends BartScreenController {
 
     public FoodScreenController(){
         dao = DAO.getDAO();
-        //dmp = DailyMealPlanEngine.getDMPEngine();
-
+        dmp = DailyMealPlanEngine.getDMPEngine();
     }
 
     public void setFoodListContainer(LayoutInflater viewInflater, View foodListContainer) {
@@ -49,25 +50,27 @@ public class FoodScreenController extends BartScreenController {
 
         try{
             populateFoodListButtons(viewInflater, foodListContainer);
+            checkAvailableFoods();
         }catch (JSONException e){
             e.printStackTrace();
         }
     }
 
-    public void checkAvailableFoods() throws JSONException{
+    public void checkAvailableFoods(){
 
-        JSONArray foodList = dao.getFoodList();
+        ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
 
-        for(int i = 1; i < foodList.length(); i++){
-            JSONObject food = foodList.getJSONObject(i);
+        View mainView = ((ViewGroup)getView().getParent());
+        FoodItem food = null;
+        ToggleButton butt = null;
 
-            View mainView = ((ViewGroup)getView().getParent());
+        for(int i = 0; i < availableFoods.size(); i++){
+            food = availableFoods.get(i);
 
-            ToggleButton butt = mainView.findViewWithTag(i).findViewById(R.id.foodBankButton);
+            butt = mainView.findViewWithTag(food.getId()).findViewById(R.id.foodBankButton);
 
-            //ToggleButton butt = foods.get(0).findViewById(R.id.foodBankButton);
+            butt.setChecked((food.isAvailable()));
 
-            butt.setChecked(food.getBoolean("available"));
         }
 
     }
@@ -120,16 +123,6 @@ public class FoodScreenController extends BartScreenController {
                     }
                 }
             });
-
-//            button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    try {
-//                        dao.changeFoodAvailability((int) food.get("id"), isChecked);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
 
             destinationDiv.addView(toAdd);
         }
