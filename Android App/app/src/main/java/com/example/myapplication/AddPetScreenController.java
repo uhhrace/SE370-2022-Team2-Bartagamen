@@ -2,41 +2,33 @@ package com.example.myapplication;
 
 //maybe import stuff here idk
 
-import java.time.Instant;
-import java.util.Calendar;
-import java.util.TimeZone;
-
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
+
+import java.util.Calendar;
 
 public class AddPetScreenController extends BartScreenController {
 
     String name, date;
-
-    private DatePickerDialog datePickerDialog;
-    private Button dateButton;
-
+    boolean test = false ;
+    Calendar cal = Calendar.getInstance() ;
+    int monthInt, dayInt, yearInt ;
 
     AppCompatButton saveButton;
     EditText nameInput;
     TextView errorText;
     EditText dateInput ;
-    //Declare Lizard object
+
+    DAO dao ;
 
     @Nullable
     @Override
@@ -58,31 +50,71 @@ public class AddPetScreenController extends BartScreenController {
             errorText = view.findViewById(R.id.errorText);
 
 
-            //TODO Bryce
-            // Set saveButton listener
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //          //TODO Bryce
-                    //          //read text forms for required info
                     name = nameInput.getText().toString() ;
                     date = dateInput.getText().toString() ;
-                    //
-                    // if info incomplete
-                    //TODO
-                    // Set up 3 spinners with month day and year
+
+                    //check if day month and year are numbers
+                    try {
+                        String month = date.substring(0,2) ;
+                        String day = date.substring(3,5);
+                        String year = date.substring(6,10);
+
+                        int monthInt = Integer.parseInt(month) ;
+                        int dayInt = Integer.parseInt(day) ;
+                        int yearInt = Integer.parseInt(year) ;
+
+                    }
+                    catch (Exception e) {
+                        test = true ;
+                    }
+
+                    if (!test) {
+
+                        String month = date.substring(0, 2);
+                        String day = date.substring(3, 5);
+                        String year = date.substring(6, 10);
+
+                        monthInt = Integer.parseInt(month);
+                        dayInt = Integer.parseInt(day);
+                        yearInt = Integer.parseInt(year);
+                    }
+
+                    //check empty
                     if (name.isEmpty() || date.isEmpty()) {
-                        //      error, ask for more info
-                        errorText.setText("Error. Some fields are incorrect or incomplete.");
-                    } else {
+                        errorText.setText("Error. Some fields empty.");
+                    }
+                    //check length
+                    else if (test || date.length() > 10) {
+                        errorText.setText("Error. Date of Birth is incorrect or incomplete");
+                    }
+                    //check if day month or year are real numbers for a date, also check if year is in the future
+                    else if (monthInt > 12 || monthInt < 1 || dayInt > 31 || dayInt < 1 || yearInt < 2000 || yearInt > cal.get(Calendar.YEAR)) {
+                        errorText.setText("Error. Date of Birth is incorrect or incomplete");
+                    }
+                    //check if the month is in the future
+                    else if (yearInt == cal.get(Calendar.YEAR) && monthInt > cal.get(Calendar.MONTH) + 1) {
+                        errorText.setText("Error. Date of Birth is incorrect or incomplete");
+                    }
+                    //check if the day is in the future
+                    else if (yearInt == cal.get(Calendar.YEAR) && monthInt == cal.get(Calendar.MONTH) + 1 && dayInt > cal.get(Calendar.DAY_OF_MONTH)) {
+                        errorText.setText("Error. Date of Birth is incorrect or incomplete");
+                    }
+                    //check if the / symbol is correct
+                    else if (date.charAt(2) != '/' || date.charAt(5) != '/') {
+                        errorText.setText("Error. Date of Birth is incorrect or incomplete");
+                    }
+                    else {
+
+                        //dao.addPet(name, "blank", date) ;
+
                         changeScreenToHome();
                         nameInput.getText().clear();
                         dateInput.getText().clear();
-                        //      build Lizard object based on textform info
-                        //      send lizard to DB
-                        //
                     }
-
+                    test = false ;
                 }
             });
         }
