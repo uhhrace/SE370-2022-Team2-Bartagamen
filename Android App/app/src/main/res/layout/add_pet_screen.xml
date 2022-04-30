@@ -16,24 +16,22 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <!-- TODO low priority
-         Allow user to change this image to a picture of their pet which will show up on other screens -->
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginBottom ="60dp"
+            android:layout_marginBottom="60dp"
             app:srcCompat="@drawable/icon_pet_list" />
 
         <TextView
             android:id="@+id/petInformationTextView"
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:text="    Enter your pets information"
             android:layout_gravity="center"
             android:fontFamily="@font/rubik_medium"
+            android:text="    Enter your pets information"
             android:textSize="25sp" />
 
         <LinearLayout
@@ -54,8 +52,8 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:autofillHints="Pet Name"
-                android:fontFamily="@font/rubik_medium"
                 android:ems="10"
+                android:fontFamily="@font/rubik_medium"
                 android:hint="Enter Name"
                 android:inputType="textPersonName"
                 android:textSize="25sp" />
@@ -80,34 +78,40 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:fontFamily="@font/rubik_medium"
                 android:hint="MM/DD/YYYY"
                 android:inputType="textPersonName"
-                android:fontFamily="@font/rubik_medium"
-                android:textSize="25sp"/>
+                android:textSize="25sp" />
 
         </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/saveButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="15dp"
-            android:layout_marginTop="300dp"
-            android:background="@drawable/rounded_corner_inactive"
-
-
-            android:fontFamily="@font/rubik_medium"
-            android:text="Save"
-            android:textAllCaps="false"
-            android:textColor="@color/buttonDarkBlue"
-            android:textSize="25dp"></androidx.appcompat.widget.AppCompatButton>
 
         <TextView
             android:id="@+id/errorText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="114dp"
+            android:text="" />
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="15dp"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/rounded_corner_inactive"
+
+
+                android:fontFamily="@font/rubik_medium"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="@color/buttonDarkBlue"
+                android:textSize="25dp"></androidx.appcompat.widget.AppCompatButton>
 
     </LinearLayout>
 
