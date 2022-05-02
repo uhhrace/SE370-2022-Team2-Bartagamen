@@ -17,7 +17,7 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:background="@drawable/icon_pet_list"
-            android:layout_marginTop="75dp"></ImageView>
+            android:layout_marginTop="20dp"></ImageView>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/petListButton"
