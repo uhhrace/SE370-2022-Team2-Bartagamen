@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     public CalendarScreenController calendarScreenController;
     public PetScreenController petScreenController;
     public FoodScreenController foodScreenController;
-    //TODO Bryce
-    // addPetController
+
+    public AddPetScreenController addPetScreenController ;
 
     private ActionBar topBar;
 
@@ -47,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
         calendarScreenController = new CalendarScreenController();
         petScreenController = new PetScreenController();
         foodScreenController = new FoodScreenController();
-        //TODO Bryce
-        // addPetController
+        addPetScreenController = new AddPetScreenController();
         topBar = getSupportActionBar();
 
         petScreenController.attach(this);
@@ -155,8 +154,12 @@ public class MainActivity extends AppCompatActivity {
         DAO.updateAvailableFoods();
     }
 
-    //TODO Bryce
-    // Add changeScreenToAddPet
+
+    public void changeScreenToAddPet() {
+        changeScreen(addPetScreenController) ;
+        topBar.setTitle("Create New Pet");
+        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
+    }
 
     /**
      * @name changeScreen
