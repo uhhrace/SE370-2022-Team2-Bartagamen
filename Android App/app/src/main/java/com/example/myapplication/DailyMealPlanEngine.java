@@ -10,114 +10,42 @@ public class DailyMealPlanEngine {
     final int SECONDS_PER_MINUTE = 60;
     final int MINUTES_PER_HOUR = 60;
     final int HOURS_PER_DAY = 24;
+    final int DAYS_PER_MONTH = 31;
     final int INDEX_NOT_FOUND = -1;
-    final int PINHEAD_CRICKETS_ID = 15;
-    final int CRICKETS_ID = 10;
+    final int PINHEAD_CRICKETS_ID = 30;
+    final int CRICKETS_ID = 26;
 
-    class Lizard{
-        private int id;
-        private String name;
-        private Date dateOfBirth;
-        private int sizeCentimeters;
-
-        private ArrayList<FoodItem> recentFoods;
-
-        Lizard(int id, String newName, int sizeCentimeters, Date dateOfBirth){
-            this.id = id;
-            this.name = newName;
-            this.dateOfBirth = dateOfBirth;
-            this.sizeCentimeters = sizeCentimeters;
-        }
-
-        public int getId(){return this.id;}
-        public String getName(){return this.name;}
-        public Date getDateOfBirth(){return this.dateOfBirth;}
-        public int getSizeCentimeters(){return this.sizeCentimeters;}
-
-        public void addRecentFood(FoodItem recentFood){
-            recentFoods.add(recentFood);
-        }
-
-        // Decrement cooldowns for all recent foods
-        public void decrementCooldowns(){
-            for(FoodItem food : recentFoods){
-                if(food.getCoolDown() == 0){
-                    recentFoods.remove(food);
-                }else{
-                    food.decrementCooldown();
-                }
-            }
-        }
-
-    }
-
-    class FoodItem{
-        private int id;
-        private String name;
-        private int coolDown;
-        private FoodType foodType;
-        private boolean available;
-
-        FoodItem(int id, FoodType type, String name){
-            this.id = id;
-            this.name = name;
-            this.coolDown = 0;
-            this.foodType = type;
-            this.available = false;
-        }
-
-        public int getId(){return this.id;}
-        public String getName(){return this.name;}
-        public int getCoolDown(){return this.coolDown;}
-        public void decrementCooldown(){coolDown--;}
-        public int getFoodType(){return this.foodType.ordinal();}
-        public boolean isAvailable(){return this.available;}
-    }
+    DAO dao;
 
     class MealPlan{
         private int id;
         private Date date;
         private int petId;
         private ArrayList<Integer> foodIdList;
+
+        MealPlan(){
+            this.id = -1;
+            this.date = null;
+            this.petId = -1;
+            this.foodIdList = new ArrayList<>();
+        }
+
+        public int getId(){return id;}
+        public Date getDate(){return date;}
+        public int getPetId(){return petId;}
+        public ArrayList<Integer> getFoodIdList(){return foodIdList;}
     }
 
-    ArrayList<Lizard> lizardList;
-    ArrayList<FoodItem> foodList;
-    ArrayList<MealPlan> mealPlanList;
-
-    public ArrayList getFoodList(){
-        return foodList;
-    }
+    ArrayList<MealPlan> mealPlanList = new ArrayList<>();
 
     private static DailyMealPlanEngine DMPEngine = null;
 
     private DailyMealPlanEngine() {
-        //Populate lists
-        lizardList.add(new Lizard(0, "Shenron", 90, new Date(2014, 3, 26)));
-        lizardList.add(new Lizard(1, "Godzilla", 60, new Date(2022, 4, 20)));
-        lizardList.add(new Lizard(2, "Dragonite", 40, new Date(2021, 12, 25)));
 
-
-        //TODO High Priority
-        // Build food list from JSON object
-        foodList.add(new FoodItem(0, FoodType.LEAFYGREEN, "Collard Greens"));
-        foodList.add(new FoodItem(1, FoodType.LEAFYGREEN, "Mustard Greens"));
-        foodList.add(new FoodItem(2, FoodType.LEAFYGREEN, "Romaine"));
-        foodList.add(new FoodItem(3, FoodType.LEAFYGREEN, "Dandelions"));
-        foodList.add(new FoodItem(4, FoodType.LEAFYGREEN, "Turnip Greens"));
-
-        foodList.add(new FoodItem(5, FoodType.VEGETABLE, "Squash"));
-        foodList.add(new FoodItem(6, FoodType.VEGETABLE, "Zucchini"));
-        foodList.add(new FoodItem(7, FoodType.VEGETABLE, "Sweet Potato"));
-        foodList.add(new FoodItem(8, FoodType.VEGETABLE, "Broccoli"));
-        foodList.add(new FoodItem(9, FoodType.VEGETABLE, "Peas"));
-
-        foodList.add(new FoodItem(10, FoodType.PROTEIN, "Crickets"));
-        foodList.add(new FoodItem(11, FoodType.PROTEIN, "Mealworms"));
-        foodList.add(new FoodItem(12, FoodType.PROTEIN, "Grasshoppers"));
-        foodList.add(new FoodItem(13, FoodType.PROTEIN, "Earthworms"));
-        foodList.add(new FoodItem(14, FoodType.PROTEIN, "Calciworms"));
-        foodList.add(new FoodItem(15, FoodType.PROTEIN, "Pinhead Crickets"));
+        dao = DAO.getDAO();
+        dao.addPet( 1,"Shenron", "90", "2014/3/26");
+        dao.addPet(2,"Godzilla", "60", "2022/4/20");
+        dao.addPet( 3,"Dragonite", "40", "2021/12/25");
     }
 
     public static DailyMealPlanEngine getDMPEngine(){
@@ -127,16 +55,16 @@ public class DailyMealPlanEngine {
         return DMPEngine;
     }
 
-    public void generateMealPlanForPetToday(int requestedPetId){
+    public MealPlan generateMealPlanForPetToday(int requestedPetId){
 
         //Currently petId is also the index.
         //TODO Figure out how to find the index of the pet when this is not the case
-        Lizard pet = lizardList.get(requestedPetId);
+        Lizard pet = dao.getLizard(requestedPetId);
 
         // Get Age in Months
         long ageMs = new Date().getTime() - pet.getDateOfBirth().getTime();
         int ageDays = (int) (ageMs / (MS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY));
-        int ageMonths = ageDays % 31;
+        int ageMonths = (int) Math.floor(ageDays / DAYS_PER_MONTH);
 
         boolean[] foodTypeHandled = {false, false, false};
 
@@ -145,6 +73,8 @@ public class DailyMealPlanEngine {
         todaysMealPlan.petId = pet.getId();
         todaysMealPlan.date = new Date();
         pet.decrementCooldowns();
+        ArrayList recentFoods = pet.getRecentFoods();
+        ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
 
         if(ageMonths < 1){
             //80% Proteins
@@ -173,29 +103,37 @@ public class DailyMealPlanEngine {
             //20% Vegetables
         }
 
-        // for each food in foods
-        for( FoodItem food : foodList ){
-            if(food.available){
-                // If food type not yet currently in meal plan
-                if (!foodTypeHandled[food.getFoodType()]){
-                    // If food not in recent foods
-                    if(INDEX_NOT_FOUND == pet.recentFoods.indexOf(food.getId())){
-                        todaysMealPlan.foodIdList.add(food.getId());
-                        pet.addRecentFood(food);
-                        foodTypeHandled[food.getFoodType()] = true;
-                    }
+        FoodItem food;
+
+        // for each available food
+        for(int i = 0; i < availableFoods.size(); i++){
+
+            food = availableFoods.get(i);
+
+            // TODO date instead of decrement
+
+            // If food type not yet currently in meal plan
+            if (!foodTypeHandled[availableFoods.get(i).getFoodType()]){
+                // If food not in recent foods
+                if(!recentFoods.contains(food.getId())){
+                    todaysMealPlan.foodIdList.add(food.getId());
+                    pet.addRecentFood(food);
+                    foodTypeHandled[food.getFoodType()] = true;
                 }
             }
         }
 
         mealPlanList.add(todaysMealPlan);
+
+        return todaysMealPlan;
     }
 
     public void generateMealPlanForPetFuture(int requestedPetId){
 
         //oh this might be complicated.
 
-        //Read the future: Mod the max cooldown of a food with the distance in days from today and
-        // the target date to decide if that food can be used on that date.
+        //Read the future: Create new instance of lizard, iterate 14 times, process cooldowns,
+        //generate meal plan for today+n iterations. Mod the max cooldown of a food with the distance
+        //in days from today and the target date to decide if that food can be used on that date.
     }
 }
