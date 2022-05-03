@@ -80,7 +80,7 @@
                 android:ems="10"
                 android:fontFamily="@font/rubik_medium"
                 android:hint="MM/DD/YYYY"
-                android:inputType="textPersonName"
+                android:inputType="date"
                 android:textSize="25sp" />
 
         </LinearLayout>

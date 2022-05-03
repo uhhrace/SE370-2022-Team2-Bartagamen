@@ -1,81 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundBlue"
-    android:gravity="center">
 
-    <LinearLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/backgroundBlue"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- TODO low priority
+     Replace logo with new icon, this is just a placeholder -->
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@drawable/icon_pet_list"
+        android:layout_marginTop="75dp"/>
+
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/petListButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/rounded_corner_inactive"
+
+        android:text="Pet List"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:textColor="@color/buttonDarkBlue">
+
+    </androidx.appcompat.widget.AppCompatSpinner>
+
+    <!--androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addPetButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/rounded_corner_inactive"
+
+
+        android:fontFamily="@font/rubik_medium"
+        android:text="New Pet Profile"
+        android:textAllCaps="false"
+        android:textColor="@color/buttonDarkBlue"
+        android:textSize="25sp" /-->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/foodBankButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/rounded_corner_inactive"
+
+
+        android:fontFamily="@font/rubik_medium"
+        android:text="Food Bank"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:textColor="@color/buttonDarkBlue" />
+
+    <TextView
+        android:id="@+id/DailyMenuSumTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="75dp"
+        android:layout_marginHorizontal="15dp"
+        android:padding="15dp"
+        android:background="@color/textBackgroundGray"
+        android:fontFamily="@font/rubik_medium"
+        android:textColor="@color/black"
+        android:text="Daily Food Sum:" />
 
-        <!-- TODO low priority
-         Replace logo with new icon, this is just a placeholder -->
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:background="@drawable/icon_pet_list"
-            android:layout_marginTop="20dp"></ImageView>
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/petListButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginHorizontal="15dp"
-            android:background="@drawable/rounded_corner_inactive"
-
-            android:text="Pet List"
-            android:textAllCaps="false"
-            android:textSize="25dp"
-            android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatSpinner>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/addPetButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="15dp"
-            android:background="@drawable/rounded_corner_inactive"
-
-
-            android:fontFamily="@font/rubik_medium"
-            android:text="New Pet Profile"
-            android:textAllCaps="false"
-            android:textColor="@color/buttonDarkBlue"
-            android:textSize="25dp"></androidx.appcompat.widget.AppCompatButton>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/foodBankButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="15dp"
-            android:layout_marginHorizontal="15dp"
-            android:background="@drawable/rounded_corner_inactive"
-
-
-            android:fontFamily="@font/rubik_medium"
-            android:text="Food Bank"
-            android:textAllCaps="false"
-            android:textSize="25dp"
-            android:textColor="@color/buttonDarkBlue"></androidx.appcompat.widget.AppCompatButton>
-
-        <TextView
-            android:id="@+id/DailyMenuSumTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="75dp"
-            android:layout_marginHorizontal="15dp"
-            android:padding="15dp"
-            android:background="@color/textBackgroundGray"
-            android:fontFamily="@font/rubik_medium"
-            android:textColor="@color/black"
-            android:text="Daily Food Sum:"></TextView>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
