@@ -21,14 +21,14 @@ public class AddPetScreenController extends BartScreenController {
     String name, date;
     boolean test = false ;
     Calendar cal = Calendar.getInstance() ;
-    int monthInt, dayInt, yearInt ;
+    int monthInt, dayInt, yearInt;
 
     AppCompatButton saveButton;
     EditText nameInput;
     TextView errorText;
-    EditText dateInput ;
+    EditText dateInput;
 
-    DAO dao ;
+    DAO dao;
 
     AddPetScreenController(){
         dao = DAO.getDAO();

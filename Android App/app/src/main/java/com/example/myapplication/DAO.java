@@ -16,11 +16,18 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class DAO extends SQLiteOpenHelper {
+
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
 
     private Context context;
     private static final String DATABASE_NAME = "Bartagamen.db";
@@ -222,10 +229,6 @@ public class DAO extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         BartDB = db;
 
-//        BartDB.execSQL(drop + TABLE_FOOD);
-//        BartDB.execSQL(drop + TABLE_PET);
-//        BartDB.execSQL(drop + TABLE_MENU);
-//        onCreate(db);
     }
 
     public void addItem(int id, String type, String name, boolean available){
@@ -258,7 +261,7 @@ public class DAO extends SQLiteOpenHelper {
         Lizard newLizard = new Lizard(
                 resultCursor.getInt(0),
                 resultCursor.getString(1),
-                resultCursor.getInt(2),
+                resultCursor.getString(2),
                 new Date(resultCursor.getString(3)));
 
         return newLizard;
@@ -274,21 +277,71 @@ public class DAO extends SQLiteOpenHelper {
         Lizard newLizard = new Lizard(
                 resultCursor.getInt(0),
                 resultCursor.getString(1),
-                resultCursor.getInt(2),
+                resultCursor.getString(2),
                 new Date(resultCursor.getString(3)));
 
         return newLizard;
     }
 
-    public void addPet(int id, String name, String size, String age){
+    public Lizard[] getLizards() throws ParseException {
+        String[] columns = {COLUMN_PET_ID, COLUMN_PET_NAME, COLUMN_PET_SIZE, COLUMN_PET_DOB};
+        String selection = "TRUE";
+
+        Lizard newLizard = null;
+
+        Cursor resultCursor = BartDB.query(true, TABLE_PET, columns, selection,  null, null, null, null , null);
+        Lizard[] lizards = new Lizard[resultCursor.getCount()];
+
+        resultCursor.moveToFirst();
+
+        while (resultCursor.getPosition() < resultCursor.getCount()){
+
+            newLizard = new Lizard(
+                    resultCursor.getInt(0),
+                    resultCursor.getString(1),
+                    resultCursor.getString(2),
+                    dateFormatter.parse(resultCursor.getString(3))
+            );
+
+            lizards[resultCursor.getPosition()] = newLizard;
+            resultCursor.moveToNext();
+        }
+
+        return lizards;
+    }
+
+    public String[] getLizardNames(){
+
+        Lizard[] lizards = null;
+        String[] names;
+
+        try{
+            lizards = getLizards();
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        names = new String[lizards.length+2];
+
+
+        names[0] = "Choose a Lizard";
+        names[names.length-1] = "Add new Lizard";
+
+        for(int i = 1; i < lizards.length+1; i++){
+            names[i] = lizards[i-1].getName();
+        }
+
+        return names;
+    }
+
+    public void addPet(String name, String size, String age){
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_PET_ID, id);
         cv.put(COLUMN_PET_NAME, name);
         cv.put(COLUMN_PET_SIZE, size);
         cv.put(COLUMN_PET_DOB, age);
 
-        long result = BartDB.insert(TABLE_PET, null, cv);
+        BartDB.insert(TABLE_PET, null, cv);
     }
 
     // TODO High Priority Function
