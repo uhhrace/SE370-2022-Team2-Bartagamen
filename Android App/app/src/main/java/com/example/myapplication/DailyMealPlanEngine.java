@@ -43,9 +43,9 @@ public class DailyMealPlanEngine {
     private DailyMealPlanEngine() {
 
         dao = DAO.getDAO();
-        dao.addPet( 1,"Shenron", "90", "2014/3/26");
-        dao.addPet(2,"Godzilla", "60", "2022/4/20");
-        dao.addPet( 3,"Dragonite", "40", "2021/12/25");
+//        dao.addPet( 1,"Shenron", "90", "2014/3/26");
+//        dao.addPet(2,"Godzilla", "60", "2022/4/20");
+//        dao.addPet( 3,"Dragonite", "40", "2021/12/25");
     }
 
     public static DailyMealPlanEngine getDMPEngine(){

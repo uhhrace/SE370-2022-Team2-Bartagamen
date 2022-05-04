@@ -7,11 +7,11 @@ public class Lizard{
     private int id;
     private String name;
     private Date dateOfBirth;
-    private int sizeCentimeters;
+    private String sizeCentimeters;
 
     private ArrayList<FoodItem> recentFoods;
 
-    Lizard(int id, String newName, int sizeCentimeters, Date dateOfBirth){
+    Lizard(int id, String newName, String sizeCentimeters, Date dateOfBirth){
         this.id = id;
         this.name = newName;
         this.dateOfBirth = dateOfBirth;
@@ -22,7 +22,7 @@ public class Lizard{
     public int getId(){return this.id;}
     public String getName(){return this.name;}
     public Date getDateOfBirth(){return this.dateOfBirth;}
-    public int getSizeCentimeters(){return this.sizeCentimeters;}
+    public String getSizeCentimeters(){return this.sizeCentimeters;}
 
     public void addRecentFood(FoodItem recentFood){
         recentFoods.add(recentFood);
