@@ -37,7 +37,7 @@ public class PetScreenController extends BartScreenController {
     ToggleButton satButton;
     ToggleButton[] dayButtons;
     AppCompatButton monthButton;
-
+    AppCompatButton editPetButton;
     int currentDay;
     MealPlan currentMealPlan;
 
@@ -80,6 +80,8 @@ public class PetScreenController extends BartScreenController {
 
         setMonthButtonListener(view);
 
+        setEditPetButtonListener(view);
+
         autoSelectDayOfWeek();
 
         //TODO low priority
@@ -108,6 +110,16 @@ public class PetScreenController extends BartScreenController {
         monthButton = view.findViewById(R.id.ViewMonthlyButton);
 
         monthButton.setOnClickListener(tempView -> changeScreenToCalendar());
+    }
+
+    void setEditPetButtonListener(View view) {
+        editPetButton = view.findViewById(R.id.EditPetButton) ;
+        editPetButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changeScreenToEditPet();
+            }
+        }) ;
     }
 
     void setDayButtonListeners(View view){

@@ -155,6 +155,22 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/EditPetButton"
+            android:layout_width="match_parent"
+            android:layout_height="53.3dp"
+            android:layout_marginBottom="45dp"
+            android:background="@drawable/rounded_corner_inactive"
+            android:backgroundTint="@color/buttonLightBlue"
+
+            android:fontFamily="@font/rubik_medium"
+            android:text="Edit Pet Information"
+            android:textAllCaps="false"
+            android:textColor="@color/buttonDarkBlue"
+            android:textSize="25dp"
+
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ViewMonthlyButton"
             android:layout_width="match_parent"
             android:layout_height="53.3dp"

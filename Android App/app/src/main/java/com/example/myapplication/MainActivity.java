@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public FoodScreenController foodScreenController;
 
     public AddPetScreenController addPetScreenController ;
+    public EditPetScreenController editPetScreenController ;
 
     private ActionBar topBar;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         petScreenController = new PetScreenController();
         foodScreenController = new FoodScreenController();
         addPetScreenController = new AddPetScreenController();
+        editPetScreenController = new EditPetScreenController() ;
         topBar = getSupportActionBar();
 
         petScreenController.attach(this);
@@ -154,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToAddPet() {
         changeScreen(addPetScreenController) ;
         topBar.setTitle("Create New Pet");
+        topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
+    }
+
+    public void changeScreenToEditPet() {
+        changeScreen(editPetScreenController) ;
+        topBar.setTitle("Edit Pet Information");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
     }
 
