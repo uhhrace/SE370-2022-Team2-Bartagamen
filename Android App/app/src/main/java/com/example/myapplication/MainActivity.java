@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         changeScreen(petScreenController);
 
         petScreenController.setDisplayedPetId( DAO.getLizard(petName).getId() );
+        editPetScreenController.setDisplayedPetId(DAO.getLizard(petName).getId());
 
         topBar.setTitle(petName + "'s Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));

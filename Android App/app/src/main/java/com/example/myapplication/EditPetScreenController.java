@@ -20,7 +20,7 @@ public class EditPetScreenController extends BartScreenController {
     String name, date ;
     boolean test = false ;
     Calendar cal = Calendar.getInstance() ;
-    int monthInt, dayInt, yearInt;
+    int monthInt, dayInt, yearInt, DISPLAYED_PET_ID;
 
     AppCompatButton saveButton;
     AppCompatButton deleteButton ;
@@ -28,9 +28,8 @@ public class EditPetScreenController extends BartScreenController {
     TextView errorText;
     EditText dateInput;
 
-    PetScreenController PetScreen = new PetScreenController() ;
-
     DAO dao;
+
 
     EditPetScreenController(){
         dao = DAO.getDAO();
@@ -44,22 +43,56 @@ public class EditPetScreenController extends BartScreenController {
         View view = inflater.inflate(R.layout.edit_pet_screen, container, false);
 
         setButtonListeners(view);
-        setPrevValues() ;
+        setPrevValues();
 
         return view ;
 
     }
 
+    public void setDisplayedPetId(int newId){
+        DISPLAYED_PET_ID = newId;
+    }
+
     void setPrevValues() {
-        try {
-            Lizard tempLizard = dao.getLizard(PetScreen.DISPLAYED_PET_ID) ;
-            //nameInput.setText(tempLizard.getName());
-            //dateInput.setText(tempLizard.getDateOfBirth().toString());
+
+        Lizard tempLizard = dao.getLizard(DISPLAYED_PET_ID) ;
+
+        nameInput.setText(tempLizard.getName());
+        String dateFormatted;
+        String grabDay = tempLizard.getDateOfBirth().toString().substring(8,10) ;
+        String grabYear = tempLizard.getDateOfBirth().toString().substring(24,28) ;
+        String grabMonth = tempLizard.getDateOfBirth().toString().substring(4,7) ;
+
+        switch (grabMonth) {
+            case "Jan" : grabMonth = "01" ;
+            break ;
+            case "Feb" : grabMonth = "02" ;
+            break ;
+            case "Mar" : grabMonth = "03" ;
+            break ;
+            case "Apr" : grabMonth = "04" ;
+            break ;
+            case "May" : grabMonth = "05" ;
+            break ;
+            case "Jun" : grabMonth = "06" ;
+            break ;
+            case "Jul" : grabMonth = "07" ;
+            break ;
+            case "Aug" : grabMonth = "08" ;
+            break ;
+            case "Sep" : grabMonth = "09" ;
+            break ;
+            case "Oct" : grabMonth = "10" ;
+            break ;
+            case "Nov" : grabMonth = "11" ;
+            break ;
+            case "Dec" : grabMonth = "12" ;
+            break ;
         }
-        catch (Exception e) {
-            nameInput.setText("fail") ;
-            dateInput.setText("fail") ;
-        }
+
+            dateFormatted = grabMonth + "/" + grabDay + "/" + grabYear ;
+
+            dateInput.setText(dateFormatted);
     }
 
 
@@ -145,9 +178,9 @@ public class EditPetScreenController extends BartScreenController {
                     //TODO
                     // add edit pet function here when complete
 
-                    changeScreenToPets();
-                    nameInput.getText().clear();
-                    dateInput.getText().clear();
+                    changeScreenToHome();
+                    //nameInput.getText().clear();
+                    //dateInput.getText().clear();
                 }
                 test = false ;
             }
