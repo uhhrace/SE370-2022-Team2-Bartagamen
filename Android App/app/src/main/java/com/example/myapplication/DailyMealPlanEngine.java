@@ -136,14 +136,17 @@ public class DailyMealPlanEngine extends AppCompatActivity {
 
         mealItems = mealItems+3;
 
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        final PetScreenController  frg = new PetScreenController ();
-        ft.replace(R.id.container, frg);
-
+        //push data from Activity to Fragment
+        PetScreenController frg = new PetScreenController ();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final Bundle bdl = new Bundle();
         bdl.putString("count", ""+mealItems);
         frg.setArguments(bdl);
+
+        //This line is not working, idk why
+      //  ft.replace(R.id.fragmentContainer, frg).commit();
+
 
         return todaysMealPlan;
     }
