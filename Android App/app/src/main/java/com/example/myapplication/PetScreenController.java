@@ -45,7 +45,7 @@ public class PetScreenController extends BartScreenController {
 
     int DISPLAYED_PET_ID;
 
-    TextView dateView;
+    TextView dateView, countItems;
     Date currentDate;
     CharSequence selectedDateString;
 
@@ -61,9 +61,13 @@ public class PetScreenController extends BartScreenController {
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        String countFoodItems = getArguments().getString("count");
+
         View view = inflater.inflate(R.layout.pet_screen, container, false);
 
         dateView = view.findViewById(R.id.dateField);
+        countItems = view.findViewById(R.id.countDailyFoodItems);
+        countItems.setText("Daily Food Items: "+countFoodItems);
         dateView.setText("Date: "+ selectedDateString);
 
         setDayButtonListeners(view);

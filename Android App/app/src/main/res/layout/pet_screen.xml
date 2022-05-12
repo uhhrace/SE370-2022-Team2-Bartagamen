@@ -10,32 +10,33 @@
     <!-- Day Selector Layout -->
 
     <LinearLayout
+        android:id="@+id/countItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingHorizontal="15dp"
         android:paddingVertical="15dp"
-        android:paddingBottom="45dp"
-        android:orientation="vertical">
+        android:paddingBottom="45dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="53.3dp"
             android:layout_marginTop="45dp"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
 
             <ToggleButton
                 android:id="@+id/sunButton"
                 android:layout_width="53.3dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corner_inactive"
                 android:fontFamily="@font/rubik_medium"
                 android:textColor="@color/buttonDarkBlue"
                 android:textOff="@string/shortString_Sunday"
                 android:textOn="@string/shortString_Sunday"
                 android:textSize="20sp"
-                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -43,13 +44,13 @@
                 android:layout_width="53.3dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/sunButton"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corner_inactive"
                 android:fontFamily="@font/rubik_medium"
                 android:textColor="@color/buttonDarkBlue"
                 android:textOff="@string/shortString_Monday"
                 android:textOn="@string/shortString_Monday"
                 android:textSize="20sp"
-                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -57,13 +58,13 @@
                 android:layout_width="53.3dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/monButton"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corner_inactive"
                 android:fontFamily="@font/rubik_medium"
                 android:textColor="@color/buttonDarkBlue"
                 android:textOff="@string/shortString_Tuesday"
                 android:textOn="@string/shortString_Tuesday"
                 android:textSize="20sp"
-                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -71,13 +72,13 @@
                 android:layout_width="53.3dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/tueButton"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corner_inactive"
                 android:fontFamily="@font/rubik_medium"
                 android:textColor="@color/buttonDarkBlue"
                 android:textOff="@string/shortString_Wednesday"
                 android:textOn="@string/shortString_Wednesday"
                 android:textSize="20sp"
-                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -85,13 +86,13 @@
                 android:layout_width="53.3dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/wedButton"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corner_inactive"
                 android:fontFamily="@font/rubik_medium"
                 android:textColor="@color/buttonDarkBlue"
                 android:textOff="@string/shortString_Thursday"
                 android:textOn="@string/shortString_Thursday"
                 android:textSize="20sp"
-                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -100,13 +101,13 @@
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@id/satButton"
                 android:layout_toRightOf="@id/thuButton"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corner_inactive"
                 android:fontFamily="@font/rubik_medium"
                 android:textColor="@color/buttonDarkBlue"
                 android:textOff="@string/shortString_Friday"
                 android:textOn="@string/shortString_Friday"
                 android:textSize="20sp"
-                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
             <ToggleButton
@@ -114,13 +115,13 @@
                 android:layout_width="53.3dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corner_inactive"
                 android:fontFamily="@font/rubik_medium"
                 android:textColor="@color/buttonDarkBlue"
                 android:textOff="@string/shortString_Saturday"
                 android:textOn="@string/shortString_Saturday"
                 android:textSize="20sp"
-                android:layout_weight="1"
                 tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
@@ -128,14 +129,32 @@
         <!-- View Monthly Button -->
         <!-- TODO low priority
         fix this font family -->
-        <TextView
-            android:id="@+id/dateField"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/rubik_medium"
-            android:paddingBottom="25dp"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dateField"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:fontFamily="@font/rubik_medium"
+                android:paddingBottom="25dp"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/countDailyFoodItems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:fontFamily="@font/rubik_medium"
+                android:paddingBottom="25dp"
+                android:text="Daily Food Items: 0"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ViewMonthlyButton"
@@ -147,9 +166,9 @@
 
             android:fontFamily="@font/rubik_medium"
             android:text="View Monthly"
-            android:textSize="25dp"
             android:textAllCaps="false"
             android:textColor="@color/buttonDarkBlue"
+            android:textSize="25dp"
 
             />
 
@@ -159,12 +178,12 @@
             android:id="@+id/petScreenMealPlanDisplay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/textBackgroundGray"
-            android:padding="10dp"
             android:layout_marginBottom="60dp"
-            android:textColor="@color/black"
+            android:background="@color/textBackgroundGray"
             android:fontFamily="@font/rubik_medium"
-            android:text="Protein : \n\t5x Medium crickets\n\t5x Dubia roaches" />
+            android:padding="10dp"
+            android:text="Protein : \n\t5x Medium crickets\n\t5x Dubia roaches"
+            android:textColor="@color/black" />
     </LinearLayout>
 
 

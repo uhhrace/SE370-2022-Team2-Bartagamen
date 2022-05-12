@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -56,6 +59,9 @@ public class DailyMealPlanEngine {
     }
 
     public MealPlan generateMealPlanForPetToday(int requestedPetId){
+
+        //count mealItems
+        int mealItems = 0;
 
         //Currently petId is also the index.
         //TODO Figure out how to find the index of the pet when this is not the case
@@ -124,6 +130,14 @@ public class DailyMealPlanEngine {
         }
 
         mealPlanList.add(todaysMealPlan);
+
+        mealItems = mealItems+3;
+
+        //push count(mealitems) to PetScreenController
+        Bundle bundle = new Bundle();
+        bundle.putString("count", ""+mealItems);
+        PetScreenController fragmentObj = new PetScreenController();
+        fragmentObj.setArguments(bundle);
 
         return todaysMealPlan;
     }
