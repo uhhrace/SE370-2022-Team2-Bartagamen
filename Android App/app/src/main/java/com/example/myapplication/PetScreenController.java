@@ -61,13 +61,26 @@ public class PetScreenController extends BartScreenController {
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        String countFoodItems = getArguments().getString("count");
+       // String countFoodItems = getArguments().getString("count");
 
         View view = inflater.inflate(R.layout.pet_screen, container, false);
 
         dateView = view.findViewById(R.id.dateField);
         countItems = view.findViewById(R.id.countDailyFoodItems);
-        countItems.setText("Daily Food Items: "+countFoodItems);
+        final Bundle bdl = getArguments();
+
+        //get Data from Daily Meal Plan Engine
+        String str = "";
+        try
+        {
+            str = bdl.getString("count");
+            countItems.setText("Daily Food Items: "+str);
+        }
+        catch(final Exception e)
+        {
+            // Do nothing
+        }
+
         dateView.setText("Date: "+ selectedDateString);
 
         setDayButtonListeners(view);

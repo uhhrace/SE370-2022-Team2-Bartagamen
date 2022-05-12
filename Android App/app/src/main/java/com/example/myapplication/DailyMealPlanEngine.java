@@ -3,10 +3,13 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DailyMealPlanEngine {
+public class DailyMealPlanEngine extends AppCompatActivity {
 
     public enum FoodType{LEAFYGREEN, VEGETABLE, PROTEIN}
     final int MS_PER_SECOND = 1000;
@@ -133,11 +136,14 @@ public class DailyMealPlanEngine {
 
         mealItems = mealItems+3;
 
-        //push count(mealitems) to PetScreenController
-        Bundle bundle = new Bundle();
-        bundle.putString("count", ""+mealItems);
-        PetScreenController fragmentObj = new PetScreenController();
-        fragmentObj.setArguments(bundle);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        final PetScreenController  frg = new PetScreenController ();
+        ft.replace(R.id.container, frg);
+
+        final Bundle bdl = new Bundle();
+        bdl.putString("count", ""+mealItems);
+        frg.setArguments(bdl);
 
         return todaysMealPlan;
     }
