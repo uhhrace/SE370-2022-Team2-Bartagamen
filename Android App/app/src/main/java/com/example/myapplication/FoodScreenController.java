@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +80,9 @@ public class FoodScreenController extends BartScreenController {
 
         LinearLayout destinationDiv;
 
-        JSONArray foodList = dao.getFoodList();
+        SQLiteDatabase t = dao.getWritableDatabase();
+
+        JSONArray foodList = dao.getUserFoodList();
 
         for(int i = 0; i < foodList.length(); i++){
             View toAdd;

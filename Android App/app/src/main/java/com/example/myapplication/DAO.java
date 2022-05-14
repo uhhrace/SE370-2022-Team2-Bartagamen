@@ -41,6 +41,7 @@ public class DAO extends SQLiteOpenHelper{
             //Do nothing
         }else{
             SQLiteDatabase t = DAO.getWritableDatabase();
+            DAO.generateTables();
         }
 
         return DAO;
@@ -146,7 +147,7 @@ public class DAO extends SQLiteOpenHelper{
 
     public JSONArray getUserFoodList(){
 
-        Cursor resultCursor = BartDB.rawQuery("SELECT * FROM " + TABLE_FOOD + " WHERE TRUE", null);
+        Cursor resultCursor = BartDB.rawQuery("SELECT * FROM " + TABLE_FOOD, null);
         resultCursor.moveToFirst();
 
         int id;
@@ -158,16 +159,16 @@ public class DAO extends SQLiteOpenHelper{
             available = resultCursor.getInt(3);
 
             try{
-                foodList.getJSONObject(id).remove("available");
+//                foodList.getJSONObject(id).remove("available");
                 if(1 == available){
                     foodList.getJSONObject(id).put("available", "true");
                 }else{
                     foodList.getJSONObject(id).put("available", "false");
                 }
-                resultCursor.moveToNext();
             }catch (Exception e){
                 e.printStackTrace();
             }
+            resultCursor.moveToNext();
         }
 
         resultCursor.close();
@@ -217,7 +218,7 @@ public class DAO extends SQLiteOpenHelper{
     }
 
     public void addItem(int id, String type, String name, boolean available){
-        //BartDB = this.getWritableDatabase();
+        BartDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_FOOD_ID, id);
