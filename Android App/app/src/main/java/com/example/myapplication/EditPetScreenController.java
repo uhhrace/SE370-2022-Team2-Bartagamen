@@ -179,8 +179,8 @@ public class EditPetScreenController extends BartScreenController {
                     // add edit pet function here when complete
 
                     changeScreenToHome();
-                    //nameInput.getText().clear();
-                    //dateInput.getText().clear();
+                    nameInput.getText().clear();
+                    dateInput.getText().clear();
                 }
                 test = false ;
             }
