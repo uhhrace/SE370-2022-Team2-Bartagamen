@@ -34,6 +34,7 @@ public class DAO extends SQLiteOpenHelper{
 
     private static DAO DAO = null;
     SQLiteDatabase BartDB = null;
+    private DailyMealPlanEngine dmp = null;
 
     // Singleton object
     public static DAO getDAO() {
@@ -50,11 +51,13 @@ public class DAO extends SQLiteOpenHelper{
     public void setContext(Context incomingContext){ this.context = incomingContext; }
 
     public DAO(Context context) {
+
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
         DAO = this;
 
         SQLiteDatabase t = DAO.getWritableDatabase();
+        dmp = DailyMealPlanEngine.getDMPEngine();
     }
 
     void generateTables(){
@@ -387,7 +390,7 @@ public class DAO extends SQLiteOpenHelper{
         String[] columns = {COLUMN_MENU_PET_ID, COLUMN_MENU_DATE, COLUMN_MENU_FOOD_ID_LIST};
         String selection =
                 COLUMN_MENU_PET_ID + " == " + requestedPetId + " AND " +
-                COLUMN_MENU_DATE + " == " + requestedDate;
+                COLUMN_MENU_DATE + " == '" + requestedDate + "'";
 
         Cursor resultCursor = BartDB.query(true, TABLE_MENU, columns, selection, null, null, null, null , null);
         resultCursor.moveToFirst();
@@ -406,8 +409,8 @@ public class DAO extends SQLiteOpenHelper{
                 requestedMealPlan.addFoodId(JSONFoodIds.getInt(i));
             }
         }else{
-            //There is no meal plan for the pet at the given date
-            requestedMealPlan = null;
+            //There is no meal plan for the pet at the given date, create one
+            requestedMealPlan = dmp.generateMealPlanForPetOnDate(requestedPetId, requestedDate);
         }
 
         resultCursor.close();
