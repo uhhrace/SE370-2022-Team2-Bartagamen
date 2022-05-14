@@ -5,14 +5,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.json.JSONException;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +28,17 @@ public class MainActivity extends AppCompatActivity {
     public AddPetScreenController addPetScreenController ;
 
     private ActionBar topBar;
+
+    public MainActivity(){
+
+    }
+
+//    @Override
+//    protected void onStart(){
+//        super.onStart();
+//        // We init the DB here
+//        SQLiteDatabase t = DAO.getWritableDatabase();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-        changeScreenToHome();
+        //Don't call changeScreenToHome at this point, we don't need to call updateAvailableFoods
+        changeScreen(homeScreenController);
     }
 
     // TODO low priority

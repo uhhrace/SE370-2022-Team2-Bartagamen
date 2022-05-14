@@ -88,6 +88,7 @@ public class FoodScreenController extends BartScreenController {
             JSONObject food = foodList.getJSONObject(i);
             switch (food.get("type").toString()){
                 case "LEAFYGREEN":
+                default:
                     destinationDiv = view.findViewById(R.id.TypeLeafyGreens);
                     break;
                 case "VEGETABLE":
@@ -95,9 +96,6 @@ public class FoodScreenController extends BartScreenController {
                     break;
                 case "PROTEIN":
                     destinationDiv = view.findViewById(R.id.TypeBugs);
-                    break;
-                default:
-                    destinationDiv = view.findViewById(R.id.TypeLeafyGreens);
                     break;
             }
 

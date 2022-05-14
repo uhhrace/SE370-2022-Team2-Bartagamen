@@ -6,10 +6,15 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class DailyMealPlanEngine extends AppCompatActivity {
+
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 
     public enum FoodType{LEAFYGREEN, VEGETABLE, PROTEIN}
     final int MS_PER_SECOND = 1000;
@@ -22,25 +27,6 @@ public class DailyMealPlanEngine extends AppCompatActivity {
     final int CRICKETS_ID = 26;
 
     DAO dao;
-
-    class MealPlan{
-        private int id;
-        private Date date;
-        private int petId;
-        private ArrayList<Integer> foodIdList;
-
-        MealPlan(){
-            this.id = -1;
-            this.date = null;
-            this.petId = -1;
-            this.foodIdList = new ArrayList<>();
-        }
-
-        public int getId(){return id;}
-        public Date getDate(){return date;}
-        public int getPetId(){return petId;}
-        public ArrayList<Integer> getFoodIdList(){return foodIdList;}
-    }
 
     ArrayList<MealPlan> mealPlanList = new ArrayList<>();
 
@@ -61,6 +47,75 @@ public class DailyMealPlanEngine extends AppCompatActivity {
         return DMPEngine;
     }
 
+    public MealPlan generateMealPlanForPetOnDate(int requestedPetId, Date requestedDate){
+        Lizard pet = dao.getLizard(requestedPetId);
+
+        long ageMs = requestedDate.getTime() - pet.getDateOfBirth().getTime();
+        int ageDays = (int) (ageMs / (MS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY));
+        int ageMonths = (int) Math.floor(ageDays / DAYS_PER_MONTH);
+
+        boolean[] foodTypeHandled = {false, false, false};
+
+        MealPlan datesMealPlan = new MealPlan();
+        datesMealPlan.setPetId(requestedPetId);
+        datesMealPlan.setDate(new Date(requestedDate.getYear(), requestedDate.getMonth(), requestedDate.getDate()));
+
+        ArrayList recentFoods = pet.getRecentFoods();
+        ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
+
+        FoodItem food;
+
+        if(ageMonths < 1){
+            //80% Proteins
+            //10% LeafyGreens
+            //10% Vegetables
+            //MANDATORY PINHEAD CRICKETS EVERY DAY
+            datesMealPlan.addFoodId(PINHEAD_CRICKETS_ID);
+            foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
+        }else if(ageMonths < 3){
+            //65% Proteins
+            //25% Leafy Greens
+            //10% Vegetables
+            //MANDATORY CRICKETS EVERY DAY
+            datesMealPlan.addFoodId(CRICKETS_ID);
+            foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
+        }else if(ageMonths < 18){
+            //50% Proteins
+            //35% Leafy Greens
+            //15% Vegetables
+            //MANDATORY CRICKETS EVERY DAY
+            datesMealPlan.addFoodId(CRICKETS_ID);
+            foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
+        }else{
+            //25% Proteins
+            //55% Leafy Greens
+            //20% Vegetables
+        }
+
+        // for each available food
+        for(int i = 0; i < availableFoods.size(); i++){
+
+            food = availableFoods.get(i);
+
+            // TODO date instead of decrement
+
+            // If food type not yet currently in meal plan
+            if (!foodTypeHandled[availableFoods.get(i).getFoodType()]){
+                // If food not in recent foods
+                if(!recentFoods.contains(food.getId())){
+                    datesMealPlan.addFoodId(food.getId());
+                    pet.addRecentFood(food);
+                    foodTypeHandled[food.getFoodType()] = true;
+                }
+            }
+        }
+
+        mealPlanList.add(datesMealPlan);
+        dao.addMealPlan(datesMealPlan);
+
+        return datesMealPlan;
+    }
+
     public MealPlan generateMealPlanForPetToday(int requestedPetId){
 
         //count mealItems
@@ -79,8 +134,11 @@ public class DailyMealPlanEngine extends AppCompatActivity {
 
         //Create menu object for this pet today
         MealPlan todaysMealPlan = new MealPlan();
-        todaysMealPlan.petId = pet.getId();
-        todaysMealPlan.date = new Date();
+        todaysMealPlan.setPetId(pet.getId());
+        Date today = new Date();
+
+        todaysMealPlan.setDate(new Date(today.getYear(), today.getMonth(), today.getDate()));
+
         pet.decrementCooldowns();
         ArrayList recentFoods = pet.getRecentFoods();
         ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
@@ -90,21 +148,21 @@ public class DailyMealPlanEngine extends AppCompatActivity {
             //10% LeafyGreens
             //10% Vegetables
             //MANDATORY PINHEAD CRICKETS EVERY DAY
-            todaysMealPlan.foodIdList.add(PINHEAD_CRICKETS_ID);
+            todaysMealPlan.addFoodId(PINHEAD_CRICKETS_ID);
             foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
         }else if(ageMonths < 3){
             //65% Proteins
             //25% Leafy Greens
             //10% Vegetables
             //MANDATORY CRICKETS EVERY DAY
-            todaysMealPlan.foodIdList.add(CRICKETS_ID);
+            todaysMealPlan.addFoodId(CRICKETS_ID);
             foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
         }else if(ageMonths < 18){
             //50% Proteins
             //35% Leafy Greens
             //15% Vegetables
             //MANDATORY CRICKETS EVERY DAY
-            todaysMealPlan.foodIdList.add(CRICKETS_ID);
+            todaysMealPlan.addFoodId(CRICKETS_ID);
             foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
         }else{
             //25% Proteins
@@ -125,7 +183,7 @@ public class DailyMealPlanEngine extends AppCompatActivity {
             if (!foodTypeHandled[availableFoods.get(i).getFoodType()]){
                 // If food not in recent foods
                 if(!recentFoods.contains(food.getId())){
-                    todaysMealPlan.foodIdList.add(food.getId());
+                    todaysMealPlan.addFoodId(food.getId());
                     pet.addRecentFood(food);
                     foodTypeHandled[food.getFoodType()] = true;
                 }
@@ -133,6 +191,7 @@ public class DailyMealPlanEngine extends AppCompatActivity {
         }
 
         mealPlanList.add(todaysMealPlan);
+        dao.addMealPlan(todaysMealPlan);
 
         mealItems = mealItems+3;
 

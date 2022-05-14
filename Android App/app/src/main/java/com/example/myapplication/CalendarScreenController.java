@@ -9,7 +9,9 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import org.json.JSONException;
 import java.util.Calendar;
+import java.util.Date;
 
 public class CalendarScreenController extends BartScreenController {
 
@@ -18,9 +20,14 @@ public class CalendarScreenController extends BartScreenController {
     static final String TAG = "CalActivity";
     public String dateString;
     Calendar selectedDate;
+    DAO dao;
+    DailyMealPlanEngine dmp;
 
     public CalendarScreenController(){
+
         selectedDate = Calendar.getInstance();
+        dao = DAO.getDAO();
+        dmp = DailyMealPlanEngine.getDMPEngine();
     }
 
     @Nullable
@@ -51,6 +58,12 @@ public class CalendarScreenController extends BartScreenController {
 
                 // Update TextView notifying the user they selected the correct Date
                 selectedDayMenuTextView.setText("Menu for " + dateString + ":");
+
+                try{
+                    dao.getMealPlan(1, new Date(year, month, day));
+                }catch (JSONException e){
+                    dmp.generateMealPlanForPetOnDate(1, new Date(year, month, day));
+                }
 
                 //TODO High Priority Feature
                 // Send a request to MenuDAO for the menu for selectedDate and selectedPet

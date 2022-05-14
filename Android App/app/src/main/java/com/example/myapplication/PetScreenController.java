@@ -41,7 +41,7 @@ public class PetScreenController extends BartScreenController {
     ToggleButton[] dayButtons;
     AppCompatButton monthButton;
     int currentDay;
-    DailyMealPlanEngine.MealPlan currentMealPlan;
+    MealPlan currentMealPlan;
 
     int DISPLAYED_PET_ID;
 
@@ -200,9 +200,17 @@ public class PetScreenController extends BartScreenController {
         selectedDateString  = DateFormat.format("MMMM d, yyyy ", selectedDate.getTime());
         dateView.setText("" + selectedDateString);
 
-        // TODO High Priority Feature
-        //  Request a specific date here
-        currentMealPlan = dmp.generateMealPlanForPetToday(DISPLAYED_PET_ID);
+        try{
+            currentMealPlan = dao.getMealPlan(
+                    DISPLAYED_PET_ID,
+                    new Date(selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDate())
+            );
+        }catch (JSONException e){
+            currentMealPlan = dmp.generateMealPlanForPetOnDate(
+                    DISPLAYED_PET_ID,
+                    new Date(selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDate())
+            );
+        }
 
         //TODO High Priority Feature
         // Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
