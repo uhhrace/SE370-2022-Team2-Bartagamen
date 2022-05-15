@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +20,14 @@ public class HomeScreenController extends BartScreenController {
     AppCompatSpinner petListButton;
     AppCompatButton foodBankButton;
     DAO dao;
+    Context context;
 
     Lizard[] lizardList = null;
     String[] lizardNames = null;
 
     public HomeScreenController(){
         dao = DAO.getDAO();
-        try{
-            lizardList = dao.getLizards();
-            lizardNames = dao.getLizardNames();
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
+        SQLiteDatabase t = dao.getWritableDatabase();
     }
 
     @Nullable
@@ -39,25 +37,15 @@ public class HomeScreenController extends BartScreenController {
 
         setButtonListeners(view);
 
+        try{
+            lizardList = dao.getLizards();
+            lizardNames = dao.getLizardNames();
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
         return view;
     }
-
-    //When PetDAO is functional, replace this array with actual info from the DB
-//    void createLizardList(){
-//        lizardList = new Lizard[3];
-//        lizardNames = new String[lizardList.length+2];
-//
-//        lizardList[0] = new Lizard("Shenron");
-//        lizardList[1] = new Lizard("Godzilla");
-//        lizardList[2] = new Lizard("Dragonite");
-//
-//        lizardNames[0] = "Choose a lizard...";
-//        lizardNames[4] = "Add new lizard";
-//
-//        for (int i = 0; i < lizardList.length; i++) {
-//            lizardNames[i+1] = lizardList[i].getName();
-//        }
-//    }
 
     void setButtonListeners(View view){
         petListButton = view.findViewById(R.id.petListButton);
@@ -69,6 +57,7 @@ public class HomeScreenController extends BartScreenController {
         //When PetDAO is functional, replace this array with actual info from the DB
 //        createLizardList();
         lizardNames = dao.getLizardNames();
+
 
         //Create adapter object for petList
         //ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.lizards, R.layout.home);
@@ -86,6 +75,7 @@ public class HomeScreenController extends BartScreenController {
                 if(position == (lizardNames.length-1)){
                     changeScreenToAddPet();
                 }else if( (position > 0) && (position < (lizardNames.length-1)) ) {
+                    // send the name of the selected lizard to individual pet screen
                     changeScreenToPets(petListButton.getItemAtPosition(position).toString());
                 }
             }
