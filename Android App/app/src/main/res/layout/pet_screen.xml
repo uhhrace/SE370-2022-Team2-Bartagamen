@@ -168,7 +168,7 @@
             android:text="View Monthly"
             android:textAllCaps="false"
             android:textColor="@color/buttonDarkBlue"
-            android:textSize="25dp"
+            android:textSize="25sp"
 
             />
 
@@ -182,7 +182,8 @@
             android:background="@color/textBackgroundGray"
             android:fontFamily="@font/rubik_medium"
             android:padding="10dp"
-            android:text="Protein : \n\t5x Medium crickets\n\t5x Dubia roaches"
+            android:text="No Meal Plan recorded for selected date"
+            android:textSize="25sp"
             android:textColor="@color/black" />
     </LinearLayout>
 

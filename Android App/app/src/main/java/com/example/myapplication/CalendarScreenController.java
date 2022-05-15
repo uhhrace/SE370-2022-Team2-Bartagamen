@@ -9,7 +9,11 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -41,6 +45,48 @@ public class CalendarScreenController extends BartScreenController {
         return view;
     }
 
+    void updateMealPlanDisplay(View view, Date selectedDate) throws JSONException{
+
+        //Create MealPlan for selected date
+        MealPlan selectedDateMealPlan = null;
+
+
+        // Pull MealPlan from DB, or generate a new one if necessary
+        try{
+            selectedDateMealPlan = dao.getMealPlan(1, selectedDate);
+        }catch (JSONException e){
+            e.printStackTrace();
+            //We don't need to do this anymore, getMealPlan already has logic to check requestedDate
+            //  and build a new meal plan if necessary
+            //selectedDateMealPlan = dmp.generateMealPlanForPetOnDate(1, selectedDate);
+        }
+
+        ArrayList<Integer> foodIds = null;
+        JSONArray foodList = dao.getFoodList();
+        String mealPlanText = "";
+
+        try{
+            foodIds = selectedDateMealPlan.getFoodIdList();
+        }catch (NullPointerException e){
+            //no meal plan for selected date
+            foodIds = new ArrayList<>();
+            mealPlanText = "No Meal Plan recorded for selected date";
+        }
+
+
+        for(int i = 0; i < foodIds.size(); i++){
+
+            mealPlanText += foodList.getJSONObject(foodIds.get(i)-1).get("type").toString();
+            mealPlanText += "\n\t";
+            mealPlanText += foodList.getJSONObject(foodIds.get(i)-1).get("name").toString();
+            mealPlanText += "\n";
+        }
+
+        // Update TextView notifying the user they selected the correct Date,
+        //  and display the meal plan for that date
+        selectedDayMenuTextView.setText("Menu for " + dateString + ":\n\n" + mealPlanText);
+    }
+
     void setCalendarViewListener(View view){
 
         calendarView = view.findViewById(R.id.calendarView);
@@ -56,13 +102,11 @@ public class CalendarScreenController extends BartScreenController {
                 // Build Date object with selected day
                 selectedDate.set(year, month, day);
 
-                // Update TextView notifying the user they selected the correct Date
-                selectedDayMenuTextView.setText("Menu for " + dateString + ":");
-
                 try{
-                    dao.getMealPlan(1, new Date(year, month, day));
+                    updateMealPlanDisplay(view, selectedDate.getTime());
                 }catch (JSONException e){
-                    dmp.generateMealPlanForPetOnDate(1, new Date(year, month, day));
+                    e.printStackTrace();
+                    selectedDayMenuTextView.setText("Catastrophic database error");
                 }
 
                 //TODO High Priority Feature

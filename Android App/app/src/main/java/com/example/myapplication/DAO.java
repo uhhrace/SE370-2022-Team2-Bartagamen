@@ -409,8 +409,15 @@ public class DAO extends SQLiteOpenHelper{
                 requestedMealPlan.addFoodId(JSONFoodIds.getInt(i));
             }
         }else{
-            //There is no meal plan for the pet at the given date, create one
-            requestedMealPlan = dmp.generateMealPlanForPetOnDate(requestedPetId, requestedDate);
+
+            //Compare requestedDate to today's Date
+            if(requestedDate.before(new Date())){
+                //Asking for a previous date that has no Meal Plan, do not generate
+                requestedMealPlan = null;
+            }else{
+                //There is no meal plan for the pet at the given date, create one
+                requestedMealPlan = dmp.generateMealPlanForPetOnDate(requestedPetId, requestedDate);
+            }
         }
 
         resultCursor.close();
