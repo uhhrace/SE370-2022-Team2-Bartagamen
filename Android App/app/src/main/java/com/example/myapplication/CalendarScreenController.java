@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +10,13 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,11 +49,14 @@ public class CalendarScreenController extends BartScreenController {
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     void updateMealPlanDisplay(View view, Date selectedDate) throws JSONException{
 
         //Create MealPlan for selected date
         MealPlan selectedDateMealPlan = null;
 
+        //Truncate time off selectedDate
+        selectedDate = Date.from(selectedDate.toInstant().truncatedTo(ChronoUnit.DAYS));
 
         // Pull MealPlan from DB, or generate a new one if necessary
         try{
@@ -72,7 +79,6 @@ public class CalendarScreenController extends BartScreenController {
             foodIds = new ArrayList<>();
             mealPlanText = "No Meal Plan recorded for selected date";
         }
-
 
         for(int i = 0; i < foodIds.size(); i++){
 

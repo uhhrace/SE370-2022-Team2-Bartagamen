@@ -29,17 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBar topBar;
 
-    public MainActivity(){
-
-    }
-
-//    @Override
-//    protected void onStart(){
-//        super.onStart();
-//        // We init the DB here
-//        SQLiteDatabase t = DAO.getWritableDatabase();
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
