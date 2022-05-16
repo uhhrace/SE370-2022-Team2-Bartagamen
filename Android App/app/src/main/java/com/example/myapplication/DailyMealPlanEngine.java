@@ -26,6 +26,8 @@ public class DailyMealPlanEngine extends AppCompatActivity {
     final int PINHEAD_CRICKETS_ID = 30;
     final int CRICKETS_ID = 26;
 
+    final int FOOD_VARIETY_DAY_DIFF = 3;
+
     DAO dao;
 
     ArrayList<MealPlan> mealPlanList = new ArrayList<>();
@@ -112,7 +114,7 @@ public class DailyMealPlanEngine extends AppCompatActivity {
                 long dayDiff = msDiff / (MS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY);
 
                 //If dateLastAte after today, its okay to eat today
-                if(dateLastAte.after(requestedDate) || dayDiff > 4){
+                if(dateLastAte.after(requestedDate) || dayDiff > FOOD_VARIETY_DAY_DIFF){
                     datesMealPlan.addFoodId(food.getId());
                     dao.addRecentFood(food.getId(), pet.getId(), requestedDate);
                     foodTypeHandled[food.getFoodType()] = true;
