@@ -45,7 +45,7 @@ public class PetScreenController extends BartScreenController {
 
     int DISPLAYED_PET_ID;
 
-    TextView dateView, countItems;
+    TextView dateView, countItems, mealPlanDisplay;
     Date currentDate;
     CharSequence selectedDateString;
 
@@ -67,6 +67,7 @@ public class PetScreenController extends BartScreenController {
 
         dateView = view.findViewById(R.id.dateField);
         countItems = view.findViewById(R.id.countDailyFoodItems);
+        mealPlanDisplay = view.findViewById(R.id.petScreenMealPlanDisplay);
         final Bundle bdl = getArguments();
 
         //get Data from Daily Meal Plan Engine
@@ -158,7 +159,7 @@ public class PetScreenController extends BartScreenController {
                     findDateAndRequestMenu(button);
 
                     try{
-                        updateMealPlanDisplay(view);
+                        updateMealPlanDisplay();
                     }catch (JSONException | NullPointerException e){
                         e.printStackTrace();
                     }
@@ -167,12 +168,9 @@ public class PetScreenController extends BartScreenController {
         }
     } // end setDayButtonListeners
 
-    void updateMealPlanDisplay(View view) throws JSONException, NullPointerException {
-
-        TextView mealPlanDisplay = view.findViewById(R.id.petScreenMealPlanDisplay);
+    void updateMealPlanDisplay() throws JSONException, NullPointerException {
 
         ArrayList<Integer> foodIds = currentMealPlan.getFoodIdList();
-        FoodItem[] plannedFoods = new FoodItem[foodIds.size()];
         JSONArray foodList = dao.getFoodList();
 
         String mealPlanText = "";
@@ -183,11 +181,6 @@ public class PetScreenController extends BartScreenController {
             mealPlanText += "\n\t";
             mealPlanText += foodList.getJSONObject(foodIds.get(i)-1).get("name").toString();
             mealPlanText += "\n";
-
-//            plannedFoods[i] = new FoodItem(
-//                    (int) foodList.getJSONObject(i).get("id"),
-//                    (DailyMealPlanEngine.FoodType) foodList.getJSONObject(i).get("type"),
-//                     foodList.getJSONObject(i).get("name").toString());
         }
 
         mealPlanDisplay.setText(mealPlanText);
@@ -210,6 +203,13 @@ public class PetScreenController extends BartScreenController {
                     DISPLAYED_PET_ID,
                     new Date(selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDate())
             );
+        }
+
+        try{
+            updateMealPlanDisplay();
+        }catch (JSONException e){
+            e.printStackTrace();
+            mealPlanDisplay.setText("JSON Error. Clear app cache.");
         }
 
         //TODO High Priority Feature

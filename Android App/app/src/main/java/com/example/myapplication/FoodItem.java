@@ -27,6 +27,7 @@ public class FoodItem {
     public String getName(){return this.name;}
     public int getCoolDown(){return this.coolDown;}
     public void decrementCooldown(){coolDown--;}
+    public DailyMealPlanEngine.FoodType getFoodTypeEnum(){return this.foodType;}
     public int getFoodType(){return this.foodType.ordinal();}
     public boolean isAvailable(){return this.available;}
 }

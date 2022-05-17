@@ -50,7 +50,7 @@ public class CalendarScreenController extends BartScreenController {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    void updateMealPlanDisplay(View view, Date selectedDate) throws JSONException{
+    void updateMealPlanDisplay(Date selectedDate) throws JSONException{
 
         //Create MealPlan for selected date
         MealPlan selectedDateMealPlan = null;
@@ -58,7 +58,7 @@ public class CalendarScreenController extends BartScreenController {
         //Truncate time off selectedDate
         selectedDate = Date.from(selectedDate.toInstant().truncatedTo(ChronoUnit.DAYS));
 
-        // Pull MealPlan from DB, or generate a new one if necessary
+        // Pull MealPlan from DB
         try{
             selectedDateMealPlan = dao.getMealPlan(1, selectedDate);
         }catch (JSONException e){
@@ -99,6 +99,7 @@ public class CalendarScreenController extends BartScreenController {
         selectedDayMenuTextView = view.findViewById(R.id.selectedDayMenu);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
                 //Build date string with selected day
@@ -108,8 +109,14 @@ public class CalendarScreenController extends BartScreenController {
                 // Build Date object with selected day
                 selectedDate.set(year, month, day);
 
+                //Strip time elements
+                selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+                selectedDate.set(Calendar.MINUTE, 0);
+                selectedDate.set(Calendar.SECOND, 0);
+                selectedDate.set(Calendar.MILLISECOND, 0);
+
                 try{
-                    updateMealPlanDisplay(view, selectedDate.getTime());
+                    updateMealPlanDisplay(selectedDate.getTime());
                 }catch (JSONException e){
                     e.printStackTrace();
                     selectedDayMenuTextView.setText("Catastrophic database error");

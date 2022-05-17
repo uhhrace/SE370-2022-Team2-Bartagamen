@@ -150,33 +150,34 @@ public class DAO extends SQLiteOpenHelper{
         }
     }
 
-    public JSONArray getUserFoodList(){
+    public ArrayList<FoodItem> getUserFoodList(){
+
+        int INDEX_ID = 0;
+        int INDEX_TYPE = 1;
+        int INDEX_NAME = 2;
+        int INDEX_AVAILABLE = 3;
+
+        ArrayList<FoodItem> foodList = new ArrayList<>();
 
         Cursor resultCursor = BartDB.rawQuery("SELECT * FROM " + TABLE_FOOD, null);
         resultCursor.moveToFirst();
 
-        int id;
-        int available;
-
         //While resultCursor.getPosition < resultCursor.getCount
         while (resultCursor.getPosition() < resultCursor.getCount() - 1){
-            id = resultCursor.getInt(0);
-            available = resultCursor.getInt(3);
 
-            try{
-//                foodList.getJSONObject(id).remove("available");
-                if(1 == available){
-                    foodList.getJSONObject(id).put("available", "true");
-                }else{
-                    foodList.getJSONObject(id).put("available", "false");
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            int foodId = resultCursor.getInt(INDEX_ID);
+            DailyMealPlanEngine.FoodType foodType = DailyMealPlanEngine.FoodType.valueOf(resultCursor.getString(INDEX_TYPE));
+            String foodName = resultCursor.getString(INDEX_NAME);
+            boolean foodAvailable = resultCursor.getInt(INDEX_AVAILABLE) > 0;
+
+            foodList.add( new FoodItem( foodId, foodType, foodName,foodAvailable) );
+
             resultCursor.moveToNext();
-        }
+
+        } // end while
 
         resultCursor.close();
+
         return foodList;
     }
 
@@ -195,23 +196,12 @@ public class DAO extends SQLiteOpenHelper{
         int INDEX_ID = 0;
         int INDEX_NAME = 1;
         int INDEX_TYPE = 2;
+        int INDEX_AVAILABLE = 3;
 
         while(resultCursor.getPosition() < resultCursor.getCount()){
             int id = resultCursor.getInt(INDEX_ID);
             String name = resultCursor.getString(INDEX_NAME);
-            DailyMealPlanEngine.FoodType foodType = null;
-
-            switch (resultCursor.getString(INDEX_TYPE)){
-                case "LEAFYGREEN":
-                    foodType = DailyMealPlanEngine.FoodType.LEAFYGREEN;
-                    break;
-                case "VEGETABLE":
-                    foodType = DailyMealPlanEngine.FoodType.VEGETABLE;
-                    break;
-                case "PROTEIN":
-                    foodType = DailyMealPlanEngine.FoodType.PROTEIN;
-                    break;
-            }
+            DailyMealPlanEngine.FoodType foodType = DailyMealPlanEngine.FoodType.valueOf(resultCursor.getString(INDEX_TYPE));
 
             FoodItem food = new FoodItem(id, foodType, name, true);
             availableFoods.add(food);

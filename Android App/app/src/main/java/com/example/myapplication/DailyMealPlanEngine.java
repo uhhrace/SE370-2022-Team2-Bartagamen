@@ -37,9 +37,6 @@ public class DailyMealPlanEngine extends AppCompatActivity {
     private DailyMealPlanEngine() {
 
         dao = DAO.getDAO();
-//        dao.addPet( 1,"Shenron", "90", "2014/3/26");
-//        dao.addPet(2,"Godzilla", "60", "2022/4/20");
-//        dao.addPet( 3,"Dragonite", "40", "2021/12/25");
     }
 
     public static DailyMealPlanEngine getDMPEngine(){
@@ -62,7 +59,8 @@ public class DailyMealPlanEngine extends AppCompatActivity {
         datesMealPlan.setPetId(requestedPetId);
         datesMealPlan.setDate(new Date(requestedDate.getYear(), requestedDate.getMonth(), requestedDate.getDate()));
 
-//        ArrayList recentFoods = pet.getRecentFoods();
+        //This takes time to process
+        ArrayList<FoodItem> userFoods = dao.getUserFoodList();
         ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
 
         FoodItem food;
@@ -81,7 +79,7 @@ public class DailyMealPlanEngine extends AppCompatActivity {
             //10% Vegetables
             //MANDATORY CRICKETS EVERY DAY
             datesMealPlan.addFoodId(CRICKETS_ID);
-            dao.addRecentFood(PINHEAD_CRICKETS_ID, pet.getId(), requestedDate);
+            dao.addRecentFood(CRICKETS_ID, pet.getId(), requestedDate);
             foodTypeHandled[FoodType.PROTEIN.ordinal()] = true;
         }else if(ageMonths < 18){
             //50% Proteins
