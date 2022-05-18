@@ -56,7 +56,7 @@ public class CalendarScreenController extends BartScreenController {
         MealPlan selectedDateMealPlan = null;
 
         //Truncate time off selectedDate
-        selectedDate = Date.from(selectedDate.toInstant().truncatedTo(ChronoUnit.DAYS));
+        selectedDate = Date.from(selectedDate.toInstant());
 
         // Pull MealPlan from DB
         try{
@@ -68,7 +68,7 @@ public class CalendarScreenController extends BartScreenController {
             //selectedDateMealPlan = dmp.generateMealPlanForPetOnDate(1, selectedDate);
         }
 
-        ArrayList<Integer> foodIds = null;
+        ArrayList<Integer> foodIds;
         JSONArray foodList = dao.getFoodList();
         String mealPlanText = "";
 
