@@ -1,12 +1,6 @@
 package com.example.myapplication;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,8 +23,6 @@ public class DailyMealPlanEngine extends AppCompatActivity {
     final int FOOD_VARIETY_DAY_DIFF = 3;
 
     DAO dao;
-
-    ArrayList<MealPlan> mealPlanList = new ArrayList<>();
 
     private static DailyMealPlanEngine DMPEngine = null;
 
@@ -124,7 +116,6 @@ public class DailyMealPlanEngine extends AppCompatActivity {
             }
         }
 
-        mealPlanList.add(datesMealPlan);
         dao.addMealPlan(datesMealPlan);
 
         return datesMealPlan;

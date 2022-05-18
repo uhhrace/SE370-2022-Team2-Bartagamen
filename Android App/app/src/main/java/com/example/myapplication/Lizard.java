@@ -24,19 +24,4 @@ public class Lizard{
     public Date getDateOfBirth(){return this.dateOfBirth;}
     public String getSizeCentimeters(){return this.sizeCentimeters;}
 
-    public void addRecentFood(FoodItem recentFood){
-        recentFoods.add(recentFood);
-    }
-    public ArrayList getRecentFoods(){ return recentFoods; }
-
-    // Decrement cooldowns for all recent foods
-    public void decrementCooldowns(){
-        for(FoodItem food : recentFoods){
-            if(food.getCoolDown() == 0){
-                recentFoods.remove(food);
-            }else{
-                food.decrementCooldown();
-            }
-        }
-    }
 }
