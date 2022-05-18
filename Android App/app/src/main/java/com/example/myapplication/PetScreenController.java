@@ -170,10 +170,17 @@ public class PetScreenController extends BartScreenController {
 
     void updateMealPlanDisplay() throws JSONException, NullPointerException {
 
-        ArrayList<Integer> foodIds = currentMealPlan.getFoodIdList();
+        ArrayList<Integer> foodIds;
         JSONArray foodList = dao.getFoodList();
-
         String mealPlanText = "";
+
+        try{
+            foodIds = currentMealPlan.getFoodIdList();
+        }catch (NullPointerException e){
+            //no meal plan for selected date, initialize to size 0 to skip the upcoming for loop
+            foodIds = new ArrayList<>();
+            mealPlanText = "No Meal Plan recorded for selected date";
+        }
 
         for(int i = 0; i < foodIds.size(); i++){
 
