@@ -23,7 +23,6 @@ class MealPlan{
     public void setDate(Date date){
         this.date = date;
     }
-
     public Date getDate(){
         return this.date;
     }
@@ -33,11 +32,9 @@ class MealPlan{
     public int getPetId(){
         return petId;
     }
-
     public void addFoodId(int foodId){
         this.foodIdList.add(foodId);
     }
-
     public ArrayList<Integer> getFoodIdList(){
         return foodIdList;
     }

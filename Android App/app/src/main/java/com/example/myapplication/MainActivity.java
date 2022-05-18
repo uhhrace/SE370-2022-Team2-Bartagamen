@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,17 +26,6 @@ public class MainActivity extends AppCompatActivity {
     public AddPetScreenController addPetScreenController ;
 
     private ActionBar topBar;
-
-    public MainActivity(){
-
-    }
-
-//    @Override
-//    protected void onStart(){
-//        super.onStart();
-//        // We init the DB here
-//        SQLiteDatabase t = DAO.getWritableDatabase();
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToFoodBank() {
         changeScreen(foodScreenController);
         wipeTopBar();
-
-//        foodScreenController.checkAvailableFoods();
     }
 
     /**
@@ -141,11 +126,6 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToPets() {
         changeScreen(petScreenController);
 
-        //TODO very low priority
-        // Currently, text defaults to white, so the topBar is made buttonDarkBlue for easy reading
-        // Ideally the top bar would be backgroundBlue, and the text would be Black, but there is
-        // no easy option for setting the text color. The topBar object might have to be converted
-        // to a View / Fragment?
         topBar.setTitle("Lizard's Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
 

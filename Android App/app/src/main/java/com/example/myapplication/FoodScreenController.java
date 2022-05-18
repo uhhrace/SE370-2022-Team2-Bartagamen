@@ -10,20 +10,45 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class FoodScreenController extends BartScreenController {
 
     DAO dao;
     DailyMealPlanEngine dmp;
-
     LayoutInflater viewInflater;
     View foodListContainer;
+
+    protected void changeScreenToCalendar(){
+        super.changeScreenToCalendar();
+        dao.updateAvailableFoods();
+    }
+
+    protected void changeScreenToFoodBank(){
+        super.changeScreenToFoodBank();
+        dao.updateAvailableFoods();
+    }
+
+    protected void changeScreenToHome(){
+        super.changeScreenToHome();
+        dao.updateAvailableFoods();
+    }
+
+    protected void changeScreenToPets(){
+        super.changeScreenToPets();
+        dao.updateAvailableFoods();
+    }
+
+    protected void changeScreenToAddPet() {
+        super.changeScreenToAddPet();
+        dao.updateAvailableFoods();
+    }
+
+    protected void changeScreenToPets(String petName){
+        super.changeScreenToPets(petName);
+        dao.updateAvailableFoods();
+    }
 
     public FoodScreenController(){
         dao = DAO.getDAO();
@@ -62,8 +87,8 @@ public class FoodScreenController extends BartScreenController {
         ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
 
         View mainView = ((ViewGroup)getView().getParent());
-        FoodItem food = null;
-        ToggleButton butt = null;
+        FoodItem food;
+        ToggleButton butt;
 
         for(int i = 0; i < availableFoods.size(); i++){
             food = availableFoods.get(i);
@@ -82,22 +107,23 @@ public class FoodScreenController extends BartScreenController {
 
         SQLiteDatabase t = dao.getWritableDatabase();
 
-        JSONArray foodList = dao.getUserFoodList();
+        ArrayList<FoodItem> foodList = dao.getUserFoodList();
 
-        for(int i = 0; i < foodList.length(); i++){
+        for (FoodItem food : foodList) {
             View toAdd;
             ToggleButton button;
             TextView itemText;
-            JSONObject food = foodList.getJSONObject(i);
-            switch (food.get("type").toString()){
-                case "LEAFYGREEN":
+            DailyMealPlanEngine.FoodType foodType = food.getFoodTypeEnum();
+
+            switch (foodType){
+                case LEAFYGREEN:
                 default:
                     destinationDiv = view.findViewById(R.id.TypeLeafyGreens);
                     break;
-                case "VEGETABLE":
+                case VEGETABLE:
                     destinationDiv = view.findViewById(R.id.TypeVegetables);
                     break;
-                case "PROTEIN":
+                case PROTEIN:
                     destinationDiv = view.findViewById(R.id.TypeBugs);
                     break;
             }
@@ -105,10 +131,10 @@ public class FoodScreenController extends BartScreenController {
             toAdd = inflater.inflate(R.layout.food_bank_item, destinationDiv, false);
             button = toAdd.findViewById(R.id.foodBankButton);
             itemText = toAdd.findViewById(R.id.text);
-            itemText.setText(food.get("name").toString());
-            toAdd.setTag(food.get("id"));
+            itemText.setText(food.getName());
+            toAdd.setTag(food.getId());
 
-            button.setChecked(food.getBoolean("available"));
+            button.setChecked(food.isAvailable());
 
             //We're setting checked/unchecked in the code, so we don't want a listener
             //  to activate every time that happens. this needs to be an onClicked listener,
@@ -116,12 +142,8 @@ public class FoodScreenController extends BartScreenController {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    try {
-                        button.setChecked(button.isChecked());
-                        dao.changeFoodAvailability((int) food.get("id"), button.isChecked());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    button.setChecked(button.isChecked());
+                    dao.changeFoodAvailability((int) food.getId(), button.isChecked());
                 }
             });
 

@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
@@ -73,6 +74,7 @@ public class DAO extends SQLiteOpenHelper{
             BartDB.execSQL(QUERY_GENERATE_FOOD_TABLE);
             BartDB.execSQL(QUERY_GENERATE_PET_TABLE);
             BartDB.execSQL(QUERY_GENERATE_MENU_TABLE);
+            BartDB.execSQL(QUERY_GENERATE_RECENT_FOOD_TABLE);
 
             generateTables();
         }catch (Exception e){
@@ -148,33 +150,34 @@ public class DAO extends SQLiteOpenHelper{
         }
     }
 
-    public JSONArray getUserFoodList(){
+    public ArrayList<FoodItem> getUserFoodList(){
+
+        int INDEX_ID = 0;
+        int INDEX_TYPE = 1;
+        int INDEX_NAME = 2;
+        int INDEX_AVAILABLE = 3;
+
+        ArrayList<FoodItem> foodList = new ArrayList<>();
 
         Cursor resultCursor = BartDB.rawQuery("SELECT * FROM " + TABLE_FOOD, null);
         resultCursor.moveToFirst();
 
-        int id;
-        int available;
-
         //While resultCursor.getPosition < resultCursor.getCount
-        while (resultCursor.getPosition() < resultCursor.getCount() - 1){
-            id = resultCursor.getInt(0);
-            available = resultCursor.getInt(3);
+        while (resultCursor.getPosition() < resultCursor.getCount()){
 
-            try{
-//                foodList.getJSONObject(id).remove("available");
-                if(1 == available){
-                    foodList.getJSONObject(id).put("available", "true");
-                }else{
-                    foodList.getJSONObject(id).put("available", "false");
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            int foodId = resultCursor.getInt(INDEX_ID);
+            DailyMealPlanEngine.FoodType foodType = DailyMealPlanEngine.FoodType.valueOf(resultCursor.getString(INDEX_TYPE));
+            String foodName = resultCursor.getString(INDEX_NAME);
+            boolean foodAvailable = resultCursor.getInt(INDEX_AVAILABLE) > 0;
+
+            foodList.add( new FoodItem( foodId, foodType, foodName,foodAvailable) );
+
             resultCursor.moveToNext();
-        }
+
+        } // end while
 
         resultCursor.close();
+
         return foodList;
     }
 
@@ -193,23 +196,12 @@ public class DAO extends SQLiteOpenHelper{
         int INDEX_ID = 0;
         int INDEX_NAME = 1;
         int INDEX_TYPE = 2;
+        int INDEX_AVAILABLE = 3;
 
         while(resultCursor.getPosition() < resultCursor.getCount()){
             int id = resultCursor.getInt(INDEX_ID);
             String name = resultCursor.getString(INDEX_NAME);
-            DailyMealPlanEngine.FoodType foodType = null;
-
-            switch (resultCursor.getString(INDEX_TYPE)){
-                case "LEAFYGREEN":
-                    foodType = DailyMealPlanEngine.FoodType.LEAFYGREEN;
-                    break;
-                case "VEGETABLE":
-                    foodType = DailyMealPlanEngine.FoodType.VEGETABLE;
-                    break;
-                case "PROTEIN":
-                    foodType = DailyMealPlanEngine.FoodType.PROTEIN;
-                    break;
-            }
+            DailyMealPlanEngine.FoodType foodType = DailyMealPlanEngine.FoodType.valueOf(resultCursor.getString(INDEX_TYPE));
 
             FoodItem food = new FoodItem(id, foodType, name, true);
             availableFoods.add(food);
@@ -372,7 +364,6 @@ public class DAO extends SQLiteOpenHelper{
     ////////////////////////////////////////////////////////////////////////
 
     final String QUERY_GENERATE_MENU_TABLE = "CREATE TABLE " + TABLE_MENU + "(" +
-                    //COLUMN_MENU_ID + " INTEGER AUTOINCREMENT, " +
                     COLUMN_MENU_DATE + " DATE NOT NULL, " +
                     COLUMN_MENU_PET_ID + " INTEGER NOT NULL, " +
                     COLUMN_MENU_FOOD_ID_LIST + " STRING NOT NULL, " +
@@ -410,8 +401,11 @@ public class DAO extends SQLiteOpenHelper{
             }
         }else{
 
+            Date today = new Date();
+            Date simpleToday = new Date(today.getYear(), today.getMonth(), today.getDate());
+
             //Compare requestedDate to today's Date
-            if(requestedDate.before(new Date())){
+            if(requestedDate.before(simpleToday)){
                 //Asking for a previous date that has no Meal Plan, do not generate
                 requestedMealPlan = null;
             }else{
@@ -435,6 +429,109 @@ public class DAO extends SQLiteOpenHelper{
         cv.put(COLUMN_MENU_FOOD_ID_LIST, new JSONArray(planToAdd.getFoodIdList()).toString());
 
         BartDB.insert(TABLE_MENU, null, cv);
+    }
+
+    public ArrayList<FoodItem> getFoodsForDate(Date requestedDate) throws JSONException{
+
+        String[] columns = {COLUMN_MENU_FOOD_ID_LIST};
+        String selection = COLUMN_MENU_DATE + " == '" + requestedDate + "'";
+
+        Cursor resultCursor = BartDB.query(true, TABLE_MENU, columns, selection, null, null, null, null , null);
+        resultCursor.moveToFirst();
+
+        ArrayList<FoodItem> requestedFoods = new ArrayList<>();
+
+        // If atleast one meal plan
+        if(resultCursor.getCount() >= 1){
+
+            JSONArray JSONFoodIds = new JSONArray(resultCursor.getString(0));
+            for(int i = 0; i < JSONFoodIds.length(); i++){
+
+                int id = JSONFoodIds.getInt(i);
+                DailyMealPlanEngine.FoodType type = DailyMealPlanEngine.FoodType.valueOf( foodList.getJSONObject(id).getString("type") );
+                String name = foodList.getJSONObject(id).getString("name");
+
+                FoodItem newFood = new FoodItem(id, type, name);
+
+                requestedFoods.add(newFood);
+            }
+        }
+
+        resultCursor.close();
+        return requestedFoods;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //      ██████  ███████  ██████ ███████ ███    ██ ████████ ███████  ██████   ██████  ██████  ██████   █████   ██████
+    //      ██   ██ ██      ██      ██      ████   ██    ██    ██      ██    ██ ██    ██ ██   ██ ██   ██ ██   ██ ██    ██
+    //      ██████  █████   ██      █████   ██ ██  ██    ██    █████   ██    ██ ██    ██ ██   ██ ██   ██ ███████ ██    ██
+    //      ██   ██ ██      ██      ██      ██  ██ ██    ██    ██      ██    ██ ██    ██ ██   ██ ██   ██ ██   ██ ██    ██
+    //      ██   ██ ███████  ██████ ███████ ██   ████    ██    ██       ██████   ██████  ██████  ██████  ██   ██  ██████
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    String TABLE_RECENT_FOOD = "recentFood";
+    String COLUMN_RECENT_FOOD_DATE_LAST_ATE = "DateLastAte";
+    String COLUMN_RECENT_FOOD_PET_ID = "PetID";
+    String COLUMN_RECENT_FOOD_FOOD_ID = "FoodID";
+
+    final String QUERY_GENERATE_RECENT_FOOD_TABLE =
+            "CREATE TABLE " + TABLE_RECENT_FOOD + "(" +
+            COLUMN_RECENT_FOOD_PET_ID + " INTEGER NOT NULL, " +
+            COLUMN_RECENT_FOOD_FOOD_ID + " INTEGER NOT NULL, " +
+            COLUMN_RECENT_FOOD_DATE_LAST_ATE + " DATE NOT NULL, " +
+            "FOREIGN KEY (" + COLUMN_RECENT_FOOD_PET_ID + ")" +
+            "REFERENCES " + TABLE_PET + " (" + COLUMN_PET_ID + "), " +
+            "FOREIGN KEY (" + COLUMN_RECENT_FOOD_FOOD_ID + ")" +
+            "REFERENCES " + TABLE_FOOD + " (" + COLUMN_FOOD_ID + "), " +
+            "PRIMARY KEY (" + COLUMN_RECENT_FOOD_PET_ID + ", " + COLUMN_RECENT_FOOD_FOOD_ID + ")" +
+            ");";
+
+    public void addRecentFood(int foodId, int petId, Date dateLastAte){
+
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_RECENT_FOOD_PET_ID, petId);
+        cv.put(COLUMN_RECENT_FOOD_FOOD_ID, foodId);
+        cv.put(COLUMN_RECENT_FOOD_DATE_LAST_ATE, dateLastAte.toString() );
+
+        try{
+            BartDB.insertOrThrow(TABLE_RECENT_FOOD, null, cv);
+        }catch (SQLException e){
+
+            e.printStackTrace();
+
+            cv = new ContentValues();
+            cv.put(COLUMN_RECENT_FOOD_DATE_LAST_ATE, dateLastAte.toString());
+
+            String whereSelection = COLUMN_RECENT_FOOD_PET_ID + " = " + petId + " AND " +
+                    COLUMN_RECENT_FOOD_FOOD_ID + " = " + foodId;
+
+            BartDB.update(TABLE_RECENT_FOOD, cv, whereSelection, null);
+        }
+    }
+
+    public Date getLastAte(int foodId, int petId){
+
+        String[] columns = {COLUMN_RECENT_FOOD_DATE_LAST_ATE};
+        String selection =
+                COLUMN_RECENT_FOOD_PET_ID + " = " + petId + " AND " +
+                COLUMN_RECENT_FOOD_FOOD_ID + " = " + foodId;
+
+        Cursor resultCursor = BartDB.query(true, TABLE_RECENT_FOOD, columns, selection, null, null, null, null , null);
+        resultCursor.moveToFirst();
+
+        String dateString;
+        Date dateLastAte;
+
+        try{
+            dateString = resultCursor.getString(0);
+            dateLastAte = new Date(dateString);
+        }catch (CursorIndexOutOfBoundsException e){
+            // Food was never ate, return 1969
+            dateLastAte = new Date(0);
+        }
+
+        resultCursor.close();
+        return dateLastAte;
     }
 
 }

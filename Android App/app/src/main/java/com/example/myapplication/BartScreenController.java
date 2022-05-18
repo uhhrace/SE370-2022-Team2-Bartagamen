@@ -12,6 +12,7 @@ public class BartScreenController extends Fragment {
 
     protected void changeScreenToFoodBank(){
         main.changeScreenToFoodBank();
+        main.foodScreenController.checkAvailableFoods();
     }
 
     protected void changeScreenToHome(){

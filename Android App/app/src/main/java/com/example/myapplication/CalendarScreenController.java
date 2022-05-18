@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +10,9 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
+import androidx.annotation.RequiresApi;
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +28,6 @@ public class CalendarScreenController extends BartScreenController {
     DailyMealPlanEngine dmp;
 
     public CalendarScreenController(){
-
         selectedDate = Calendar.getInstance();
         dao = DAO.getDAO();
         dmp = DailyMealPlanEngine.getDMPEngine();
@@ -45,13 +44,16 @@ public class CalendarScreenController extends BartScreenController {
         return view;
     }
 
-    void updateMealPlanDisplay(View view, Date selectedDate) throws JSONException{
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void updateMealPlanDisplay(Date selectedDate) throws JSONException{
 
         //Create MealPlan for selected date
         MealPlan selectedDateMealPlan = null;
 
+        //Truncate time off selectedDate
+        selectedDate = Date.from(selectedDate.toInstant());
 
-        // Pull MealPlan from DB, or generate a new one if necessary
+        // Pull MealPlan from DB
         try{
             selectedDateMealPlan = dao.getMealPlan(1, selectedDate);
         }catch (JSONException e){
@@ -61,7 +63,7 @@ public class CalendarScreenController extends BartScreenController {
             //selectedDateMealPlan = dmp.generateMealPlanForPetOnDate(1, selectedDate);
         }
 
-        ArrayList<Integer> foodIds = null;
+        ArrayList<Integer> foodIds;
         JSONArray foodList = dao.getFoodList();
         String mealPlanText = "";
 
@@ -72,7 +74,6 @@ public class CalendarScreenController extends BartScreenController {
             foodIds = new ArrayList<>();
             mealPlanText = "No Meal Plan recorded for selected date";
         }
-
 
         for(int i = 0; i < foodIds.size(); i++){
 
@@ -93,6 +94,7 @@ public class CalendarScreenController extends BartScreenController {
         selectedDayMenuTextView = view.findViewById(R.id.selectedDayMenu);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
                 //Build date string with selected day
@@ -102,20 +104,19 @@ public class CalendarScreenController extends BartScreenController {
                 // Build Date object with selected day
                 selectedDate.set(year, month, day);
 
+                //Strip time elements
+                selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+                selectedDate.set(Calendar.MINUTE, 0);
+                selectedDate.set(Calendar.SECOND, 0);
+                selectedDate.set(Calendar.MILLISECOND, 0);
+
                 try{
-                    updateMealPlanDisplay(view, selectedDate.getTime());
+                    // Send a request to MenuDAO for the menu for selectedDate and selectedPet
+                    updateMealPlanDisplay(selectedDate.getTime());
                 }catch (JSONException e){
                     e.printStackTrace();
                     selectedDayMenuTextView.setText("Catastrophic database error");
                 }
-
-                //TODO High Priority Feature
-                // Send a request to MenuDAO for the menu for selectedDate and selectedPet
-                // selectedDate is currently java.util.Calendar, interacting with the database
-                // may be easier with java.sql.Date, either start with it from the beginning or
-                // convert.
-                // https://docs.oracle.com/javase/7/docs/api/java/sql/Date.html
-
             }
         });
     }

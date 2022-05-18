@@ -13,11 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -40,12 +37,13 @@ public class PetScreenController extends BartScreenController {
     ToggleButton satButton;
     ToggleButton[] dayButtons;
     AppCompatButton monthButton;
+
     int currentDay;
     MealPlan currentMealPlan;
 
     int DISPLAYED_PET_ID;
 
-    TextView dateView, countItems;
+    TextView dateView, countItems, mealPlanDisplay;
     Date currentDate;
     CharSequence selectedDateString;
 
@@ -61,20 +59,15 @@ public class PetScreenController extends BartScreenController {
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-       // String countFoodItems = getArguments().getString("count");
-
         View view = inflater.inflate(R.layout.pet_screen, container, false);
 
         dateView = view.findViewById(R.id.dateField);
         countItems = view.findViewById(R.id.countDailyFoodItems);
-        final Bundle bdl = getArguments();
+        mealPlanDisplay = view.findViewById(R.id.petScreenMealPlanDisplay);
 
-        //get Data from Daily Meal Plan Engine
-        String str = "";
         try
         {
-            str = bdl.getString("count");
-            countItems.setText("Daily Food Items: "+str);
+            countItems.setText("Daily Food Items: " + currentMealPlan.getFoodIdList().size());
         }
         catch(final Exception e)
         {
@@ -158,7 +151,7 @@ public class PetScreenController extends BartScreenController {
                     findDateAndRequestMenu(button);
 
                     try{
-                        updateMealPlanDisplay(view);
+                        updateMealPlanDisplay();
                     }catch (JSONException | NullPointerException e){
                         e.printStackTrace();
                     }
@@ -167,15 +160,19 @@ public class PetScreenController extends BartScreenController {
         }
     } // end setDayButtonListeners
 
-    void updateMealPlanDisplay(View view) throws JSONException, NullPointerException {
+    void updateMealPlanDisplay() throws JSONException, NullPointerException {
 
-        TextView mealPlanDisplay = view.findViewById(R.id.petScreenMealPlanDisplay);
-
-        ArrayList<Integer> foodIds = currentMealPlan.getFoodIdList();
-        FoodItem[] plannedFoods = new FoodItem[foodIds.size()];
+        ArrayList<Integer> foodIds;
         JSONArray foodList = dao.getFoodList();
-
         String mealPlanText = "";
+
+        try{
+            foodIds = currentMealPlan.getFoodIdList();
+        }catch (NullPointerException e){
+            //no meal plan for selected date, initialize to size 0 to skip the upcoming for loop
+            foodIds = new ArrayList<>();
+            mealPlanText = "No Meal Plan recorded for selected date";
+        }
 
         for(int i = 0; i < foodIds.size(); i++){
 
@@ -183,11 +180,6 @@ public class PetScreenController extends BartScreenController {
             mealPlanText += "\n\t";
             mealPlanText += foodList.getJSONObject(foodIds.get(i)-1).get("name").toString();
             mealPlanText += "\n";
-
-//            plannedFoods[i] = new FoodItem(
-//                    (int) foodList.getJSONObject(i).get("id"),
-//                    (DailyMealPlanEngine.FoodType) foodList.getJSONObject(i).get("type"),
-//                     foodList.getJSONObject(i).get("name").toString());
         }
 
         mealPlanDisplay.setText(mealPlanText);
@@ -201,6 +193,7 @@ public class PetScreenController extends BartScreenController {
         dateView.setText("" + selectedDateString);
 
         try{
+            // Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
             currentMealPlan = dao.getMealPlan(
                     DISPLAYED_PET_ID,
                     new Date(selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDate())
@@ -212,8 +205,19 @@ public class PetScreenController extends BartScreenController {
             );
         }
 
-        //TODO High Priority Feature
-        // Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
+        try{
+            countItems.setText("Daily Food Items: " + currentMealPlan.getFoodIdList().size());
+        }catch (NullPointerException e){
+            // No meal plan set
+            countItems.setText("Daily Food Items: None");
+        }
+
+        try{
+            updateMealPlanDisplay();
+        }catch (JSONException e){
+            e.printStackTrace();
+            mealPlanDisplay.setText("JSON Error. Clear app cache.");
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

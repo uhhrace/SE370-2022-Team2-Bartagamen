@@ -75,6 +75,7 @@
         android:background="@color/textBackgroundGray"
         android:fontFamily="@font/rubik_medium"
         android:textColor="@color/black"
+        android:textSize="20sp"
         android:text="Daily Food Sum:" />
 
 </LinearLayout>
