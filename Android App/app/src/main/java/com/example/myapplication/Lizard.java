@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Lizard{
@@ -9,14 +8,11 @@ public class Lizard{
     private Date dateOfBirth;
     private String sizeCentimeters;
 
-    private ArrayList<FoodItem> recentFoods;
-
     Lizard(int id, String newName, String sizeCentimeters, Date dateOfBirth){
         this.id = id;
         this.name = newName;
         this.dateOfBirth = dateOfBirth;
         this.sizeCentimeters = sizeCentimeters;
-        this.recentFoods = new ArrayList<>();
     }
 
     public int getId(){return this.id;}

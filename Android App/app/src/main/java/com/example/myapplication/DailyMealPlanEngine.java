@@ -1,14 +1,10 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 public class DailyMealPlanEngine extends AppCompatActivity {
-
-    SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 
     public enum FoodType{LEAFYGREEN, VEGETABLE, PROTEIN}
     final int MS_PER_SECOND = 1000;
@@ -16,10 +12,8 @@ public class DailyMealPlanEngine extends AppCompatActivity {
     final int MINUTES_PER_HOUR = 60;
     final int HOURS_PER_DAY = 24;
     final int DAYS_PER_MONTH = 31;
-    final int INDEX_NOT_FOUND = -1;
     final int PINHEAD_CRICKETS_ID = 30;
     final int CRICKETS_ID = 26;
-
     final int FOOD_VARIETY_DAY_DIFF = 3;
 
     DAO dao;
@@ -27,7 +21,6 @@ public class DailyMealPlanEngine extends AppCompatActivity {
     private static DailyMealPlanEngine DMPEngine = null;
 
     private DailyMealPlanEngine() {
-
         dao = DAO.getDAO();
     }
 

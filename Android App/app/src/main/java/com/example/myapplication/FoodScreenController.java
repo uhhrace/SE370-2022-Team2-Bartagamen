@@ -10,17 +10,13 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class FoodScreenController extends BartScreenController {
 
     DAO dao;
     DailyMealPlanEngine dmp;
-
     LayoutInflater viewInflater;
     View foodListContainer;
 
@@ -91,8 +87,8 @@ public class FoodScreenController extends BartScreenController {
         ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
 
         View mainView = ((ViewGroup)getView().getParent());
-        FoodItem food = null;
-        ToggleButton butt = null;
+        FoodItem food;
+        ToggleButton butt;
 
         for(int i = 0; i < availableFoods.size(); i++){
             food = availableFoods.get(i);

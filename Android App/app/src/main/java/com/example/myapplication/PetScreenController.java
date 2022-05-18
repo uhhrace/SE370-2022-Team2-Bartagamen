@@ -13,11 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -40,6 +37,7 @@ public class PetScreenController extends BartScreenController {
     ToggleButton satButton;
     ToggleButton[] dayButtons;
     AppCompatButton monthButton;
+
     int currentDay;
     MealPlan currentMealPlan;
 
@@ -61,16 +59,12 @@ public class PetScreenController extends BartScreenController {
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-       // String countFoodItems = getArguments().getString("count");
-
         View view = inflater.inflate(R.layout.pet_screen, container, false);
 
         dateView = view.findViewById(R.id.dateField);
         countItems = view.findViewById(R.id.countDailyFoodItems);
         mealPlanDisplay = view.findViewById(R.id.petScreenMealPlanDisplay);
 
-        //get Data from Daily Meal Plan Engine
-        String str = "";
         try
         {
             countItems.setText("Daily Food Items: " + currentMealPlan.getFoodIdList().size());

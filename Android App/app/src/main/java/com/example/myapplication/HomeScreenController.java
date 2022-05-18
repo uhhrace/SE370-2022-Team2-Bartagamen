@@ -9,14 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
-
 import org.json.JSONException;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +23,6 @@ public class HomeScreenController extends BartScreenController {
     AppCompatSpinner petListButton;
     AppCompatButton foodBankButton;
     DAO dao;
-    Context context;
 
     Lizard[] lizardList = null;
     String[] lizardNames = null;
@@ -63,7 +59,6 @@ public class HomeScreenController extends BartScreenController {
 
         //Get petList
         //When PetDAO is functional, replace this array with actual info from the DB
-//        createLizardList();
         lizardNames = dao.getLizardNames();
 
 

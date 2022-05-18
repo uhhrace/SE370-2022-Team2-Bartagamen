@@ -11,12 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

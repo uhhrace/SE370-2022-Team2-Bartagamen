@@ -1,19 +1,14 @@
 package com.example.myapplication;
 
-//maybe import stuff here idk
-
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
-
 import java.util.Calendar;
 
 public class AddPetScreenController extends BartScreenController {

@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -116,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToFoodBank() {
         changeScreen(foodScreenController);
         wipeTopBar();
-
-//        foodScreenController.checkAvailableFoods();
     }
 
     /**
