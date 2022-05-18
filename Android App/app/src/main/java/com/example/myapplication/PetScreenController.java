@@ -68,14 +68,12 @@ public class PetScreenController extends BartScreenController {
         dateView = view.findViewById(R.id.dateField);
         countItems = view.findViewById(R.id.countDailyFoodItems);
         mealPlanDisplay = view.findViewById(R.id.petScreenMealPlanDisplay);
-        final Bundle bdl = getArguments();
 
         //get Data from Daily Meal Plan Engine
         String str = "";
         try
         {
-            str = bdl.getString("count");
-            countItems.setText("Daily Food Items: "+str);
+            countItems.setText("Daily Food Items: " + currentMealPlan.getFoodIdList().size());
         }
         catch(final Exception e)
         {
@@ -210,6 +208,13 @@ public class PetScreenController extends BartScreenController {
                     DISPLAYED_PET_ID,
                     new Date(selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDate())
             );
+        }
+
+        try{
+            countItems.setText("Daily Food Items: " + currentMealPlan.getFoodIdList().size());
+        }catch (NullPointerException e){
+            // No meal plan set
+            countItems.setText("Daily Food Items: None");
         }
 
         try{

@@ -32,7 +32,6 @@ public class CalendarScreenController extends BartScreenController {
     DailyMealPlanEngine dmp;
 
     public CalendarScreenController(){
-
         selectedDate = Calendar.getInstance();
         dao = DAO.getDAO();
         dmp = DailyMealPlanEngine.getDMPEngine();

@@ -163,7 +163,7 @@ public class DAO extends SQLiteOpenHelper{
         resultCursor.moveToFirst();
 
         //While resultCursor.getPosition < resultCursor.getCount
-        while (resultCursor.getPosition() < resultCursor.getCount() - 1){
+        while (resultCursor.getPosition() < resultCursor.getCount()){
 
             int foodId = resultCursor.getInt(INDEX_ID);
             DailyMealPlanEngine.FoodType foodType = DailyMealPlanEngine.FoodType.valueOf(resultCursor.getString(INDEX_TYPE));
@@ -429,6 +429,36 @@ public class DAO extends SQLiteOpenHelper{
         cv.put(COLUMN_MENU_FOOD_ID_LIST, new JSONArray(planToAdd.getFoodIdList()).toString());
 
         BartDB.insert(TABLE_MENU, null, cv);
+    }
+
+    public ArrayList<FoodItem> getFoodsForDate(Date requestedDate) throws JSONException{
+
+        String[] columns = {COLUMN_MENU_FOOD_ID_LIST};
+        String selection = COLUMN_MENU_DATE + " == '" + requestedDate + "'";
+
+        Cursor resultCursor = BartDB.query(true, TABLE_MENU, columns, selection, null, null, null, null , null);
+        resultCursor.moveToFirst();
+
+        ArrayList<FoodItem> requestedFoods = new ArrayList<>();
+
+        // If atleast one meal plan
+        if(resultCursor.getCount() >= 1){
+
+            JSONArray JSONFoodIds = new JSONArray(resultCursor.getString(0));
+            for(int i = 0; i < JSONFoodIds.length(); i++){
+
+                int id = JSONFoodIds.getInt(i);
+                DailyMealPlanEngine.FoodType type = DailyMealPlanEngine.FoodType.valueOf( foodList.getJSONObject(id).getString("type") );
+                String name = foodList.getJSONObject(id).getString("name");
+
+                FoodItem newFood = new FoodItem(id, type, name);
+
+                requestedFoods.add(newFood);
+            }
+        }
+
+        resultCursor.close();
+        return requestedFoods;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

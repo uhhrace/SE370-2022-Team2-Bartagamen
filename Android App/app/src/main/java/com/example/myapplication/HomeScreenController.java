@@ -8,12 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import org.json.JSONException;
+
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeScreenController extends BartScreenController {
 
@@ -43,6 +49,8 @@ public class HomeScreenController extends BartScreenController {
         }catch (ParseException e){
             e.printStackTrace();
         }
+
+        updateMealPlanDisplay(view);
 
         return view;
     }
@@ -93,5 +101,28 @@ public class HomeScreenController extends BartScreenController {
             }
         });
 
+    }
+
+    void updateMealPlanDisplay(View view){
+
+        TextView mealPlanSumDisplay = view.findViewById(R.id.DailyMenuSumTextView);
+        String mealPlanSumText;
+        Date today = new Date();
+        Date simpleToday = new Date(today.getYear(), today.getMonth(), today.getDate());
+
+        try{
+            ArrayList<FoodItem> todaysFoods = dao.getFoodsForDate(simpleToday);
+            mealPlanSumText = "Daily Food Sum:\n\t";
+
+            for (FoodItem food : todaysFoods) {
+                mealPlanSumText += food.getName();
+                mealPlanSumText += "\n\t";
+            }
+
+        }catch (JSONException e){
+            mealPlanSumText = "No food on record today";
+        }
+
+        mealPlanSumDisplay.setText(mealPlanSumText);
     }
 }

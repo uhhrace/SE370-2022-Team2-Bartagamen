@@ -113,11 +113,10 @@ public class FoodScreenController extends BartScreenController {
 
         ArrayList<FoodItem> foodList = dao.getUserFoodList();
 
-        for(int i = 0; i < foodList.size(); i++){
+        for (FoodItem food : foodList) {
             View toAdd;
             ToggleButton button;
             TextView itemText;
-            FoodItem food = foodList.get(i);
             DailyMealPlanEngine.FoodType foodType = food.getFoodTypeEnum();
 
             switch (foodType){
