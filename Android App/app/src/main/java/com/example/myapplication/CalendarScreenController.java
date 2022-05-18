@@ -115,19 +115,12 @@ public class CalendarScreenController extends BartScreenController {
                 selectedDate.set(Calendar.MILLISECOND, 0);
 
                 try{
+                    // Send a request to MenuDAO for the menu for selectedDate and selectedPet
                     updateMealPlanDisplay(selectedDate.getTime());
                 }catch (JSONException e){
                     e.printStackTrace();
                     selectedDayMenuTextView.setText("Catastrophic database error");
                 }
-
-                //TODO High Priority Feature
-                // Send a request to MenuDAO for the menu for selectedDate and selectedPet
-                // selectedDate is currently java.util.Calendar, interacting with the database
-                // may be easier with java.sql.Date, either start with it from the beginning or
-                // convert.
-                // https://docs.oracle.com/javase/7/docs/api/java/sql/Date.html
-
             }
         });
     }

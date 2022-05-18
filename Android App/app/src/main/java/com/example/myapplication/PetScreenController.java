@@ -199,6 +199,7 @@ public class PetScreenController extends BartScreenController {
         dateView.setText("" + selectedDateString);
 
         try{
+            // Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
             currentMealPlan = dao.getMealPlan(
                     DISPLAYED_PET_ID,
                     new Date(selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDate())
@@ -223,9 +224,6 @@ public class PetScreenController extends BartScreenController {
             e.printStackTrace();
             mealPlanDisplay.setText("JSON Error. Clear app cache.");
         }
-
-        //TODO High Priority Feature
-        // Send a request to MenuDAO requesting the menu for selectedDate and selectedPet
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

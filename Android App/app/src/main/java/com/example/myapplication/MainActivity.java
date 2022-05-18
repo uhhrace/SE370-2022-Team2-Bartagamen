@@ -130,11 +130,6 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToPets() {
         changeScreen(petScreenController);
 
-        //TODO very low priority
-        // Currently, text defaults to white, so the topBar is made buttonDarkBlue for easy reading
-        // Ideally the top bar would be backgroundBlue, and the text would be Black, but there is
-        // no easy option for setting the text color. The topBar object might have to be converted
-        // to a View / Fragment?
         topBar.setTitle("Lizard's Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
 
