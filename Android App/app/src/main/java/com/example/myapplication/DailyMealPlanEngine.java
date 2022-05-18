@@ -61,7 +61,6 @@ public class DailyMealPlanEngine extends AppCompatActivity {
 
         //This takes time to process
         ArrayList<FoodItem> userFoods = dao.getUserFoodList();
-        ArrayList<FoodItem> availableFoods = dao.getAvailableFoods();
 
         FoodItem food;
 
@@ -95,27 +94,32 @@ public class DailyMealPlanEngine extends AppCompatActivity {
             //20% Vegetables
         }
 
-        Date dateLastAte = new Date();
+        Date dateLastAte;
 
         // for each available food
-        for(int i = 0; i < availableFoods.size(); i++){
+        for(int i = 0; i < userFoods.size(); i++){
 
-            food = availableFoods.get(i);
+            food = userFoods.get(i);
 
             // If food type not yet currently in meal plan
-            if (!foodTypeHandled[availableFoods.get(i).getFoodType()]){
+            if (!foodTypeHandled[userFoods.get(i).getFoodType()]){
 
-                // If food not recent
-                dateLastAte = dao.getLastAte(food.getId(), pet.getId());
+                // And food is available
+                if(food.isAvailable()){
 
-                long msDiff = requestedDate.getTime() - dateLastAte.getTime();
-                long dayDiff = msDiff / (MS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY);
+                    // If food not recent
+                    dateLastAte = dao.getLastAte(food.getId(), pet.getId());
 
-                //If dateLastAte after today, its okay to eat today
-                if(dateLastAte.after(requestedDate) || dayDiff > FOOD_VARIETY_DAY_DIFF){
-                    datesMealPlan.addFoodId(food.getId());
-                    dao.addRecentFood(food.getId(), pet.getId(), requestedDate);
-                    foodTypeHandled[food.getFoodType()] = true;
+                    long msDiff = requestedDate.getTime() - dateLastAte.getTime();
+                    long dayDiff = msDiff / (MS_PER_SECOND * SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY);
+
+                    //If dateLastAte after today, its okay to eat today
+                    if(dateLastAte.after(requestedDate) || dayDiff > FOOD_VARIETY_DAY_DIFF){
+                        datesMealPlan.addFoodId(food.getId());
+                        dao.addRecentFood(food.getId(), pet.getId(), requestedDate);
+                        foodTypeHandled[food.getFoodType()] = true;
+                    }
+
                 }
             }
         }
