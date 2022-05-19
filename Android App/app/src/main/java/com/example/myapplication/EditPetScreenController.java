@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class EditPetScreenController extends BartScreenController {
 
     String name, date ;
-    boolean test = false ;
+    boolean invalidDate = false ;
     Calendar cal = Calendar.getInstance() ;
     int monthInt, dayInt, yearInt, DISPLAYED_PET_ID;
 
@@ -108,12 +108,10 @@ public class EditPetScreenController extends BartScreenController {
             @Override
             public void onClick(View view) {
 
-                //TODO
-                // Run delete pet function here when complete
+                // Remove pet from database
+                dao.removePet(DISPLAYED_PET_ID);
 
                 changeScreenToHome() ;
-
-
             }
         });
 
@@ -136,10 +134,10 @@ public class EditPetScreenController extends BartScreenController {
 
                 }
                 catch (Exception e) {
-                    test = true ;
+                    invalidDate = true ;
                 }
 
-                if (!test) {
+                if (!invalidDate) {
 
                     String month = date.substring(0, 2);
                     String day = date.substring(3, 5);
@@ -155,7 +153,7 @@ public class EditPetScreenController extends BartScreenController {
                     errorText.setText("Error. Some fields empty.");
                 }
                 //check length
-                else if (test || date.length() > 10) {
+                else if (invalidDate || date.length() > 10) {
                     errorText.setText("Error. Date of Birth is incorrect or incomplete");
                 }
                 //check if day month or year are real numbers for a date, also check if year is in the future
@@ -175,16 +173,14 @@ public class EditPetScreenController extends BartScreenController {
                     errorText.setText("Error. Date of Birth is incorrect or incomplete");
                 }
                 else {
-                    //TODO
-                    // add edit pet function here when complete
-
+                    // update pet in database
                     dao.updatePet(DISPLAYED_PET_ID, nameInput.getText().toString(), dateInput.getText().toString());
 
                     changeScreenToHome();
                     nameInput.getText().clear();
                     dateInput.getText().clear();
                 }
-                test = false ;
+                invalidDate = false ;
             }
 
         });
