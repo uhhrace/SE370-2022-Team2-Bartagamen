@@ -95,7 +95,6 @@ public class EditPetScreenController extends BartScreenController {
             dateInput.setText(dateFormatted);
     }
 
-
     void setButtonListeners (View view){
 
         saveButton = view.findViewById(R.id.saveButton);

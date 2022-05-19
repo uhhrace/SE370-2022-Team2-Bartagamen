@@ -477,9 +477,11 @@ public class DAO extends SQLiteOpenHelper{
 
     public void removePet(int id){
 
-        String selection = COLUMN_PET_ID + " = " + id;
+        String petSelection = COLUMN_PET_ID + " = " + id;
+        String menuSelection = COLUMN_MENU_PET_ID + " = " + id;
 
-        BartDB.delete(TABLE_PET, selection, null);
+        BartDB.delete(TABLE_PET, petSelection, null);
+        BartDB.delete(TABLE_MENU, menuSelection, null);
 
     }
 
