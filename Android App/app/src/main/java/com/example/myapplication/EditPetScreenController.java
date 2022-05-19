@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-//maybe import stuff here idk
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
-
 
 import java.util.Calendar;
 
@@ -30,30 +27,33 @@ public class EditPetScreenController extends BartScreenController {
 
     DAO dao;
 
-
     EditPetScreenController(){
         dao = DAO.getDAO();
     }
 
-
     @Nullable
     @Override
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_pet_screen, container, false);
 
         setButtonListeners(view);
-        setPrevValues();
+        fillInfoFields();
 
         return view ;
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        fillInfoFields();
     }
 
     public void setDisplayedPetId(int newId){
         DISPLAYED_PET_ID = newId;
     }
 
-    void setPrevValues() {
+    void fillInfoFields() {
 
         Lizard tempLizard = dao.getLizard(DISPLAYED_PET_ID) ;
 
@@ -177,6 +177,8 @@ public class EditPetScreenController extends BartScreenController {
                 else {
                     //TODO
                     // add edit pet function here when complete
+
+                    dao.updatePet(DISPLAYED_PET_ID, nameInput.getText().toString(), dateInput.getText().toString());
 
                     changeScreenToHome();
                     nameInput.getText().clear();

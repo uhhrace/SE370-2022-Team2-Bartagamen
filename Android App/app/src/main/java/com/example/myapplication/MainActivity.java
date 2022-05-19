@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public EditPetScreenController editPetScreenController ;
 
     private ActionBar topBar;
+    private Menu topMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,24 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        topMenu = menu;
+        return true;
+    }
+
+    void addGearToTopBar(){
+        getMenuInflater().inflate(R.menu.pet_screen_action_bar, topMenu);
+    }
+
+    void removeGearFromTopBar(){
+        topMenu.clear();
+    }
+
+    public Menu getTopMenu(){
+        return topMenu;
+    }
+
     private void wipeTopBar() {
         topBar.setTitle(null);
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroundBlue)));
@@ -102,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToHome() {
         changeScreen(homeScreenController);
         wipeTopBar();
+        removeGearFromTopBar();
 
         DAO.updateAvailableFoods();
     }
@@ -116,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     public void changeScreenToFoodBank() {
         changeScreen(foodScreenController);
         wipeTopBar();
+        removeGearFromTopBar();
     }
 
     /**
@@ -142,20 +164,21 @@ public class MainActivity extends AppCompatActivity {
 
         topBar.setTitle(petName + "'s Meal Plan");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
+        addGearToTopBar();
 
         DAO.updateAvailableFoods();
     }
 
     public void changeScreenToCalendar() {
         changeScreen(calendarScreenController);
+        removeGearFromTopBar();
         topBar.setTitle("Lizard's Meal Plan - Monthly View");
 
         DAO.updateAvailableFoods();
     }
 
-
     public void changeScreenToAddPet() {
-        changeScreen(addPetScreenController) ;
+        changeScreen(addPetScreenController);
         topBar.setTitle("Create New Pet");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
     }
@@ -164,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         changeScreen(editPetScreenController) ;
         topBar.setTitle("Edit Pet Information");
         topBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.buttonDarkBlue)));
+        removeGearFromTopBar();
     }
 
     /**
