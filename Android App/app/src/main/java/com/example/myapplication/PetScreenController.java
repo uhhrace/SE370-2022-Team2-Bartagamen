@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
@@ -37,7 +42,7 @@ public class PetScreenController extends BartScreenController {
     ToggleButton satButton;
     ToggleButton[] dayButtons;
     AppCompatButton monthButton;
-
+    AppCompatButton editPetButton;
     int currentDay;
     MealPlan currentMealPlan;
 
@@ -80,6 +85,8 @@ public class PetScreenController extends BartScreenController {
 
         setMonthButtonListener(view);
 
+        setEditPetButtonListener();
+
         autoSelectDayOfWeek();
 
         //TODO low priority
@@ -108,6 +115,20 @@ public class PetScreenController extends BartScreenController {
         monthButton = view.findViewById(R.id.ViewMonthlyButton);
 
         monthButton.setOnClickListener(tempView -> changeScreenToCalendar());
+    }
+
+    void setEditPetButtonListener() {
+
+        Menu topMenu = main.getTopMenu();
+        // Only one item, pull first item
+        MenuItem editPetButton = topMenu.getItem(0);
+        editPetButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                changeScreenToEditPet();
+                return true;
+            }
+        });
     }
 
     void setDayButtonListeners(View view){

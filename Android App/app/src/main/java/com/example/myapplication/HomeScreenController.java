@@ -51,6 +51,13 @@ public class HomeScreenController extends BartScreenController {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        updateMealPlanDisplay( (ViewGroup)getView().getParent() );
+    }
+
     void setButtonListeners(View view){
         petListButton = view.findViewById(R.id.petListButton);
         foodBankButton = view.findViewById(R.id.foodBankButton);

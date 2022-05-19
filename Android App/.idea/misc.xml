@@ -28,6 +28,8 @@
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/pets.xml" value="0.18591691995947315" />
         <entry key="..\:/Users/a002685/OneDrive - All for One Group SE/Dokumente/GitHub/Bartagamen_New/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/menu/menu.xml" value="0.31296296296296294" />
         <entry key="..\:/Users/raceb/.gradle/caches/transforms-3/7ad767b51f6b98a76ea81086e524167b/transformed/appcompat-1.4.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.13269927536231885" />
+        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/baseline_settings_20.xml" value="0.1935" />
+        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/baseline_settings_24.xml" value="0.1935" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/food_bank_rounded_corner.xml" value="0.332" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/food_bank_rounded_corner_active.xml" value="0.332" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/drawable/food_bank_rounded_corner_inactive.xml" value="0.332" />
@@ -54,7 +56,10 @@
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/pet_list_spinner.xml" value="0.13269927536231885" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/pet_screen.xml" value="0.5" />
         <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/layout/pets.xml" value="0.33" />
-        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/menu/menu.xml" value="0.1" />
+        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/menu/action_bar.xml" value="0.14791666666666667" />
+        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/menu/menu.xml" value="0.33" />
+        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/menu/petScreenActionBar.xml" value="0.1" />
+        <entry key="..\:/git/SE370-2022-Team2-Bartagamen/Android App/app/src/main/res/menu/pet_screen_action_bar.xml" value="0.18541666666666667" />
       </map>
     </option>
   </component>

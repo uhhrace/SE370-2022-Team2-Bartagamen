@@ -351,8 +351,15 @@ public class DAO extends SQLiteOpenHelper{
 
     // TODO High Priority Function
     //  Update pet when edit pet form completed
-    public void updatePet(String name, String Size, String age){
-        //stuff
+    public void updatePet(int id, String newName, String newDateOfBirth){
+
+        String updateQuery = "UPDATE " + TABLE_PET +
+                " SET " + COLUMN_PET_NAME + " = '" + newName + "', " +
+                COLUMN_PET_DOB + " = '" + newDateOfBirth + "'" +
+                " WHERE " + COLUMN_PET_ID + "= " + id;
+
+        BartDB.execSQL(updateQuery);
+
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -444,21 +451,36 @@ public class DAO extends SQLiteOpenHelper{
         // If atleast one meal plan
         if(resultCursor.getCount() >= 1){
 
-            JSONArray JSONFoodIds = new JSONArray(resultCursor.getString(0));
-            for(int i = 0; i < JSONFoodIds.length(); i++){
+            // Loop through meal plans
+            while(resultCursor.getPosition() < resultCursor.getCount()){
 
-                int id = JSONFoodIds.getInt(i);
-                DailyMealPlanEngine.FoodType type = DailyMealPlanEngine.FoodType.valueOf( foodList.getJSONObject(id).getString("type") );
-                String name = foodList.getJSONObject(id).getString("name");
+                JSONArray JSONFoodIds = new JSONArray(resultCursor.getString(0));
+                for(int i = 0; i < JSONFoodIds.length(); i++){
 
-                FoodItem newFood = new FoodItem(id, type, name);
+                    int id = JSONFoodIds.getInt(i);
+                    DailyMealPlanEngine.FoodType type = DailyMealPlanEngine.FoodType.valueOf( foodList.getJSONObject(id).getString("type") );
+                    String name = foodList.getJSONObject(id-1).getString("name");
 
-                requestedFoods.add(newFood);
+                    FoodItem newFood = new FoodItem(id, type, name);
+
+                    requestedFoods.add(newFood);
+                }
+
+                resultCursor.moveToNext();
+
             }
         }
 
         resultCursor.close();
         return requestedFoods;
+    }
+
+    public void removePet(int id){
+
+        String selection = COLUMN_PET_ID + " = " + id;
+
+        BartDB.delete(TABLE_PET, selection, null);
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
